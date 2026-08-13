@@ -1,16 +1,491 @@
-{"version":"nr.rules/v1","kind":"exposuresignatures","signatures":[
-{"id":"git-config","path":".git/config","category":"leak","severity":"high","mustContainAny":["[core]","[remote","[branch"],"mustNotContain":["<html","<!doctype"]},
-{"id":"git-head","path":".git/HEAD","category":"leak","severity":"medium","pattern":"ref:\\s*refs/","mustNotContain":["<html","<!doctype"]},
-{"id":"env-file","path":".env","category":"leak","severity":"high","pattern":"(?m)^[A-Z][A-Z0-9_]{1,}=","mustContainAny":["APP_","DB_","SECRET","API","PASSWORD","TOKEN","KEY"],"mustNotContain":["<html","<!doctype"]},
-{"id":"wp-config-backup","path":"wp-config.php.bak","category":"leak","severity":"critical","mustContainAny":["DB_PASSWORD","DB_USER"],"mustNotContain":["<?php"]},
-{"id":"sql-dump","path":"backup.sql","category":"leak","severity":"high","mustContainAny":["CREATE TABLE","INSERT INTO","DROP TABLE"]},
-{"id":"ds-store","path":".DS_Store","category":"leak","severity":"low","mustContain":["Bud1"]},
-{"id":"directory-listing","path":"","category":"exposure","severity":"medium","mustContainAny":["Index of /","Directory listing for","<title>Index of"]},
-{"id":"phpinfo","path":"phpinfo.php","category":"exposure","severity":"medium","mustContainAny":["phpinfo()","PHP Version","<title>phpinfo"]},
-{"id":"spring-actuator-env","path":"actuator/env","category":"exposure","severity":"high","mustContain":["propertySources"]},
-{"id":"spring-heapdump","path":"actuator/heapdump","category":"exposure","severity":"high","mustContainAny":["JAVA PROFILE","HPROF"]},
-{"id":"swagger","path":"swagger.json","category":"exposure","severity":"info","mustContainAny":["\"swagger\"","\"openapi\""]},
-{"id":"server-status","path":"server-status","category":"exposure","severity":"low","mustContainAny":["Apache Server Status","Scoreboard Key"]},
-{"id":"laravel-log","path":"storage/logs/laravel.log","category":"leak","severity":"medium","mustContainAny":["production.ERROR","local.ERROR","stacktrace","#0 {main}"]},
-{"id":"npmrc","path":".npmrc","category":"leak","severity":"high","pattern":"_authToken=","mustNotContain":["<html"]}
-]}
+{
+  "version": "nr.rules/v1",
+  "kind": "exposuresignatures",
+  "signatures": [
+    {
+      "id": "git-config",
+      "path": ".git/config",
+      "category": "leak",
+      "severity": "high",
+      "mustContainAny": [
+        "[core]",
+        "[remote",
+        "[branch"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "git-head",
+      "path": ".git/HEAD",
+      "category": "leak",
+      "severity": "medium",
+      "pattern": "ref:\\s*refs/",
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "env-file",
+      "path": ".env",
+      "category": "leak",
+      "severity": "high",
+      "pattern": "(?m)^[A-Z][A-Z0-9_]{1,}=",
+      "mustContainAny": [
+        "APP_",
+        "DB_",
+        "SECRET",
+        "API",
+        "PASSWORD",
+        "TOKEN",
+        "KEY"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "wp-config-backup",
+      "path": "wp-config.php.bak",
+      "category": "leak",
+      "severity": "critical",
+      "mustContainAny": [
+        "DB_PASSWORD",
+        "DB_USER"
+      ],
+      "mustNotContain": [
+        "<?php"
+      ]
+    },
+    {
+      "id": "sql-dump",
+      "path": "backup.sql",
+      "category": "leak",
+      "severity": "high",
+      "mustContainAny": [
+        "CREATE TABLE",
+        "INSERT INTO",
+        "DROP TABLE"
+      ]
+    },
+    {
+      "id": "ds-store",
+      "path": ".DS_Store",
+      "category": "leak",
+      "severity": "low",
+      "mustContain": [
+        "Bud1"
+      ]
+    },
+    {
+      "id": "directory-listing",
+      "path": "",
+      "category": "exposure",
+      "severity": "medium",
+      "mustContainAny": [
+        "Index of /",
+        "Directory listing for",
+        "<title>Index of"
+      ]
+    },
+    {
+      "id": "phpinfo",
+      "path": "phpinfo.php",
+      "category": "exposure",
+      "severity": "medium",
+      "mustContainAny": [
+        "phpinfo()",
+        "PHP Version",
+        "<title>phpinfo"
+      ]
+    },
+    {
+      "id": "spring-actuator-env",
+      "path": "actuator/env",
+      "category": "exposure",
+      "severity": "high",
+      "mustContain": [
+        "propertySources"
+      ]
+    },
+    {
+      "id": "spring-heapdump",
+      "path": "actuator/heapdump",
+      "category": "exposure",
+      "severity": "high",
+      "mustContainAny": [
+        "JAVA PROFILE",
+        "HPROF"
+      ]
+    },
+    {
+      "id": "swagger",
+      "path": "swagger.json",
+      "category": "exposure",
+      "severity": "info",
+      "mustContainAny": [
+        "\"swagger\"",
+        "\"openapi\""
+      ]
+    },
+    {
+      "id": "server-status",
+      "path": "server-status",
+      "category": "exposure",
+      "severity": "low",
+      "mustContainAny": [
+        "Apache Server Status",
+        "Scoreboard Key"
+      ]
+    },
+    {
+      "id": "laravel-log",
+      "path": "storage/logs/laravel.log",
+      "category": "leak",
+      "severity": "medium",
+      "mustContainAny": [
+        "production.ERROR",
+        "local.ERROR",
+        "stacktrace",
+        "#0 {main}"
+      ]
+    },
+    {
+      "id": "npmrc",
+      "path": ".npmrc",
+      "category": "leak",
+      "severity": "high",
+      "pattern": "_authToken=",
+      "mustNotContain": [
+        "<html"
+      ]
+    },
+    {
+      "id": "svn-wc-db",
+      "path": ".svn/wc.db",
+      "category": "leak",
+      "severity": "medium",
+      "mustContainAny": [
+        "SQLite format",
+        "svn:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "hg-store",
+      "path": ".hg/requires",
+      "category": "leak",
+      "severity": "low",
+      "mustContainAny": [
+        "revlogv",
+        "dotencode",
+        "fncache"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "bzr-branch",
+      "path": ".bzr/branch-format",
+      "category": "leak",
+      "severity": "low",
+      "mustContainAny": [
+        "Bazaar-NG",
+        "Bazaar branch format"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "htpasswd",
+      "path": ".htpasswd",
+      "category": "secret",
+      "severity": "high",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "[^:\\s]+:\\$(apr1|2y|1|6|5)\\$"
+    },
+    {
+      "id": "htaccess",
+      "path": ".htaccess",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "RewriteEngine",
+        "AuthType",
+        "<Files",
+        "Options ",
+        "Deny from"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "aws-credentials",
+      "path": ".aws/credentials",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "aws_access_key_id",
+        "aws_secret_access_key"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "pypirc",
+      "path": ".pypirc",
+      "category": "secret",
+      "severity": "high",
+      "mustContain": [
+        "[pypi]"
+      ],
+      "mustContainAny": [
+        "password",
+        "username"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "netrc",
+      "path": ".netrc",
+      "category": "secret",
+      "severity": "high",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "machine\\s+\\S+\\s+login\\s+\\S+"
+    },
+    {
+      "id": "git-credentials",
+      "path": ".git-credentials",
+      "category": "secret",
+      "severity": "critical",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "https?://[^:@\\s]+:[^@\\s]+@"
+    },
+    {
+      "id": "dockercfg",
+      "path": ".dockercfg",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "\"auths\"",
+        "\"auth\":",
+        "registry"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "env-backup",
+      "path": ".env.bak",
+      "category": "secret",
+      "severity": "high",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "(?m)^[A-Z][A-Z0-9_]{2,}="
+    },
+    {
+      "id": "wp-config-bak",
+      "path": "wp-config.php.bak",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "DB_PASSWORD",
+        "DB_NAME",
+        "AUTH_KEY"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "composer-json",
+      "path": "composer.json",
+      "category": "config",
+      "severity": "low",
+      "mustContain": [
+        "\"require\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "package-json",
+      "path": "package.json",
+      "category": "config",
+      "severity": "low",
+      "mustContain": [
+        "\"dependencies\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "terraform-state",
+      "path": "terraform.tfstate",
+      "category": "secret",
+      "severity": "critical",
+      "mustContain": [
+        "\"terraform_version\""
+      ],
+      "mustContainAny": [
+        "\"resources\"",
+        "\"lineage\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "dockerfile",
+      "path": "Dockerfile",
+      "category": "config",
+      "severity": "low",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "(?m)^(FROM|RUN|COPY|ENV|EXPOSE)\\s"
+    },
+    {
+      "id": "docker-compose",
+      "path": "docker-compose.yml",
+      "category": "config",
+      "severity": "medium",
+      "mustContain": [
+        "services:"
+      ],
+      "mustContainAny": [
+        "image:",
+        "build:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "id-rsa",
+      "path": "id_rsa",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "BEGIN RSA PRIVATE KEY",
+        "BEGIN OPENSSH PRIVATE KEY",
+        "BEGIN PRIVATE KEY"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "web-config",
+      "path": "web.config",
+      "category": "config",
+      "severity": "medium",
+      "mustContainAny": [
+        "<configuration>",
+        "<connectionStrings>",
+        "<system.web>"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    }
+  ]
+}
