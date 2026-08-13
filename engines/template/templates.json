@@ -5,21 +5,140 @@
       "info": {
         "name": "Exposed .git/config",
         "severity": "high",
+        "tags": [
+          "exposure",
+          "git"
+        ],
         "description": "A readable .git/config exposes repository metadata and remote URLs.",
-        "tags": ["exposure", "git"],
         "cwe": "CWE-538"
       },
       "requests": [
         {
           "method": "GET",
-          "path": ["/.git/config"],
+          "path": [
+            "/.git/config"
+          ],
           "matchersCondition": "and",
           "matchers": [
-            {"type": "status", "status": [200]},
-            {"type": "word", "part": "body", "words": ["[core]", "repositoryformatversion"], "condition": "and"}
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "[core]",
+                "repositoryformatversion"
+              ],
+              "condition": "and"
+            }
           ],
           "extractors": [
-            {"type": "regex", "part": "body", "name": "remote", "regex": ["url\\s*=\\s*(\\S+)"], "group": 1}
+            {
+              "type": "regex",
+              "part": "body",
+              "name": "remote",
+              "regex": [
+                "url\\s*=\\s*(\\S+)"
+              ],
+              "group": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "git-head-exposure",
+      "info": {
+        "name": "Exposed .git/HEAD",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "git"
+        ],
+        "description": "A readable .git/HEAD confirms an exposed git repository.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.git/HEAD"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "^ref:\\s*refs/"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svn-entries-exposure",
+      "info": {
+        "name": "Exposed .svn/entries",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "svn"
+        ],
+        "description": "Subversion metadata is reachable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.svn/entries",
+            "/.svn/wc.db"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "svn://",
+                "dir",
+                "SQLite format",
+                "http://",
+                "https://"
+              ],
+              "condition": "or"
+            }
           ]
         }
       ]
@@ -29,84 +148,778 @@
       "info": {
         "name": "Spring Boot Actuator env exposure",
         "severity": "high",
+        "tags": [
+          "exposure",
+          "spring",
+          "actuator"
+        ],
         "description": "An unauthenticated Actuator env endpoint discloses configuration and secrets.",
-        "tags": ["exposure", "spring", "actuator"],
         "prerequisite": true
       },
       "requests": [
         {
           "method": "GET",
-          "path": ["/actuator/env", "/env"],
-          "matchersCondition": "and",
-          "matchers": [
-            {"type": "status", "status": [200]},
-            {"type": "word", "part": "body", "words": ["propertySources", "systemEnvironment"], "condition": "or"}
-          ]
-        }
-      ]
-    },
-    {
-      "id": "server-version-disclosure",
-      "info": {
-        "name": "Server version disclosure",
-        "severity": "info",
-        "description": "The Server response header discloses product and version, feeding version-based matching.",
-        "tags": ["fingerprint", "disclosure"]
-      },
-      "requests": [
-        {
-          "method": "GET",
-          "path": ["/"],
-          "matchersCondition": "and",
-          "matchers": [
-            {"type": "header", "header": "Server", "regex": ["\\S+/\\d"], "condition": "or"}
+          "path": [
+            "/actuator/env",
+            "/env"
           ],
-          "extractors": [
-            {"type": "regex", "part": "header", "name": "server", "regex": ["Server:\\s*([^\\r\\n]+)"], "group": 1}
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "propertySources",
+                "systemEnvironment"
+              ],
+              "condition": "or"
+            }
           ]
         }
       ]
     },
     {
-      "id": "roundcube-log-disclosure",
+      "id": "spring-actuator-health",
       "info": {
-        "name": "Roundcube webmail log disclosure",
+        "name": "Spring Boot Actuator health",
+        "severity": "info",
+        "tags": [
+          "actuator",
+          "spring",
+          "disclosure"
+        ],
+        "description": "Actuator health endpoint is reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/actuator/health",
+            "/health"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"status\":\"UP\"",
+                "\"status\": \"UP\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spring-actuator-mappings",
+      "info": {
+        "name": "Spring Boot Actuator mappings",
         "severity": "medium",
-        "description": "A world-readable Roundcube errors.log discloses IMAP errors, usernames, and email addresses.",
-        "tags": ["exposure", "roundcube", "webmail", "disclosure"],
-        "cwe": "CWE-532"
+        "tags": [
+          "actuator",
+          "spring",
+          "disclosure"
+        ],
+        "description": "Actuator mappings disclose internal routes.",
+        "prerequisite": true
       },
       "requests": [
         {
           "method": "GET",
-          "path": ["/webmail/logs/errors.log", "/roundcube/logs/errors.log", "/logs/errors.log", "/mail/logs/errors.log"],
+          "path": [
+            "/actuator/mappings",
+            "/mappings"
+          ],
           "matchersCondition": "and",
           "matchers": [
-            {"type": "status", "status": [200]},
-            {"type": "word", "part": "body", "words": ["IMAP Error", "PHP Error", "DB Error", "SMTP Error"], "condition": "or"},
-            {"type": "word", "part": "body", "words": ["<html", "<!doctype"], "condition": "or", "negative": true}
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "handlerMethod",
+                "requestMappingConditions",
+                "patternValues"
+              ],
+              "condition": "or"
+            }
           ]
         }
       ]
     },
     {
-      "id": "exposed-log-file",
+      "id": "env-file-exposure",
       "info": {
-        "name": "Exposed application log file",
-        "severity": "low",
-        "description": "A reachable plaintext log file may disclose internal paths, errors, and user data.",
-        "tags": ["exposure", "logs", "disclosure"],
-        "cwe": "CWE-532"
+        "name": "Exposed .env file",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "env",
+          "secret"
+        ],
+        "description": "A readable .env leaks application secrets and credentials.",
+        "cwe": "CWE-538"
       },
       "requests": [
         {
           "method": "GET",
-          "path": ["/error.log", "/errors.log", "/error_log", "/access.log", "/debug.log", "/laravel.log", "/storage/logs/laravel.log"],
+          "path": [
+            "/.env",
+            ".env.local",
+            "/.env.production"
+          ],
           "matchersCondition": "and",
           "matchers": [
-            {"type": "status", "status": [200]},
-            {"type": "regex", "part": "body", "regex": ["\\[\\d{2}[-/][A-Za-z0-9]{2,4}[-/]\\d{4}", "\\d{4}-\\d{2}-\\d{2}[ T]\\d{2}:\\d{2}:\\d{2}", "PHP (Warning|Notice|Fatal error)"], "condition": "or"},
-            {"type": "word", "part": "body", "words": ["<html", "<!doctype", "<head"], "condition": "or", "negative": true}
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "(?m)^[A-Z0-9_]+=",
+                "APP_KEY=",
+                "DB_PASSWORD=",
+                "SECRET"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "env-backup-exposure",
+      "info": {
+        "name": "Exposed .env backup",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "env",
+          "backup",
+          "secret"
+        ],
+        "description": "A backup of .env is readable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.env.bak",
+            "/.env.save",
+            "/.env.old",
+            "/.env~",
+            "/env.bak"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "(?m)^[A-Z0-9_]+=",
+                "APP_KEY=",
+                "DB_"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wp-config-backup",
+      "info": {
+        "name": "Exposed wp-config backup",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "wordpress",
+          "backup"
+        ],
+        "description": "A WordPress config backup leaks database credentials.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/wp-config.php.bak",
+            "/wp-config.php~",
+            "/wp-config.php.save",
+            "/wp-config.php.old",
+            "/.wp-config.php.swp"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "DB_PASSWORD",
+                "DB_NAME",
+                "DB_USER",
+                "AUTH_KEY"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sql-dump-exposure",
+      "info": {
+        "name": "Exposed SQL dump",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "backup",
+          "database"
+        ],
+        "description": "A database dump is publicly readable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/backup.sql",
+            "/dump.sql",
+            "/database.sql",
+            "/db.sql",
+            "/mysql.sql",
+            "/backup/db.sql"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "INSERT INTO",
+                "CREATE TABLE",
+                "MySQL dump",
+                "PostgreSQL database dump",
+                "DROP TABLE"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "archive-backup-exposure",
+      "info": {
+        "name": "Exposed site archive",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "backup"
+        ],
+        "description": "A site archive/backup is publicly downloadable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/backup.zip",
+            "/backup.tar.gz",
+            "/www.zip",
+            "/site.tar.gz",
+            "/backup.tar",
+            "/web.zip"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "^PK\\x03\\x04",
+                "^\\x1f\\x8b"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "htpasswd-exposure",
+      "info": {
+        "name": "Exposed .htpasswd",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "secret",
+          "auth"
+        ],
+        "description": "An .htpasswd file leaks password hashes.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.htpasswd",
+            "/.htpasswd.bak"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "[^:]+:\\$(apr1|2y|1|6)\\$",
+                "[^:]+:\\{SHA\\}"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "private-key-exposure",
+      "info": {
+        "name": "Exposed private key",
+        "severity": "critical",
+        "tags": [
+          "exposure",
+          "secret",
+          "key"
+        ],
+        "description": "A private key is publicly readable.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/id_rsa",
+            "/.ssh/id_rsa",
+            "/id_dsa",
+            "/server.key",
+            "/private.key",
+            "/id_ed25519"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "BEGIN RSA PRIVATE KEY",
+                "BEGIN OPENSSH PRIVATE KEY",
+                "BEGIN PRIVATE KEY",
+                "BEGIN EC PRIVATE KEY",
+                "BEGIN DSA PRIVATE KEY"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aws-credentials-exposure",
+      "info": {
+        "name": "Exposed AWS credentials",
+        "severity": "critical",
+        "tags": [
+          "exposure",
+          "secret",
+          "aws",
+          "cloud"
+        ],
+        "description": "AWS credentials file is readable.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.aws/credentials",
+            ".aws/config"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "aws_access_key_id",
+                "aws_secret_access_key"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "git-credentials-exposure",
+      "info": {
+        "name": "Exposed .git-credentials",
+        "severity": "critical",
+        "tags": [
+          "exposure",
+          "secret",
+          "git"
+        ],
+        "description": "Stored git credentials with embedded passwords are readable.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.git-credentials"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "https?://[^:]+:[^@]+@"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npmrc-exposure",
+      "info": {
+        "name": "Exposed .npmrc token",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "secret",
+          "npm"
+        ],
+        "description": "An .npmrc leaks an npm auth token.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.npmrc"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "_authToken\\s*=",
+                "_auth\\s*=",
+                "//.*:_password="
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dockercfg-exposure",
+      "info": {
+        "name": "Exposed docker config",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "secret",
+          "docker"
+        ],
+        "description": "A docker config leaks registry credentials.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.docker/config.json",
+            "/.dockercfg"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"auths\"",
+                "\"auth\":",
+                "\"registry\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dsstore-exposure",
+      "info": {
+        "name": "Exposed .DS_Store",
+        "severity": "low",
+        "tags": [
+          "exposure",
+          "disclosure"
+        ],
+        "description": "A .DS_Store file discloses directory structure.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.DS_Store"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "Bud1",
+                "\\x00\\x00\\x00\\x01Bud1"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directory-listing",
+      "info": {
+        "name": "Directory listing enabled",
+        "severity": "low",
+        "tags": [
+          "exposure",
+          "misconfig"
+        ],
+        "description": "Autoindex is enabled, disclosing file names.",
+        "cwe": "CWE-548"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/uploads/",
+            "/files/",
+            "/backup/",
+            "/images/",
+            "/assets/",
+            "/tmp/",
+            "/logs/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Index of /",
+                "Parent Directory",
+                "[To Parent Directory]"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Directory Listing For"
+              ],
+              "condition": "or"
+            }
           ]
         }
       ]
@@ -116,17 +929,590 @@
       "info": {
         "name": "Exposed phpinfo()",
         "severity": "medium",
-        "description": "A reachable phpinfo() page discloses environment and configuration details.",
-        "tags": ["exposure", "php"]
+        "tags": [
+          "exposure",
+          "php"
+        ],
+        "description": "A reachable phpinfo() page discloses environment details."
       },
       "requests": [
         {
           "method": "GET",
-          "path": ["/phpinfo.php", "/info.php"],
+          "path": [
+            "/phpinfo.php",
+            "/info.php",
+            "/php_info.php",
+            "/test.php"
+          ],
           "matchersCondition": "and",
           "matchers": [
-            {"type": "status", "status": [200]},
-            {"type": "word", "part": "body", "words": ["PHP Version", "<title>phpinfo()"], "condition": "or"}
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "PHP Version",
+                "<title>phpinfo()",
+                "phpinfo()"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "server-status-exposure",
+      "info": {
+        "name": "Apache server-status exposed",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "apache",
+          "misconfig"
+        ],
+        "description": "mod_status exposes request and worker data.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/server-status"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Apache Server Status",
+                "Total Traffic",
+                "Server uptime"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "server-info-exposure",
+      "info": {
+        "name": "Apache server-info exposed",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "apache",
+          "misconfig"
+        ],
+        "description": "mod_info exposes server configuration.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/server-info"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Apache Server Information",
+                "Server Settings",
+                "Module Name"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laravel-telescope",
+      "info": {
+        "name": "Laravel Telescope exposed",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "laravel",
+          "panel"
+        ],
+        "description": "Laravel Telescope debug panel is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/telescope/requests",
+            "/telescope"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Telescope",
+                "laravel-telescope",
+                "telescope-"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "symfony-profiler",
+      "info": {
+        "name": "Symfony profiler exposed",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "symfony",
+          "debug"
+        ],
+        "description": "The Symfony web profiler is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/_profiler",
+            "/_profiler/empty/search/results"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Symfony Profiler",
+                "sf-toolbar",
+                "_profiler"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "adminer-panel",
+      "info": {
+        "name": "Adminer panel exposed",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "panel",
+          "database"
+        ],
+        "description": "An Adminer database console is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/adminer.php",
+            "/adminer/",
+            "/adminer-4.8.1.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Adminer",
+                "adminer.org",
+                "Login - Adminer"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phpmyadmin-panel",
+      "info": {
+        "name": "phpMyAdmin panel exposed",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "panel",
+          "database"
+        ],
+        "description": "A phpMyAdmin console is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/phpmyadmin/",
+            "/pma/",
+            "/phpMyAdmin/",
+            "/mysql/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "phpMyAdmin",
+                "pma_username",
+                "phpmyadmin.css"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "swagger-ui",
+      "info": {
+        "name": "Swagger UI exposed",
+        "severity": "info",
+        "tags": [
+          "exposure",
+          "api",
+          "swagger"
+        ],
+        "description": "An interactive API documentation UI is reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/swagger-ui.html",
+            "/swagger-ui/",
+            "/swagger/",
+            "/api/swagger-ui.html"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Swagger UI",
+                "swagger-ui",
+                "swagger-ui-bundle"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "openapi-spec",
+      "info": {
+        "name": "OpenAPI/Swagger spec exposed",
+        "severity": "info",
+        "tags": [
+          "exposure",
+          "api",
+          "swagger"
+        ],
+        "description": "An OpenAPI specification is reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/swagger.json",
+            "/openapi.json",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/api-docs"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"swagger\"",
+                "\"openapi\"",
+                "\"paths\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wp-debug-log",
+      "info": {
+        "name": "WordPress debug.log exposed",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "wordpress",
+          "logs"
+        ],
+        "description": "The WordPress debug log is publicly readable.",
+        "cwe": "CWE-532"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/wp-content/debug.log"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "PHP (Warning|Notice|Fatal error|Deprecated)",
+                "\\[\\d{2}-[A-Za-z]{3}-\\d{4}"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roundcube-log-disclosure",
+      "info": {
+        "name": "Roundcube webmail log disclosure",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "roundcube",
+          "webmail",
+          "disclosure"
+        ],
+        "description": "A world-readable Roundcube errors.log discloses IMAP errors and email addresses.",
+        "cwe": "CWE-532"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/webmail/logs/errors.log",
+            "/roundcube/logs/errors.log",
+            "/logs/errors.log",
+            "/mail/logs/errors.log"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "IMAP Error",
+                "PHP Error",
+                "DB Error",
+                "SMTP Error"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exposed-log-file",
+      "info": {
+        "name": "Exposed application log file",
+        "severity": "low",
+        "tags": [
+          "exposure",
+          "logs",
+          "disclosure"
+        ],
+        "description": "A reachable plaintext log file may disclose internal paths and user data.",
+        "cwe": "CWE-532"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/error.log",
+            "/errors.log",
+            "/error_log",
+            "/access.log",
+            "/debug.log",
+            "/laravel.log",
+            "/storage/logs/laravel.log"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "\\[\\d{2}[-/][A-Za-z0-9]{2,4}[-/]\\d{4}",
+                "\\d{4}-\\d{2}-\\d{2}[ T]\\d{2}:\\d{2}:\\d{2}",
+                "PHP (Warning|Notice|Fatal error)"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "server-version-disclosure",
+      "info": {
+        "name": "Server version disclosure",
+        "severity": "info",
+        "tags": [
+          "fingerprint",
+          "disclosure"
+        ],
+        "description": "The Server response header discloses product and version."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "header",
+              "header": "Server",
+              "regex": [
+                "\\S+/\\d"
+              ],
+              "condition": "or"
+            }
+          ],
+          "extractors": [
+            {
+              "type": "regex",
+              "part": "header",
+              "name": "server",
+              "regex": [
+                "Server:\\s*([^\\r\\n]+)"
+              ],
+              "group": 1
+            }
           ]
         }
       ]
