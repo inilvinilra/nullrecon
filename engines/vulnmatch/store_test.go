@@ -66,3 +66,32 @@ func TestStoreMatchNoVersionNoMatch(t *testing.T) {
 		t.Fatalf("missing version must not match, got %d", len(got))
 	}
 }
+
+func TestStoreMatchNoBoundsDoesNotOvermatch(t *testing.T) {
+	m := storeMatcher()
+	rec := cve.Record{CVE: "CVE-X", Products: []cve.Affected{{Vendor: "acme", Product: "widget"}}}
+	if got := m.Match("p", technology.Technology{Product: "widget", Version: "1.0.0"}, []cve.Record{rec}); len(got) != 0 {
+		t.Fatalf("a product with no version bounds must not match (avoid over-matching), got %d", len(got))
+	}
+}
+
+func TestStoreMatchStartBoundOnly(t *testing.T) {
+	m := storeMatcher()
+	rec := cve.Record{CVE: "CVE-Y", Products: []cve.Affected{{Vendor: "acme", Product: "widget", RangeStartIncl: "2.0.0"}}}
+	if got := m.Match("p", technology.Technology{Product: "widget", Version: "1.5.0"}, []cve.Record{rec}); len(got) != 0 {
+		t.Fatalf("version below a start-only bound must not match, got %d", len(got))
+	}
+	if got := m.Match("p", technology.Technology{Product: "widget", Version: "2.5.0"}, []cve.Record{rec}); len(got) != 1 {
+		t.Fatalf("version at/above a start-only bound must match, got %d", len(got))
+	}
+}
+
+func TestStoreMatchUnparseableVersionNoMatch(t *testing.T) {
+	m := storeMatcher()
+	rec := log4jRecord()
+	for _, v := range []string{"", "unknown", "latest", "v", "stable"} {
+		if got := m.Match("p", technology.Technology{Product: "log4j", Version: v}, []cve.Record{rec}); len(got) != 0 {
+			t.Fatalf("unparseable version %q must not match, got %d", v, len(got))
+		}
+	}
+}
