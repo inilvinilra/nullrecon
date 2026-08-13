@@ -76,3 +76,50 @@ func TestEntropyGate(t *testing.T) {
 		t.Fatalf("a single-character run must have near-zero entropy, got %f", low)
 	}
 }
+
+func TestExpandedDetectorsMatchRealTokens(t *testing.T) {
+	set, err := DefaultDetectors()
+	if err != nil {
+		t.Fatal(err)
+	}
+	fill := func(n int) string {
+		base := "aB3xY7zK9mN2pQ4rS6tU8vW1cV5bN0mL3kJ6hG9fD2sA4tE6uH8iL1oP7wQjR"
+		out := ""
+		for len(out) < n {
+			out += base
+		}
+		return out[:n]
+	}
+	cases := map[string]string{
+		"gitlab-pat":         "glpat-" + fill(20),
+		"stripe-secret":      "sk_live_" + fill(24),
+		"slack-webhook":      "https://hooks.slack.com/services/T024BE7L9/B0G7Q3ZK5/" + fill(24),
+		"sendgrid-api-key":   "SG." + fill(22) + "." + fill(43),
+		"huggingface-token":  "hf_" + fill(34),
+		"telegram-bot-token": "847362910:" + fill(35),
+		"basic-auth-url":     "postgres://admin:S3cretP4ssw0rd@db.internal:5432/app",
+	}
+	for id, secret := range cases {
+		content := "value = " + secret + "\n"
+		res := Scan(set, []byte(content), "test")
+		found := false
+		for _, c := range res.Candidates {
+			if c.DetectorID == id {
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("detector %q must match a real token; candidates=%+v suppressed=%d", id, res.Candidates, res.Suppressed)
+		}
+	}
+}
+
+func TestDetectorCountGrew(t *testing.T) {
+	set, err := DefaultDetectors()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if set.Len() < 40 {
+		t.Fatalf("expected a comprehensive detector set, got %d", set.Len())
+	}
+}
