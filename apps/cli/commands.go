@@ -161,8 +161,85 @@ func (c commandContext) cmdProject(args []string) int {
 			return c.fail(exitError, "%v", err)
 		}
 		return c.emit(project)
+	case "authorize":
+		return c.projectAuthorize(args)
 	}
 	return c.fail(exitUsage, "unknown project subcommand %q", args[0])
+}
+
+func (c commandContext) projectAuthorize(args []string) int {
+	slug, ok := flagValue(args, "--project")
+	if !ok {
+		return c.fail(exitUsage, "project authorize requires --project")
+	}
+	modesRaw, ok := flagValue(args, "--modes")
+	if !ok {
+		return c.fail(exitUsage, "project authorize requires --modes (comma-separated)")
+	}
+	var modes []string
+	for _, m := range strings.Split(modesRaw, ",") {
+		m = strings.TrimSpace(m)
+		if m == "" {
+			continue
+		}
+		if _, err := policy.ParseMode(m); err != nil {
+			return c.fail(exitUsage, "unknown mode %q", m)
+		}
+		modes = append(modes, m)
+	}
+	if len(modes) == 0 {
+		return c.fail(exitUsage, "project authorize requires at least one mode")
+	}
+	source, ok := flagValue(args, "--source")
+	if !ok {
+		source = "cli"
+	}
+	reference, _ := flagValue(args, "--reference")
+	days := 30
+	if raw, ok := flagValue(args, "--days"); ok {
+		n, err := parsePositiveInt(raw)
+		if err != nil {
+			return c.fail(exitUsage, "--days must be a positive integer")
+		}
+		days = n
+	}
+	db, err := c.openDB()
+	if err != nil {
+		return c.fail(exitError, "%v", err)
+	}
+	defer db.Close()
+	ctx := context.Background()
+	project, err := db.Projects().BySlug(ctx, slug)
+	if err != nil {
+		return c.fail(exitError, "%v", err)
+	}
+	now := time.Now().UTC()
+	authz := identity.NewAuthorization(project.ID, source, reference, modes, now, now.AddDate(0, 0, days))
+	if err := db.Authorizations().Put(ctx, authz); err != nil {
+		return c.fail(exitError, "%v", err)
+	}
+	log := auditlog.New(db)
+	if _, err := log.Append(ctx, project.ID, "cli", "project.authorize", authz.ID, "authorization granted", strings.Join(modes, ",")); err != nil {
+		return c.fail(exitError, "%v", err)
+	}
+	return c.emit(authz)
+}
+
+func parsePositiveInt(raw string) (int, error) {
+	n := 0
+	if raw == "" {
+		return 0, fmt.Errorf("empty")
+	}
+	for _, r := range raw {
+		if r < '0' || r > '9' {
+			return 0, fmt.Errorf("not a number")
+		}
+		n = n*10 + int(r-'0')
+	}
+	if n <= 0 {
+		return 0, fmt.Errorf("not positive")
+	}
+	return n, nil
 }
 
 func (c commandContext) cmdScope(args []string) int {

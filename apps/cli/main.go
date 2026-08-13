@@ -91,6 +91,7 @@ commands:
   init
   project create --name NAME --slug SLUG
   project show --slug SLUG
+  project authorize --project SLUG --modes MODE[,MODE] [--source S] [--reference R] [--days N]
   scope import --project SLUG --label LABEL --file SCOPE.json
   scope validate --file SCOPE.json
   scope explain --project SLUG --label LABEL --mode MODE [--host HOST] [--ip IP] [--port N] [--protocol P] [--path PATH]
