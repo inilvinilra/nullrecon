@@ -1,20 +1,27 @@
 package contentdiscovery
 
-var defaultWords = []string{
-	"admin", "administrator", "login", "logout", "dashboard", "portal",
-	"api", "api/v1", "api/v2", "graphql", "swagger", "openapi.json",
-	"config", "config.json", "configuration", "settings", "setup", "install",
-	"backup", "backups", "old", "new", "test", "dev", "staging", "debug",
-	"status", "health", "healthz", "metrics", "actuator", "info",
-	"robots.txt", "sitemap.xml", "security.txt", ".well-known/security.txt",
-	"env", ".env", ".git/config", ".git/HEAD", ".svn/entries",
-	"phpinfo.php", "server-status", "server-info", "wp-admin", "wp-login.php",
-	"user", "users", "account", "profile", "register", "signup",
-	"upload", "uploads", "files", "download", "downloads", "assets",
-	"static", "public", "private", "internal", "console", "manage",
-	"db", "database", "sql", "phpmyadmin", "adminer", "redis",
-	"docs", "documentation", "help", "support", "readme", "readme.md",
-	"tmp", "temp", "cache", "logs", "log", "error", "errors",
+import (
+	_ "embed"
+	"strings"
+)
+
+//go:embed words.txt
+var embeddedWords string
+
+var defaultWords = loadDefaultWords()
+
+func loadDefaultWords() []string {
+	var out []string
+	seen := map[string]bool{}
+	for _, line := range strings.Split(embeddedWords, "\n") {
+		w := strings.TrimSpace(line)
+		if w == "" || strings.HasPrefix(w, "#") || seen[w] {
+			continue
+		}
+		seen[w] = true
+		out = append(out, w)
+	}
+	return out
 }
 
 var defaultExtensions = []string{"php", "json", "bak", "old", "zip", "txt"}
