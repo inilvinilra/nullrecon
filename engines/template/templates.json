@@ -1516,6 +1516,1369 @@
           ]
         }
       ]
+    },
+    {
+      "id": "kibana-panel",
+      "info": {
+        "name": "Kibana panel exposed",
+        "severity": "info",
+        "tags": [
+          "panel",
+          "kibana",
+          "elastic"
+        ],
+        "description": "Kibana console reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/app/kibana",
+            "/api/status"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"kibana\"",
+                "kbn-",
+                "\"nickname\"",
+                "Looking for"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jenkins-panel",
+      "info": {
+        "name": "Jenkins panel exposed",
+        "severity": "medium",
+        "tags": [
+          "panel",
+          "jenkins",
+          "ci"
+        ],
+        "description": "Jenkins reachable.",
+        "cwe": "CWE-284",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                403
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Jenkins-Version",
+                "X-Jenkins",
+                "Dashboard [Jenkins]",
+                "jenkins-session"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitlab-panel",
+      "info": {
+        "name": "GitLab login exposed",
+        "severity": "info",
+        "tags": [
+          "panel",
+          "gitlab",
+          "ci"
+        ],
+        "description": "GitLab instance reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/users/sign_in",
+            "/explore"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "GitLab",
+                "gon.gitlab_url",
+                "gitlab-session"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rabbitmq-management",
+      "info": {
+        "name": "RabbitMQ management exposed",
+        "severity": "high",
+        "tags": [
+          "panel",
+          "rabbitmq",
+          "queue"
+        ],
+        "description": "RabbitMQ management UI/API reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/api/overview"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "RabbitMQ Management",
+                "rabbit_version",
+                "management_version"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "consul-ui",
+      "info": {
+        "name": "Consul UI/API exposed",
+        "severity": "high",
+        "tags": [
+          "panel",
+          "consul",
+          "service-mesh"
+        ],
+        "description": "HashiCorp Consul reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/v1/agent/self",
+            "/ui/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"Config\"",
+                "\"NodeName\"",
+                "Consul Agent",
+                "\"Datacenter\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "etcd-keys",
+      "info": {
+        "name": "etcd exposed",
+        "severity": "critical",
+        "tags": [
+          "etcd",
+          "database",
+          "misconfig"
+        ],
+        "description": "etcd API reachable without auth.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/version",
+            "/v2/keys/",
+            "/v3/kv/range"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"etcdserver\"",
+                "\"etcdcluster\"",
+                "\"kvs\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kubernetes-dashboard",
+      "info": {
+        "name": "Kubernetes dashboard exposed",
+        "severity": "high",
+        "tags": [
+          "panel",
+          "kubernetes",
+          "k8s"
+        ],
+        "description": "Kubernetes dashboard reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/api/v1/namespaces"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Kubernetes Dashboard",
+                "kubernetesDashboard",
+                "kubernetes-dashboard"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prometheus-metrics",
+      "info": {
+        "name": "Prometheus metrics exposed",
+        "severity": "low",
+        "tags": [
+          "metrics",
+          "prometheus",
+          "disclosure"
+        ],
+        "description": "A Prometheus metrics endpoint is public.",
+        "cwe": "CWE-200"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/metrics"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "(?m)^# HELP ",
+                "(?m)^# TYPE ",
+                "go_gc_duration_seconds"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "actuator-heapdump",
+      "info": {
+        "name": "Spring Actuator heapdump exposed",
+        "severity": "critical",
+        "tags": [
+          "actuator",
+          "spring",
+          "exposure"
+        ],
+        "description": "An Actuator heap dump is downloadable.",
+        "cwe": "CWE-200",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/actuator/heapdump",
+            "/heapdump"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "^\\x1f\\x8b",
+                "JAVA PROFILE",
+                "HPROF"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "actuator-threaddump",
+      "info": {
+        "name": "Spring Actuator threaddump exposed",
+        "severity": "medium",
+        "tags": [
+          "actuator",
+          "spring",
+          "exposure"
+        ],
+        "description": "An Actuator thread dump is public.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/actuator/threaddump",
+            "/threaddump"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"threads\"",
+                "\"threadName\"",
+                "\"stackTrace\"",
+                "\"lockedMonitors\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "actuator-loggers",
+      "info": {
+        "name": "Spring Actuator loggers exposed",
+        "severity": "medium",
+        "tags": [
+          "actuator",
+          "spring",
+          "exposure"
+        ],
+        "description": "Actuator loggers endpoint is public.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/actuator/loggers",
+            "/loggers"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"levels\"",
+                "\"configuredLevel\"",
+                "\"effectiveLevel\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terraform-state",
+      "info": {
+        "name": "Exposed terraform.tfstate",
+        "severity": "critical",
+        "tags": [
+          "exposure",
+          "terraform",
+          "iac",
+          "secret"
+        ],
+        "description": "A Terraform state file leaks infrastructure and secrets.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/terraform.tfstate",
+            "/.terraform/terraform.tfstate",
+            "/state/terraform.tfstate"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"terraform_version\"",
+                "\"lineage\"",
+                "\"resources\""
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "docker-compose-exposed",
+      "info": {
+        "name": "Exposed docker-compose.yml",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "docker",
+          "config"
+        ],
+        "description": "A docker-compose file is readable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/docker-compose.yml",
+            "/docker-compose.yaml"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "services:",
+                "image:",
+                "version:",
+                "environment:"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "k8s-secret-yaml",
+      "info": {
+        "name": "Exposed Kubernetes secret manifest",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "kubernetes",
+          "secret"
+        ],
+        "description": "A Kubernetes Secret manifest is readable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/secret.yaml",
+            "/secrets.yaml",
+            "/k8s/secret.yaml"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "kind: Secret",
+                "apiVersion:",
+                "data:"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pypirc-exposed",
+      "info": {
+        "name": "Exposed .pypirc",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "secret",
+          "pypi"
+        ],
+        "description": "A .pypirc file leaks PyPI credentials.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.pypirc"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "[pypi]",
+                "[distutils]",
+                "username",
+                "password"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "netrc-exposed",
+      "info": {
+        "name": "Exposed .netrc",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "secret"
+        ],
+        "description": "A .netrc file leaks stored credentials.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.netrc",
+            "/_netrc"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "machine\\s+\\S+\\s+login\\s+\\S+",
+                "password\\s+\\S+"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wpconfig-direct",
+      "info": {
+        "name": "WordPress wp-config leak",
+        "severity": "critical",
+        "tags": [
+          "exposure",
+          "wordpress",
+          "secret"
+        ],
+        "description": "A readable wp-config variant leaks database credentials.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/wp-config.php.txt",
+            "/wp-config.txt",
+            "/wp-config.php.dist~"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "DB_PASSWORD",
+                "DB_NAME",
+                "AUTH_KEY",
+                "SECURE_AUTH_KEY"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laravel-env-direct",
+      "info": {
+        "name": "Laravel .env leak",
+        "severity": "critical",
+        "tags": [
+          "exposure",
+          "laravel",
+          "secret"
+        ],
+        "description": "A Laravel .env leaks the app key and credentials.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.env",
+            ".env.backup",
+            "/.env.prod"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "APP_KEY=base64:",
+                "DB_PASSWORD=",
+                "MAIL_PASSWORD="
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "settings-py-exposed",
+      "info": {
+        "name": "Exposed Django settings.py",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "django",
+          "secret"
+        ],
+        "description": "A Django settings.py leaks the secret key.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/settings.py",
+            "/app/settings.py",
+            "/config/settings.py"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "SECRET_KEY",
+                "INSTALLED_APPS",
+                "DATABASES"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "database-yml-exposed",
+      "info": {
+        "name": "Exposed Rails database.yml",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "rails",
+          "secret"
+        ],
+        "description": "A Rails database.yml leaks credentials.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/config/database.yml",
+            "/database.yml"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "adapter:",
+                "password:",
+                "database:"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "werkzeug-debugger",
+      "info": {
+        "name": "Werkzeug/Flask debugger exposed",
+        "severity": "critical",
+        "tags": [
+          "debug",
+          "flask",
+          "werkzeug",
+          "rce"
+        ],
+        "description": "The interactive Werkzeug debugger allows code execution.",
+        "cwe": "CWE-489",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/console"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                500
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Werkzeug Debugger",
+                "__traceback_hide__",
+                "werkzeug.debug",
+                "The debugger caught an exception"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "django-debug",
+      "info": {
+        "name": "Django debug page exposed",
+        "severity": "medium",
+        "tags": [
+          "debug",
+          "django",
+          "disclosure"
+        ],
+        "description": "Django DEBUG is enabled, leaking stack traces and settings.",
+        "cwe": "CWE-489",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/nonexistent-djangotest-page"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                500,
+                404
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "DjangoDebug",
+                "You're seeing this error because you have",
+                "Django Version",
+                "Request Method:"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aspnet-trace",
+      "info": {
+        "name": "ASP.NET trace.axd exposed",
+        "severity": "medium",
+        "tags": [
+          "debug",
+          "aspnet",
+          "disclosure"
+        ],
+        "description": "ASP.NET trace.axd leaks request diagnostics.",
+        "cwe": "CWE-200"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/trace.axd"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Application Trace",
+                "Request Details",
+                "Trace Information"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elmah-exposed",
+      "info": {
+        "name": "ELMAH error log exposed",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "aspnet",
+          "logs"
+        ],
+        "description": "ELMAH exposes application error logs.",
+        "cwe": "CWE-532"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/elmah.axd",
+            "/errorlog.axd"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Error Log for",
+                "ELMAH",
+                "Powered by ELMAH"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "graphql-introspection",
+      "info": {
+        "name": "GraphQL introspection enabled",
+        "severity": "medium",
+        "tags": [
+          "api",
+          "graphql",
+          "misconfig"
+        ],
+        "description": "GraphQL introspection is enabled, exposing the schema.",
+        "cwe": "CWE-200"
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": [
+            "/graphql",
+            "/api/graphql",
+            "/v1/graphql"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"__schema\"",
+                "\"queryType\"",
+                "\"types\""
+              ],
+              "condition": "or"
+            }
+          ],
+          "body": "{\"query\":\"{__schema{queryType{name}}}\"}"
+        }
+      ]
+    },
+    {
+      "id": "wp-users-enum",
+      "info": {
+        "name": "WordPress user enumeration via REST",
+        "severity": "low",
+        "tags": [
+          "wordpress",
+          "disclosure",
+          "api"
+        ],
+        "description": "The WordPress REST API enumerates usernames.",
+        "cwe": "CWE-200"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/wp-json/wp/v2/users",
+            "/?rest_route=/wp/v2/users"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "\"slug\"\\s*:",
+                "\"id\"\\s*:\\s*[0-9]"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"name\""
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jira-dev-mode",
+      "info": {
+        "name": "Atlassian Jira info disclosure",
+        "severity": "low",
+        "tags": [
+          "atlassian",
+          "jira",
+          "disclosure"
+        ],
+        "description": "Jira server info is exposed.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/secure/Dashboard.jspa",
+            "/rest/api/2/serverInfo"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"serverTitle\"",
+                "\"buildNumber\"",
+                "\"versionNumbers\"",
+                "JIRA"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solr-admin",
+      "info": {
+        "name": "Apache Solr admin exposed",
+        "severity": "high",
+        "tags": [
+          "panel",
+          "solr",
+          "apache"
+        ],
+        "description": "Apache Solr admin is reachable without auth.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/solr/",
+            "/solr/admin/info/system"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"lucene\"",
+                "\"solr_home\"",
+                "Solr Admin",
+                "\"jvm\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
