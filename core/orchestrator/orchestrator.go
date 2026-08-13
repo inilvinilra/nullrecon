@@ -54,6 +54,14 @@ func (o *Orchestrator) RegisterAll(e *workflow.Engine) {
 	e.Register("RunContentDiscovery", o.runContentDiscovery)
 	e.Register("GenerateVulnerabilityCandidates", o.generateVulnerabilityCandidates)
 	e.Register("RunAllowedChecks", o.runAllowedChecks)
+	e.Register("CollectLeakSignals", o.collectLeakSignals)
+	e.Register("ScanApprovedRepositories", o.scanApprovedRepositories)
+	e.Register("EnrichVulnerabilities", o.enrichVulnerabilities)
+	e.Register("DeduplicateSignals", o.deduplicateSignals)
+	e.Register("VerifyCandidates", o.verifyCandidates)
+	e.Register("ScoreConfidence", o.scoreConfidence)
+	e.Register("PrioritizeFindings", o.prioritizeFindings)
+	e.Register("BuildEvidence", o.buildEvidence)
 	e.Register("RenderReports", o.renderReports)
 }
 

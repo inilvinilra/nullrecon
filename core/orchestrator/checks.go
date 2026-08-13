@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/nullrecon/nullrecon/analysis/confidence"
 	"github.com/nullrecon/nullrecon/contracts"
 	"github.com/nullrecon/nullrecon/core/policy"
 	"github.com/nullrecon/nullrecon/core/workflow"
@@ -87,14 +88,26 @@ func (o *Orchestrator) recordExposure(ctx context.Context, nc *workflow.NodeCont
 		return err
 	}
 	key := "exposure:" + f.SignatureID + ":" + assetID
+	conf := finding.Confidence{
+		Parse:              1.0,
+		Ownership:          1.0,
+		Freshness:          1.0,
+		Fingerprint:        1.0,
+		Version:            1.0,
+		Prerequisite:       1.0,
+		ActiveVerification: 1.0,
+	}
+	decision := confidence.DefaultModel().Decide(conf, nil)
+	conf.Value = decision.Value
+	conf.Gates = append([]string{"content-verified"}, decision.Gates...)
 	fnd := finding.Finding{
 		Versioned:       contracts.NewVersioned("finding"),
 		ID:              contracts.NewID("fnd"),
 		ProjectID:       nc.Run.ProjectID,
 		Title:           title,
-		State:           finding.StateConfirmed,
+		State:           decision.State,
 		Severity:        finding.Severity(f.Severity),
-		Confidence:      finding.Confidence{ActiveVerification: 1.0, Value: confidenceFor(f.Severity), Gates: []string{"content-verified"}},
+		Confidence:      conf,
 		AssetIDs:        []string{assetID},
 		ScopeSnapshotID: nc.Snapshot.ID,
 		SnapshotHash:    nc.Snapshot.Hash,
@@ -206,14 +219,4 @@ func categoryFor(f exposure.Finding) exposuredomain.Category {
 		return exposuredomain.CatLeakedConfig
 	}
 	return exposuredomain.CatDebugEndpoint
-}
-
-func confidenceFor(severity string) float64 {
-	switch severity {
-	case "critical", "high":
-		return 0.95
-	case "medium":
-		return 0.9
-	}
-	return 0.85
 }
