@@ -1,0 +1,5 @@
+[
+  {"issuer_name":"C=US, O=Let's Encrypt, CN=R3","common_name":"www.example.com","name_value":"www.example.com\nexample.com","not_before":"2026-01-01T00:00:00","not_after":"2026-04-01T00:00:00"},
+  {"issuer_name":"C=US, O=Let's Encrypt, CN=R3","common_name":"api.example.com","name_value":"*.api.example.com\napi.example.com","not_before":"2026-02-01T00:00:00","not_after":"2026-05-01T00:00:00"},
+  {"issuer_name":"C=US, O=Let's Encrypt, CN=R3","common_name":"www.example.com","name_value":"www.example.com","not_before":"2026-03-01T00:00:00","not_after":"2026-06-01T00:00:00"}
+]

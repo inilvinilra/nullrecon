@@ -1,0 +1,1 @@
+{"matches":[{"ip":"93.184.216.34","portinfo":{"port":443,"service":"https","app":"nginx","version":"1.18.0","banner":"HTTP/1.1 200"}},{"ip":"93.184.216.35","portinfo":{"port":22,"service":"ssh","app":"OpenSSH","version":"8.9"}}],"total":42,"available":42}

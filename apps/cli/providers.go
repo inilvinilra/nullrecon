@@ -11,6 +11,7 @@ import (
 	"github.com/nullrecon/nullrecon/platform/secretvault"
 	"github.com/nullrecon/nullrecon/providers/censys"
 	"github.com/nullrecon/nullrecon/providers/cisa"
+	"github.com/nullrecon/nullrecon/providers/crtsh"
 	"github.com/nullrecon/nullrecon/providers/epss"
 	"github.com/nullrecon/nullrecon/providers/fofa"
 	"github.com/nullrecon/nullrecon/providers/leakix"
@@ -18,6 +19,9 @@ import (
 	"github.com/nullrecon/nullrecon/providers/nvd"
 	"github.com/nullrecon/nullrecon/providers/registry"
 	"github.com/nullrecon/nullrecon/providers/shodan"
+	"github.com/nullrecon/nullrecon/providers/urlscan"
+	"github.com/nullrecon/nullrecon/providers/virustotal"
+	"github.com/nullrecon/nullrecon/providers/zoomeye"
 )
 
 func buildRegistry() *registry.Registry {
@@ -31,6 +35,10 @@ func buildRegistry() *registry.Registry {
 		nvd.New(envOr("NULLRECON_NVD_ENDPOINT", "")),
 		epss.New(envOr("NULLRECON_EPSS_ENDPOINT", "")),
 		cisa.New(envOr("NULLRECON_CISA_ENDPOINT", "")),
+		crtsh.New(envOr("NULLRECON_CRTSH_ENDPOINT", "")),
+		urlscan.New(envOr("NULLRECON_URLSCAN_ENDPOINT", "")),
+		virustotal.New(envOr("NULLRECON_VIRUSTOTAL_ENDPOINT", "")),
+		zoomeye.New(envOr("NULLRECON_ZOOMEYE_ENDPOINT", "")),
 	} {
 		reg.Register(a)
 	}

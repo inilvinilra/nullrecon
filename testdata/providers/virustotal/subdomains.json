@@ -1,0 +1,1 @@
+{"data":[{"id":"api.example.com","type":"domain"},{"id":"MAIL.example.com","type":"domain"}],"meta":{"cursor":"NEXTCUR","count":2},"links":{"next":"https://.../subdomains?cursor=NEXTCUR"}}
