@@ -2879,6 +2879,1286 @@
           ]
         }
       ]
+    },
+    {
+      "id": "redis-unauth",
+      "info": {
+        "name": "Redis exposed over HTTP",
+        "severity": "high",
+        "tags": [
+          "redis",
+          "database",
+          "misconfig"
+        ],
+        "description": "Redis reachable.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "-DENIED Redis is running",
+                "-NOAUTH Authentication required",
+                "redis_version:"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mongodb-http",
+      "info": {
+        "name": "MongoDB HTTP status exposed",
+        "severity": "medium",
+        "tags": [
+          "mongodb",
+          "database"
+        ],
+        "description": "MongoDB HTTP interface reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/_status"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "It looks like you are trying to access MongoDB",
+                "mongoDBStandalone",
+                "serverStatus"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "couchdb-welcome",
+      "info": {
+        "name": "CouchDB exposed",
+        "severity": "high",
+        "tags": [
+          "couchdb",
+          "database",
+          "misconfig"
+        ],
+        "description": "Apache CouchDB reachable.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/_all_dbs",
+            "/_utils/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"couchdb\":\"Welcome\"",
+                "Fauxton",
+                "The Apache Software Foundation"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elasticsearch-open",
+      "info": {
+        "name": "Elasticsearch exposed",
+        "severity": "high",
+        "tags": [
+          "elasticsearch",
+          "database",
+          "misconfig"
+        ],
+        "description": "Elasticsearch reachable without auth.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/_cluster/health",
+            "/_cat/indices"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"cluster_name\"",
+                "\"lucene_version\"",
+                "You Know, for Search"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kong-admin",
+      "info": {
+        "name": "Kong admin API exposed",
+        "severity": "high",
+        "tags": [
+          "kong",
+          "api-gateway",
+          "misconfig"
+        ],
+        "description": "Kong admin API reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/status"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"plugins\"",
+                "\"tagline\":\"Welcome to kong\"",
+                "\"lua_version\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "traefik-dashboard",
+      "info": {
+        "name": "Traefik dashboard exposed",
+        "severity": "medium",
+        "tags": [
+          "traefik",
+          "panel"
+        ],
+        "description": "Traefik dashboard/API reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/dashboard/",
+            "/api/rawdata",
+            "/api/overview"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"routers\"",
+                "\"middlewares\"",
+                "Traefik",
+                "\"providers\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "harbor-api",
+      "info": {
+        "name": "Harbor registry exposed",
+        "severity": "medium",
+        "tags": [
+          "harbor",
+          "registry"
+        ],
+        "description": "Harbor registry API reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/api/v2.0/systeminfo",
+            "/api/systeminfo"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"harbor_version\"",
+                "\"registry_url\"",
+                "\"auth_mode\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nexus-repo",
+      "info": {
+        "name": "Sonatype Nexus exposed",
+        "severity": "low",
+        "tags": [
+          "nexus",
+          "registry"
+        ],
+        "description": "Nexus repository reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/service/rest/v1/status",
+            "/nexus/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Nexus Repository Manager",
+                "edition",
+                "sonatype"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sonarqube-panel",
+      "info": {
+        "name": "SonarQube exposed",
+        "severity": "low",
+        "tags": [
+          "sonarqube",
+          "ci"
+        ],
+        "description": "SonarQube reachable."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/api/system/status",
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "SonarQube",
+                "sonarqube"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airflow-panel",
+      "info": {
+        "name": "Apache Airflow exposed",
+        "severity": "medium",
+        "tags": [
+          "airflow",
+          "panel"
+        ],
+        "description": "Airflow reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/health",
+            "/api/v1/health",
+            "/home"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "\"metadatabase\"",
+                "\"scheduler\":{\"status\"",
+                "Airflow",
+                "airflow"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jupyter-notebook",
+      "info": {
+        "name": "Jupyter notebook exposed",
+        "severity": "high",
+        "tags": [
+          "jupyter",
+          "panel",
+          "rce"
+        ],
+        "description": "Jupyter is reachable and may allow code execution.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/tree",
+            "/api/status",
+            "/lab"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Jupyter Notebook",
+                "jupyter-config-data",
+                "JupyterLab"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hadoop-yarn",
+      "info": {
+        "name": "Hadoop YARN exposed",
+        "severity": "high",
+        "tags": [
+          "hadoop",
+          "yarn",
+          "misconfig"
+        ],
+        "description": "Hadoop YARN ResourceManager reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/ws/v1/cluster/info",
+            "/cluster"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"resourceManagerVersion\"",
+                "\"hadoopVersion\"",
+                "\"clusterInfo\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dockerd-api",
+      "info": {
+        "name": "Docker Engine API exposed",
+        "severity": "critical",
+        "tags": [
+          "docker",
+          "misconfig",
+          "rce"
+        ],
+        "description": "Docker Engine API reachable - full host compromise.",
+        "cwe": "CWE-306",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/version",
+            "/info",
+            "/containers/json"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"ApiVersion\"",
+                "\"DockerRootDir\"",
+                "\"ContainersRunning\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kubelet-api",
+      "info": {
+        "name": "Kubelet read-only API exposed",
+        "severity": "high",
+        "tags": [
+          "kubernetes",
+          "kubelet",
+          "misconfig"
+        ],
+        "description": "Kubelet API reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/pods",
+            "/metrics/cadvisor",
+            "/stats/summary"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"kind\":\"PodList\"",
+                "\"apiVersion\"",
+                "container_"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aws-metadata-proxy",
+      "info": {
+        "name": "AWS metadata reachable via proxy",
+        "severity": "high",
+        "tags": [
+          "ssrf",
+          "aws",
+          "cloud"
+        ],
+        "description": "EC2 metadata is reachable (possible SSRF).",
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/latest/meta-data/",
+            "/latest/meta-data/iam/security-credentials/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "ami-id",
+                "instance-id",
+                "AccessKeyId",
+                "iam/"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sql-backup-patterns",
+      "info": {
+        "name": "Exposed SQL backup",
+        "severity": "high",
+        "tags": [
+          "backup",
+          "database",
+          "exposure"
+        ],
+        "description": "A database backup is downloadable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/db_backup.sql",
+            "/database_backup.sql",
+            "/dump.sql.gz",
+            "/backup/database.sql",
+            "/latest.sql"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "INSERT INTO",
+                "CREATE TABLE",
+                "-- MySQL dump",
+                "-- PostgreSQL",
+                "DROP TABLE IF EXISTS"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editor-swap",
+      "info": {
+        "name": "Exposed editor swap/backup",
+        "severity": "medium",
+        "tags": [
+          "exposure",
+          "source"
+        ],
+        "description": "An editor swap/backup file leaks source code.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/index.php~",
+            "/config.php~",
+            "/index.php.swp",
+            "/.index.php.swp",
+            "/config.php.save"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<?php",
+                "<?=",
+                "function ",
+                "require",
+                "include"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ide-config",
+      "info": {
+        "name": "Exposed IDE configuration",
+        "severity": "low",
+        "tags": [
+          "exposure",
+          "ide"
+        ],
+        "description": "IDE config leaks project internals.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.idea/workspace.xml",
+            "/.idea/dataSources.xml",
+            "/.vscode/settings.json",
+            "/nbproject/project.properties"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "<project",
+                "dataSource",
+                "\"settings\"",
+                "project.properties",
+                "<component"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wp-install",
+      "info": {
+        "name": "WordPress installer reachable",
+        "severity": "medium",
+        "tags": [
+          "wordpress",
+          "install",
+          "misconfig"
+        ],
+        "description": "The WordPress installer is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/wp-admin/install.php",
+            "/wp-admin/setup-config.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "WordPress &rsaquo; Installation",
+                "Welcome to the famous five-minute",
+                "setup-config"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phpmyadmin-setup",
+      "info": {
+        "name": "phpMyAdmin setup exposed",
+        "severity": "high",
+        "tags": [
+          "phpmyadmin",
+          "setup",
+          "misconfig"
+        ],
+        "description": "phpMyAdmin setup script is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/phpmyadmin/setup/index.php",
+            "/pma/setup/index.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "phpMyAdmin setup",
+                "Configuration file",
+                "Overview"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "joomla-install",
+      "info": {
+        "name": "Joomla installer reachable",
+        "severity": "medium",
+        "tags": [
+          "joomla",
+          "install",
+          "misconfig"
+        ],
+        "description": "The Joomla installer is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/installation/index.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Joomla",
+                "installation",
+                "Main Configuration"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "firebase-config",
+      "info": {
+        "name": "Exposed Firebase config",
+        "severity": "low",
+        "tags": [
+          "firebase",
+          "disclosure"
+        ],
+        "description": "Firebase configuration is embedded and reachable.",
+        "cwe": "CWE-200"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/main.js",
+            "/app.js",
+            "/env.js"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "regex",
+              "part": "all",
+              "regex": [
+                "apiKey['\\\"]?\\s*:\\s*['\\\"]AIza",
+                "firebaseio\\.com",
+                "projectId['\\\"]?\\s*:"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spring-cloud-gateway",
+      "info": {
+        "name": "Spring Cloud Gateway actuator exposed",
+        "severity": "high",
+        "tags": [
+          "spring",
+          "actuator",
+          "misconfig"
+        ],
+        "description": "Spring Cloud Gateway actuator is exposed.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/actuator/gateway/routes"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"route_id\"",
+                "\"predicate\"",
+                "\"filters\"",
+                "\"uri\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "struts-devmode",
+      "info": {
+        "name": "Apache Struts devMode",
+        "severity": "medium",
+        "tags": [
+          "struts",
+          "debug"
+        ],
+        "description": "Struts development mode leaks stack traces.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/index.action"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Struts Problem Report",
+                "struts.devMode",
+                "There is no Action mapped"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phpunit-eval",
+      "info": {
+        "name": "PHPUnit eval-stdin RCE endpoint",
+        "severity": "critical",
+        "tags": [
+          "phpunit",
+          "rce"
+        ],
+        "description": "A reachable PHPUnit eval-stdin.php executes the posted PHP (confirmed by a unique marker).",
+        "cwe": "CWE-94",
+        "cve": "CVE-2017-9841"
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": [
+            "/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "nrpoce8ffa492c3769e10972c39d865c827ed"
+              ],
+              "condition": "or"
+            }
+          ],
+          "body": "<?php echo 'nrpoc'.md5('nullrecon'); ?>"
+        }
+      ]
+    },
+    {
+      "id": "thinkphp-rce",
+      "info": {
+        "name": "ThinkPHP invoke function marker",
+        "severity": "high",
+        "tags": [
+          "thinkphp",
+          "rce"
+        ],
+        "description": "ThinkPHP invokefunction marker reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/index.php?s=/index/\\think\\app/invokefunction"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "think\\\\",
+                "ThinkPHP",
+                "topThink"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "git-directory-listing",
+      "info": {
+        "name": "Exposed .git directory listing",
+        "severity": "high",
+        "tags": [
+          "git",
+          "exposure",
+          "misconfig"
+        ],
+        "description": "The .git directory is browsable.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.git/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "all",
+              "words": [
+                "Index of /.git",
+                "HEAD",
+                "refs/",
+                "objects/",
+                "config"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Parent Directory",
+                "Index of"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vscode-sftp",
+      "info": {
+        "name": "Exposed VS Code sftp.json",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "secret",
+          "ide"
+        ],
+        "description": "A VS Code sftp.json leaks deployment credentials.",
+        "cwe": "CWE-522"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.vscode/sftp.json",
+            "/sftp.json"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"host\"",
+                "\"password\"",
+                "\"privateKeyPath\"",
+                "\"username\""
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ds-store-listing",
+      "info": {
+        "name": "Exposed .well-known/security.txt",
+        "severity": "info",
+        "tags": [
+          "disclosure",
+          "well-known"
+        ],
+        "description": "A security.txt contact policy is published."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/.well-known/security.txt",
+            "/security.txt"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "(?i)Contact:\\s*\\S+",
+                "(?i)Policy:\\s*\\S+",
+                "(?i)Expires:\\s*\\S+"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<head>",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }
