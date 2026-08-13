@@ -37,16 +37,27 @@ Every finding passes structural confidence gates: a passive signal alone can nev
 
 ```
 nullrecon subdomain DOMAIN --project SLUG --label L --mode safeactive
-nullrecon portscan HOST --project SLUG --label L --mode safeactive --ports 80,443
+nullrecon portscan HOST --project SLUG --label L --mode safeactive --top-ports 200
 nullrecon discover URL --project SLUG --label L --mode authorizedtest --words-file W
+nullrecon tech URL --project SLUG --label L --mode safeactive          # fingerprint + CVE match per host
+nullrecon honeypot --ip IP --project SLUG --label L --mode authorizedtest --ports ...
+nullrecon origin --domain DOMAIN --project SLUG --label L --mode safeactive   # CDN + DNS origin leaks
 nullrecon template scan URL --project SLUG --label L --mode authorizedtest
 nullrecon exposure --project SLUG --label L --mode authorizedtest --url URL
-nullrecon cve sync (--kev | --since DATE [--until DATE]) ; nullrecon cve stats
+nullrecon cve import --feed        # bulk-load the full ~358k-CVE corpus, no rate limits
+nullrecon cve sync --kev ; nullrecon cve stats ; nullrecon cve match --product P --version V
 nullrecon service list ; nullrecon template list ; nullrecon vuln list --project SLUG
 nullrecon workflow run baseline --project SLUG --label L --mode authorizedtest
 nullrecon report build --project SLUG --format markdown
 nullrecon apikey create --name N --role viewer ; nullrecon serve --addr 127.0.0.1:8787
 ```
+
+One `workflow run` chains discovery through correlation: brute-force plus
+verified passive subdomain discovery, port and service scanning,
+technology fingerprinting, content discovery, exposure/secret/template
+detection, and CVE correlation against the local store — every finding
+gated by the confidence model, every content matcher covered by a
+false-positive regression gate.
 
 ## Layout
 
