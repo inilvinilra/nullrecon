@@ -80,3 +80,30 @@ func TestBuildRequiresParam(t *testing.T) {
 		t.Fatal("expected error when no search param is supplied")
 	}
 }
+
+func TestParseFeedFormat(t *testing.T) {
+	feed := `{"cve_count":2,"feed_name":"CVE-2022","cve_items":[
+	  {"id":"CVE-2022-0001","published":"2022-01-01T00:00:00.000","lastModified":"2022-02-01T00:00:00.000","vulnStatus":"Analyzed",
+	   "descriptions":[{"lang":"en","value":"desc"}],
+	   "metrics":{"cvssMetricV31":[{"cvssData":{"vectorString":"CVSS:3.1/AV:N","baseScore":9.8,"baseSeverity":"CRITICAL"}}]},
+	   "configurations":[{"nodes":[{"operator":"OR","cpeMatch":[{"vulnerable":true,"criteria":"cpe:2.3:a:acme:widget:*:*:*:*:*:*:*:*","versionEndExcluding":"2.0.0"}]}]}]},
+	  {"id":"CVE-2022-0002","vulnStatus":"Rejected","descriptions":[{"lang":"en","value":"rejected"}]}
+	]}`
+	records, err := ParseFeed([]byte(feed))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(records) != 2 {
+		t.Fatalf("ParseFeed must yield a record per cve_item, got %d", len(records))
+	}
+	first := records[0]
+	if first.Value != "CVE-2022-0001" || first.Fields["cvssScore"] != "9.8" {
+		t.Fatalf("bad first record: %+v", first.Fields)
+	}
+	if first.Fields["cpeRanges"] == "" {
+		t.Fatal("feed record must carry cpe ranges")
+	}
+	if records[1].Fields["status"] != "Rejected" {
+		t.Fatalf("status must be preserved for downstream filtering: %+v", records[1].Fields)
+	}
+}

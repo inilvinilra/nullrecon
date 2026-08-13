@@ -45,6 +45,8 @@ func (c commandContext) cmdCVE(args []string) int {
 		return c.emit(rec)
 	case "sync":
 		return c.cveSync(db, args[1:])
+	case "import":
+		return c.cveImport(db, args[1:])
 	}
 	return c.fail(exitUsage, "unknown cve subcommand %q", args[0])
 }

@@ -241,3 +241,21 @@ func (a *Adapter) Parse(q registry.Query, resp registry.Response) (registry.Page
 	}
 	return page, nil
 }
+
+type feedFile struct {
+	CVECount int       `json:"cve_count"`
+	Items    []cveItem `json:"cve_items"`
+}
+
+func ParseFeed(data []byte) ([]registry.Record, error) {
+	var feed feedFile
+	if err := json.Unmarshal(data, &feed); err != nil {
+		return nil, fmt.Errorf("nvd: invalid feed json: %w", err)
+	}
+	a := New("")
+	out := make([]registry.Record, 0, len(feed.Items))
+	for i := range feed.Items {
+		out = append(out, a.itemToRecord(feed.Items[i]))
+	}
+	return out, nil
+}

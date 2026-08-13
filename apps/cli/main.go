@@ -125,7 +125,9 @@ commands:
   finding list --project SLUG
   finding show FINDINGID
   vuln list --project SLUG
-  cve sync (--kev | --cve CVE | --keyword KW | --since DATE [--until DATE])
+  cve sync (--kev | --cve CVE | --keyword KW | --since DATE | --pub-since DATE [--pub-until DATE])
+  cve import --feed [--from YEAR] [--to YEAR]
+  cve import FILE.json[.xz] ...
   cve stats
   cve show CVE
   template list
