@@ -110,3 +110,37 @@ request draws from the run budget.
 `nullrecon origin --domain DOMAIN --project SLUG --label LABEL --mode MODE
 [--host SUBDOMAIN ...] [--ip IP ...]` resolves the domain and any supplied
 subdomains, adds explicit candidate IPs, and runs classification and verification.
+
+## Exposure Detection (`engines/exposure`)
+
+Native detection of exposed sensitive files and misconfigurations (leaked
+`.git` and `.env` files, backups, `wp-config` backups, Spring Boot actuators,
+directory listings, `phpinfo`, and similar). Signatures are a versioned embedded
+ruleset (`engines/exposure/signatures.json`, `nr.rules/v1`).
+
+### Content-verified, not status-only
+
+A path returning 200 is never a finding on its own. Every signature carries
+content matchers — required substrings, an at-least-one set, forbidden
+substrings, and an optional regex — and a finding is `confirmed` only when the
+body satisfies them. Soft-404 pages and catch-all responders are filtered out by
+`mustNotContain` HTML markers and by the absence of the real signature content,
+so a wildcard 200 does not produce false positives.
+
+### Secret safety
+
+Findings in the `leak` category (exposed secrets and credentials) never carry a
+raw body preview. Other categories include a preview capped at 256 bytes and run
+through the redactor, so secret material never reaches output. The full body is
+only ever handed to the encrypted evidence store, never printed.
+
+### Safety and budgets
+
+Each signature request is scope-gated with the `httpget` action and draws from
+the run budget, so denied paths and exhausted budgets block requests. Redirects
+are not followed.
+
+### CLI
+
+`nullrecon exposure --project SLUG --label LABEL --mode MODE (--url URL |
+--domain DOMAIN) ...` scans each target against the signature set.

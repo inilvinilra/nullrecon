@@ -1,0 +1,16 @@
+{"version":"nr.rules/v1","kind":"exposuresignatures","signatures":[
+{"id":"git-config","path":".git/config","category":"leak","severity":"high","mustContainAny":["[core]","[remote","[branch"],"mustNotContain":["<html","<!doctype"]},
+{"id":"git-head","path":".git/HEAD","category":"leak","severity":"medium","pattern":"ref:\\s*refs/","mustNotContain":["<html","<!doctype"]},
+{"id":"env-file","path":".env","category":"leak","severity":"high","pattern":"(?m)^[A-Z][A-Z0-9_]{1,}=","mustContainAny":["APP_","DB_","SECRET","API","PASSWORD","TOKEN","KEY"],"mustNotContain":["<html","<!doctype"]},
+{"id":"wp-config-backup","path":"wp-config.php.bak","category":"leak","severity":"critical","mustContainAny":["DB_PASSWORD","DB_USER"],"mustNotContain":["<?php"]},
+{"id":"sql-dump","path":"backup.sql","category":"leak","severity":"high","mustContainAny":["CREATE TABLE","INSERT INTO","DROP TABLE"]},
+{"id":"ds-store","path":".DS_Store","category":"leak","severity":"low","mustContain":["Bud1"]},
+{"id":"directory-listing","path":"","category":"exposure","severity":"medium","mustContainAny":["Index of /","Directory listing for","<title>Index of"]},
+{"id":"phpinfo","path":"phpinfo.php","category":"exposure","severity":"medium","mustContainAny":["phpinfo()","PHP Version","<title>phpinfo"]},
+{"id":"spring-actuator-env","path":"actuator/env","category":"exposure","severity":"high","mustContain":["propertySources"]},
+{"id":"spring-heapdump","path":"actuator/heapdump","category":"exposure","severity":"high","mustContainAny":["JAVA PROFILE","HPROF"]},
+{"id":"swagger","path":"swagger.json","category":"exposure","severity":"info","mustContainAny":["\"swagger\"","\"openapi\""]},
+{"id":"server-status","path":"server-status","category":"exposure","severity":"low","mustContainAny":["Apache Server Status","Scoreboard Key"]},
+{"id":"laravel-log","path":"storage/logs/laravel.log","category":"leak","severity":"medium","mustContainAny":["production.ERROR","local.ERROR","stacktrace","#0 {main}"]},
+{"id":"npmrc","path":".npmrc","category":"leak","severity":"high","pattern":"_authToken=","mustNotContain":["<html"]}
+]}
