@@ -267,6 +267,9 @@ func (o *Orchestrator) probeHosts(ctx context.Context, nc *workflow.NodeContext)
 		return nil, nil, err
 	}
 	engine := portscan.New(nc.Snapshot, nc.Budget)
+	if maxPortsPerTarget(plan.Targets) > 2000 {
+		engine.WithConcurrency(1000).WithDialTimeout(1500 * time.Millisecond).WithAttempts(1)
+	}
 	var open []map[string]any
 	for _, target := range plan.Targets {
 		res, err := engine.Scan(ctx, scopeguard.Target{Host: target.Host, IP: target.IP}, target.Ports)
@@ -289,6 +292,16 @@ func (o *Orchestrator) probeHosts(ctx context.Context, nc *workflow.NodeContext)
 		}
 	}
 	return out(map[string]any{"open": open})
+}
+
+func maxPortsPerTarget(targets []probeTarget) int {
+	max := 0
+	for _, t := range targets {
+		if len(t.Ports) > max {
+			max = len(t.Ports)
+		}
+	}
+	return max
 }
 
 func expandScopePorts(scope scopeguard.Scope) []int {
