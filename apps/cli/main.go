@@ -58,6 +58,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdScope(rest[1:])
 	case "provider":
 		return ctx.cmdProvider(rest[1:])
+	case "service":
+		return ctx.cmdService(rest[1:])
 	case "asset":
 		return ctx.cmdAsset(rest[1:])
 	case "workflow":
@@ -99,6 +101,7 @@ commands:
   provider configure NAME
   provider health
   provider usage
+  service list [--category CAT]
   workflow plan NAME --project SLUG --label LABEL --mode MODE
   workflow run NAME --project SLUG --label LABEL --mode MODE
   scan status --run RUNID

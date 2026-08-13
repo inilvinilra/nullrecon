@@ -10,9 +10,12 @@ import (
 	"github.com/nullrecon/nullrecon/platform/database"
 	"github.com/nullrecon/nullrecon/platform/secretvault"
 	"github.com/nullrecon/nullrecon/providers/censys"
+	"github.com/nullrecon/nullrecon/providers/cisa"
+	"github.com/nullrecon/nullrecon/providers/epss"
 	"github.com/nullrecon/nullrecon/providers/fofa"
 	"github.com/nullrecon/nullrecon/providers/leakix"
 	"github.com/nullrecon/nullrecon/providers/netlas"
+	"github.com/nullrecon/nullrecon/providers/nvd"
 	"github.com/nullrecon/nullrecon/providers/registry"
 	"github.com/nullrecon/nullrecon/providers/shodan"
 )
@@ -25,6 +28,9 @@ func buildRegistry() *registry.Registry {
 		netlas.New(envOr("NULLRECON_NETLAS_ENDPOINT", "")),
 		shodan.New(envOr("NULLRECON_SHODAN_ENDPOINT", "")),
 		leakix.New(envOr("NULLRECON_LEAKIX_ENDPOINT", "")),
+		nvd.New(envOr("NULLRECON_NVD_ENDPOINT", "")),
+		epss.New(envOr("NULLRECON_EPSS_ENDPOINT", "")),
+		cisa.New(envOr("NULLRECON_CISA_ENDPOINT", "")),
 	} {
 		reg.Register(a)
 	}
