@@ -52,6 +52,8 @@ func (o *Orchestrator) RegisterAll(e *workflow.Engine) {
 	e.Register("AssessDeception", o.assessDeception)
 	e.Register("PlanContentDiscovery", o.planContentDiscovery)
 	e.Register("RunContentDiscovery", o.runContentDiscovery)
+	e.Register("GenerateVulnerabilityCandidates", o.generateVulnerabilityCandidates)
+	e.Register("RunAllowedChecks", o.runAllowedChecks)
 }
 
 func out(v any) (json.RawMessage, []byte, error) {

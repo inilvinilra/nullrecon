@@ -20,17 +20,17 @@ type discoveryTarget struct {
 	BaseURL string `json:"baseUrl"`
 }
 
-func (o *Orchestrator) planContentDiscovery(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
+func (o *Orchestrator) webTargets(ctx context.Context, nc *workflow.NodeContext, action policy.ActionClass) ([]discoveryTarget, error) {
 	assets, err := o.deps.DB.Assets().List(ctx, nc.Run.ProjectID, "")
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	seen := map[string]bool{}
 	var targets []discoveryTarget
 	for _, a := range assets {
 		eps, err := o.deps.DB.Endpoints().ForAsset(ctx, a.ID)
 		if err != nil {
-			return nil, nil, err
+			return nil, err
 		}
 		for _, ep := range eps {
 			if ep.Source != "webprobe" {
@@ -44,7 +44,7 @@ func (o *Orchestrator) planContentDiscovery(ctx context.Context, nc *workflow.No
 			if seen[base] {
 				continue
 			}
-			decision := nc.Snapshot.EvaluateAction(scopeguard.Target{Host: parsed.Hostname(), Port: portOfURL(parsed), Protocol: "tcp", Path: "/"}, policy.ActionContentDiscovery, o.now())
+			decision := nc.Snapshot.EvaluateAction(scopeguard.Target{Host: parsed.Hostname(), Port: portOfURL(parsed), Protocol: "tcp", Path: "/"}, action, o.now())
 			if !decision.Allowed {
 				continue
 			}
@@ -53,6 +53,14 @@ func (o *Orchestrator) planContentDiscovery(ctx context.Context, nc *workflow.No
 		}
 	}
 	sort.SliceStable(targets, func(i, j int) bool { return targets[i].BaseURL < targets[j].BaseURL })
+	return targets, nil
+}
+
+func (o *Orchestrator) planContentDiscovery(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
+	targets, err := o.webTargets(ctx, nc, policy.ActionContentDiscovery)
+	if err != nil {
+		return nil, nil, err
+	}
 	if len(targets) == 0 {
 		return out(map[string]any{"targets": targets, "note": "content discovery not authorized or no web targets"})
 	}

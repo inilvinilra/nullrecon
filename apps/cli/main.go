@@ -68,6 +68,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdOrigin(rest[1:])
 	case "exposure":
 		return ctx.cmdExposure(rest[1:])
+	case "finding":
+		return ctx.cmdFinding(rest[1:])
 	case "version":
 		return ctx.emit(map[string]string{"version": versionString()})
 	}
@@ -98,5 +100,7 @@ commands:
   scan cancel --run RUNID
   origin --domain DOMAIN --project SLUG --label LABEL --mode MODE [--host SUB] [--ip IP]
   exposure --project SLUG --label LABEL --mode MODE (--url URL | --domain DOMAIN) ...
+  finding list --project SLUG
+  finding show FINDINGID
   version`)
 }
