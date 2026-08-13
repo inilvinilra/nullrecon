@@ -84,26 +84,35 @@ func (c commandContext) cveSync(db *database.DB, args []string) int {
 		return c.fail(exitUsage, "cve sync requires one of --kev, --cve, --keyword, or --since")
 	}
 
-	var collected []registry.Record
-	truncated := false
-	for _, sq := range queries {
-		records, tr, err := runSync(ctx, exec, sq)
-		if err != nil {
-			return c.fail(exitError, "%s: %v", sq.provider, err)
-		}
-		truncated = truncated || tr
-		collected = append(collected, records...)
-	}
-
-	merged := cvefeed.NewIngestor().Merge(collected)
+	delay := syncDelay(ctx, db)
+	ingestor := cvefeed.NewIngestor()
+	fetched := 0
 	stored := 0
-	for _, rec := range merged {
-		if err := db.CVEKnowledge().Upsert(ctx, rec); err != nil {
-			return c.fail(exitError, "%v", err)
+	var failures []string
+	for i, sq := range queries {
+		records, err := runSync(ctx, exec, sq, delay)
+		fetched += len(records)
+		for _, rec := range ingestor.Merge(records) {
+			if uerr := db.CVEKnowledge().Upsert(ctx, rec); uerr != nil {
+				return c.fail(exitError, "%v", uerr)
+			}
+			stored++
 		}
-		stored++
+		if err != nil {
+			failures = append(failures, err.Error())
+		}
+		if len(queries) > 1 {
+			fmt.Fprintf(c.stderr, "cve sync: window %d/%d done, %d stored so far\n", i+1, len(queries), stored)
+		}
 	}
-	return c.emit(map[string]any{"fetched": len(collected), "stored": stored, "truncated": truncated})
+	return c.emit(map[string]any{"fetched": fetched, "stored": stored, "windows": len(queries), "failures": failures})
+}
+
+func syncDelay(ctx context.Context, db *database.DB) time.Duration {
+	if _, err := db.ProviderConfigs().Get(ctx, "nvd"); err == nil {
+		return 700 * time.Millisecond
+	}
+	return 6500 * time.Millisecond
 }
 
 type syncQuery struct {
@@ -111,21 +120,30 @@ type syncQuery struct {
 	query    registry.Query
 }
 
-func runSync(ctx context.Context, exec *registry.Executor, sq syncQuery) ([]registry.Record, bool, error) {
+func runSync(ctx context.Context, exec *registry.Executor, sq syncQuery, delay time.Duration) ([]registry.Record, error) {
 	var out []registry.Record
 	q := sq.query
 	for page := 0; page < maxSyncPages; page++ {
+		if page > 0 && delay > 0 {
+			timer := time.NewTimer(delay)
+			select {
+			case <-ctx.Done():
+				timer.Stop()
+				return out, ctx.Err()
+			case <-timer.C:
+			}
+		}
 		res, err := exec.Execute(ctx, sq.provider, q)
 		if err != nil {
-			return nil, false, err
+			return out, err
 		}
 		out = append(out, res.Records...)
 		if res.NextCursor == "" {
-			return out, false, nil
+			return out, nil
 		}
 		q.Cursor = res.NextCursor
 	}
-	return out, true, nil
+	return out, nil
 }
 
 type cveWindow struct {
