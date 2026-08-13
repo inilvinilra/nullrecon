@@ -78,6 +78,10 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdCVE(rest[1:])
 	case "template":
 		return ctx.cmdTemplate(rest[1:])
+	case "apikey":
+		return ctx.cmdAPIKey(rest[1:])
+	case "serve":
+		return ctx.cmdServe(rest[1:])
 	case "report":
 		return ctx.cmdReport(rest[1:])
 	case "version":
@@ -120,5 +124,9 @@ commands:
   cve show CVE
   template list
   report build --project SLUG [--format json|markdown|sarif] [--out FILE] [--run RUNID]
+  apikey create --name NAME [--role viewer|operator|admin]
+  apikey list
+  apikey revoke ID
+  serve [--addr HOST:PORT]
   version`)
 }

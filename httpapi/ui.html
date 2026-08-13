@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nullrecon</title>
+<style>
+  :root { color-scheme: light dark; --bg:#0f1115; --fg:#e6e6e6; --muted:#9aa4b2; --card:#171a21; --line:#232733; --crit:#ff5c5c; --high:#ff9f43; --med:#ffd166; --low:#4dd4ac; --info:#6ea8fe; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background:var(--bg); color:var(--fg); }
+  header { padding:16px 24px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  header h1 { font-size:18px; margin:0; letter-spacing:1px; }
+  header .muted { color:var(--muted); font-size:12px; }
+  main { padding:24px; max-width:1100px; margin:0 auto; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+  input, select, button { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:8px 10px; font:inherit; }
+  button { cursor:pointer; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; margin-bottom:20px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px; }
+  .tile .n { font-size:24px; font-weight:600; }
+  .tile .l { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:1px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; }
+  .sev { font-weight:600; }
+  .sev.critical{color:var(--crit)} .sev.high{color:var(--high)} .sev.medium{color:var(--med)} .sev.low{color:var(--low)} .sev.info{color:var(--info)}
+  .state { color:var(--muted); }
+  .err { color:var(--crit); padding:12px 0; }
+  code { color:var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>nullrecon</h1>
+  <span class="muted">reconnaissance & evidence platform</span>
+</header>
+<main>
+  <div class="row">
+    <input id="key" type="password" placeholder="API key (Bearer)" size="30">
+    <input id="slug" type="text" placeholder="project slug" value="acme">
+    <button id="load">Load</button>
+  </div>
+  <div id="error" class="err"></div>
+  <div class="tiles" id="tiles"></div>
+  <table id="table">
+    <thead><tr><th>Severity</th><th>State</th><th>Confidence</th><th>Title</th><th>Weakness</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</main>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function auth(){ return { headers: { 'Authorization': 'Bearer ' + $('key').value.trim() } }; }
+  function tile(n,l){ return '<div class="tile"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
+  async function load(){
+    $('error').textContent = '';
+    var slug = $('slug').value.trim();
+    try {
+      var res = await fetch('/api/v1/projects/'+encodeURIComponent(slug)+'/report', auth());
+      if(!res.ok){ throw new Error('HTTP '+res.status+' — check API key and slug'); }
+      var d = await res.json();
+      var sev = d.findings.reduce(function(a,f){ a[f.severity]=(a[f.severity]||0)+1; return a; }, {});
+      $('tiles').innerHTML =
+        tile(d.findings.length,'findings') +
+        tile(d.exposureCount||0,'exposures') +
+        tile(d.vulnerabilityCount||0,'vulns') +
+        tile(d.kevCount||0,'kev') +
+        tile(sev.critical||0,'critical') +
+        tile(sev.high||0,'high');
+      var rows = d.findings.slice().sort(function(a,b){ return rank(b.severity)-rank(a.severity); }).map(function(f){
+        return '<tr><td class="sev '+f.severity+'">'+f.severity+'</td><td class="state">'+f.state+'</td><td>'+(f.confidence&&f.confidence.value!=null?f.confidence.value.toFixed(2):'')+'</td><td>'+esc(f.title)+'</td><td><code>'+esc(f.weaknessClass||'')+'</code></td></tr>';
+      }).join('');
+      $('rows').innerHTML = rows || '<tr><td colspan="5" class="state">No findings.</td></tr>';
+    } catch(e){ $('error').textContent = e.message; $('tiles').innerHTML=''; $('rows').innerHTML=''; }
+  }
+  function rank(s){ return {critical:5,high:4,medium:3,low:2,info:1}[s]||0; }
+  function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  $('load').addEventListener('click', load);
+})();
+</script>
+</body>
+</html>
