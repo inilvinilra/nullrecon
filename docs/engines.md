@@ -167,12 +167,56 @@ attach these fingerprint-only hits — so an exposed `.env` reports which secret
 types leaked without ever emitting the secret. The orchestrator persists these
 as `SecretCandidate` records keyed by fingerprint.
 
+## Vulnerability Intelligence (`engines/vulnmatch`)
+
+Native version-range vulnerability matching. It correlates fingerprinted
+technologies against an embedded, versioned ruleset (`engines/vulnmatch/rules.json`,
+`nr.rules/v1`) of well-documented CVEs with concrete affected ranges (Log4Shell,
+Spring4Shell, Struts2, Heartbleed, Apache path traversal, PHP-FPM, Confluence
+OGNL, nginx smuggling). Rules carry CVSS, EPSS, KEV, and prerequisite metadata.
+
+### Version comparison
+
+The matcher parses dotted versions natively, with two ordering rules external
+data demands: an alphabetic patch suffix attached to the last numeric segment
+sorts ascending (OpenSSL `1.0.1 < 1.0.1f < 1.0.1g`), while a `-`/`+` pre-release
+suffix sorts before its release (`2.0.0-rc1 < 2.0.0`). Constraints are
+space-separated comparators combined with AND inside one expression, and the
+`affected` array combines expressions with OR.
+
+### False-positive control
+
+A candidate is emitted only when a concrete version was fingerprinted and it
+falls inside an affected range; a missing or unparseable version yields nothing,
+and a vendor mismatch skips the rule. Crucially, a version-range match is not a
+confirmed vulnerability: prerequisites are unverified and no exploit was
+attempted. Findings are created with `Prerequisite` and `ActiveVerification` at
+zero, so the confidence model caps them at `potential`/`likely` and the
+no-passive-confirm rule prevents any `confirmed` state. `nullrecon vuln list
+--project SLUG` lists stored candidates and the KEV count.
+
+## Confidence and False-Positive Control (`analysis/confidence`)
+
+A single weighted, gated model decides a finding's confidence value and state.
+Positive evidence components (parse, ownership, freshness, fingerprint, version,
+prerequisite, cross-source, active-verification) are weighted and summed;
+deception, shared-infrastructure, gateway, and staleness penalties are
+subtracted. Rule gates then cap the result: a missing mandatory component caps
+at 0.25, low ownership caps at 0.5, and a strong deception signal caps at 0.4.
+
+The decisive false-positive rule is structural: a finding cannot reach
+`confirmed` without either active verification (≥ 0.8) or independent
+cross-source corroboration (≥ 0.5). The weighting alone keeps a passive-only
+finding below the confirmed threshold, and a defensive gate downgrades any that
+slip through. The `ScoreConfidence` workflow node recomputes every finding's
+state through this model as the single source of truth.
+
 ## Reporting (`reporting/renderer`)
 
 Renders findings into JSON, Markdown, and SARIF 2.1.0. The report model is a
-versioned `nr.report/v1` document carrying findings, per-severity counts, an
-exposure count, and a secret summary that lists detector counts only — never a
-raw secret or preview value. SARIF severity maps to `error`/`warning`/`note` so
+versioned `nr.report/v1` document carrying findings, per-severity and
+per-state counts, exposure and vulnerability/KEV counts, and a secret summary
+that lists detector counts only — never a raw secret or preview value. SARIF severity maps to `error`/`warning`/`note` so
 findings load into code-scanning dashboards. The `RenderReports` workflow node
 stores a JSON report artifact and records counts; `nullrecon report build
 --project SLUG [--format json|markdown|sarif] [--out FILE]` renders on demand.
