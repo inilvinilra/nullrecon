@@ -239,7 +239,7 @@ func (o *Orchestrator) planSafeActive(ctx context.Context, nc *workflow.NodeCont
 	if err != nil {
 		return nil, nil, err
 	}
-	ports := nc.Snapshot.Scope.Ports
+	ports := expandScopePorts(nc.Snapshot.Scope)
 	var targets []probeTarget
 	for _, a := range assets {
 		if a.Class != asset.ClassActive || len(ports) == 0 {
@@ -289,6 +289,26 @@ func (o *Orchestrator) probeHosts(ctx context.Context, nc *workflow.NodeContext)
 		}
 	}
 	return out(map[string]any{"open": open})
+}
+
+func expandScopePorts(scope scopeguard.Scope) []int {
+	seen := map[int]bool{}
+	var out []int
+	for _, p := range scope.Ports {
+		if !seen[p] {
+			seen[p] = true
+			out = append(out, p)
+		}
+	}
+	for _, r := range scope.PortRanges {
+		for p := r.Start; p <= r.End && p <= 65535; p++ {
+			if p > 0 && !seen[p] {
+				seen[p] = true
+				out = append(out, p)
+			}
+		}
+	}
+	return out
 }
 
 func firstOf(values ...string) string {
