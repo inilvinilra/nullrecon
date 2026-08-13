@@ -43,9 +43,19 @@ func (c commandContext) cmdReport(args []string) int {
 	if err != nil {
 		return c.fail(exitError, "%v", err)
 	}
+	vulns, err := db.VulnCandidates().ForProject(ctx, project.ID)
+	if err != nil {
+		return c.fail(exitError, "%v", err)
+	}
 	data := renderer.New(project.ID, project.Slug, time.Now())
 	data.Findings = findings
 	data.ExposureCount = len(exposures)
+	data.VulnerabilityCount = len(vulns)
+	for _, v := range vulns {
+		if v.KEV {
+			data.KEVCount++
+		}
+	}
 	summary := map[string]int{}
 	for _, s := range secrets {
 		summary[s.Detector]++

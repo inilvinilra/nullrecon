@@ -143,7 +143,15 @@ func (r *Technologies) Upsert(ctx context.Context, t technology.Technology) erro
 }
 
 func (r *Technologies) ForAsset(ctx context.Context, assetID string) ([]technology.Technology, error) {
-	rows, err := r.db.QueryContext(ctx, "SELECT data FROM technologies WHERE asset_id = ? ORDER BY product", assetID)
+	return r.query(ctx, "SELECT data FROM technologies WHERE asset_id = ? ORDER BY product", assetID)
+}
+
+func (r *Technologies) ForProject(ctx context.Context, projectID string) ([]technology.Technology, error) {
+	return r.query(ctx, "SELECT data FROM technologies WHERE project_id = ? ORDER BY product", projectID)
+}
+
+func (r *Technologies) query(ctx context.Context, sql, arg string) ([]technology.Technology, error) {
+	rows, err := r.db.QueryContext(ctx, sql, arg)
 	if err != nil {
 		return nil, err
 	}

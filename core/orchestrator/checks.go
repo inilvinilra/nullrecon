@@ -164,6 +164,10 @@ func (o *Orchestrator) renderReports(ctx context.Context, nc *workflow.NodeConte
 	if err != nil {
 		return nil, nil, err
 	}
+	vulns, err := o.deps.DB.VulnCandidates().ForProject(ctx, projectID)
+	if err != nil {
+		return nil, nil, err
+	}
 	slug := ""
 	if project, err := o.deps.DB.Projects().Get(ctx, projectID); err == nil {
 		slug = project.Slug
@@ -174,6 +178,12 @@ func (o *Orchestrator) renderReports(ctx context.Context, nc *workflow.NodeConte
 	data.Mode = string(nc.Snapshot.Mode)
 	data.Findings = findings
 	data.ExposureCount = len(exposures)
+	data.VulnerabilityCount = len(vulns)
+	for _, v := range vulns {
+		if v.KEV {
+			data.KEVCount++
+		}
+	}
 	summary := map[string]int{}
 	for _, s := range secrets {
 		summary[s.Detector]++
@@ -189,7 +199,7 @@ func (o *Orchestrator) renderReports(ctx context.Context, nc *workflow.NodeConte
 			ref = stored
 		}
 	}
-	return out(map[string]any{"findings": len(findings), "exposures": len(exposures), "secrets": len(secrets), "severity": data.SeverityCounts(), "reportRef": ref})
+	return out(map[string]any{"findings": len(findings), "exposures": len(exposures), "secrets": len(secrets), "vulnerabilities": len(vulns), "kev": data.KEVCount, "severity": data.SeverityCounts(), "states": data.StateCounts(), "reportRef": ref})
 }
 
 func sensitivityFor(severity string) exposuredomain.Sensitivity {

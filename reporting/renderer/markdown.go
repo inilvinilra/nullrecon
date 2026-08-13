@@ -31,6 +31,7 @@ func RenderMarkdown(d Data) ([]byte, error) {
 	}
 	fmt.Fprintf(&b, "| **Total** | **%d** |\n\n", len(d.Findings))
 	fmt.Fprintf(&b, "Exposures observed: %d\n\n", d.ExposureCount)
+	fmt.Fprintf(&b, "Vulnerability candidates: %d (KEV-listed: %d)\n\n", d.VulnerabilityCount, d.KEVCount)
 	if len(d.SecretSummary) > 0 {
 		b.WriteString("### Secret candidates (fingerprints only)\n\n")
 		keys := make([]string, 0, len(d.SecretSummary))

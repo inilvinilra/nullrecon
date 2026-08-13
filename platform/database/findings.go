@@ -8,6 +8,7 @@ import (
 	"github.com/nullrecon/nullrecon/contracts"
 	"github.com/nullrecon/nullrecon/domain/exposure"
 	"github.com/nullrecon/nullrecon/domain/finding"
+	"github.com/nullrecon/nullrecon/domain/vulnerability"
 )
 
 type Exposures struct {
@@ -117,6 +118,71 @@ func (r *SecretCandidates) ForProject(ctx context.Context, projectID string) ([]
 			return nil, err
 		}
 		out = append(out, s)
+	}
+	return out, rows.Err()
+}
+
+type VulnCandidates struct {
+	db *DB
+}
+
+func (d *DB) VulnCandidates() *VulnCandidates {
+	return &VulnCandidates{db: d}
+}
+
+func (r *VulnCandidates) Upsert(ctx context.Context, c vulnerability.Candidate) error {
+	if c.ID == "" {
+		c.ID = contracts.NewID("vul")
+	}
+	if c.Version == "" {
+		c.Versioned = contracts.NewVersioned("vulnerabilitycandidate")
+	}
+	data, err := marshal(c)
+	if err != nil {
+		return err
+	}
+	_, err = r.db.ExecContext(ctx,
+		"INSERT INTO vulnerabilitycandidates(id, project_id, asset_id, cve, ghsa, matched_by, state, data, observed_at) VALUES (?,?,?,?,?,?,?,?,?) "+
+			"ON CONFLICT(asset_id, cve, matched_by) DO UPDATE SET state=excluded.state, data=excluded.data, observed_at=excluded.observed_at",
+		c.ID, c.ProjectID, c.AssetID, c.CVE, c.GHSA, string(c.MatchedBy), string(c.State), data, timeString(c.ObservedAt))
+	return err
+}
+
+func (r *VulnCandidates) ByKey(ctx context.Context, assetID, cve string, matchedBy vulnerability.MatchedBy) (vulnerability.Candidate, bool, error) {
+	var data string
+	err := r.db.QueryRowContext(ctx,
+		"SELECT data FROM vulnerabilitycandidates WHERE asset_id = ? AND cve = ? AND matched_by = ?",
+		assetID, cve, string(matchedBy)).Scan(&data)
+	if errors.Is(err, sql.ErrNoRows) {
+		return vulnerability.Candidate{}, false, nil
+	}
+	if err != nil {
+		return vulnerability.Candidate{}, false, err
+	}
+	var c vulnerability.Candidate
+	if err := unmarshal(data, &c); err != nil {
+		return vulnerability.Candidate{}, false, err
+	}
+	return c, true, nil
+}
+
+func (r *VulnCandidates) ForProject(ctx context.Context, projectID string) ([]vulnerability.Candidate, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT data FROM vulnerabilitycandidates WHERE project_id = ? ORDER BY observed_at DESC", projectID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []vulnerability.Candidate
+	for rows.Next() {
+		var data string
+		if err := rows.Scan(&data); err != nil {
+			return nil, err
+		}
+		var c vulnerability.Candidate
+		if err := unmarshal(data, &c); err != nil {
+			return nil, err
+		}
+		out = append(out, c)
 	}
 	return out, rows.Err()
 }

@@ -10,16 +10,18 @@ import (
 
 type Data struct {
 	contracts.Versioned
-	Title         string            `json:"title"`
-	GeneratedAt   time.Time         `json:"generatedAt"`
-	ProjectID     string            `json:"projectId"`
-	ProjectSlug   string            `json:"projectSlug"`
-	RunID         string            `json:"runId,omitempty"`
-	SnapshotHash  string            `json:"snapshotHash,omitempty"`
-	Mode          string            `json:"mode,omitempty"`
-	Findings      []finding.Finding `json:"findings"`
-	SecretSummary map[string]int    `json:"secretSummary,omitempty"`
-	ExposureCount int               `json:"exposureCount"`
+	Title              string            `json:"title"`
+	GeneratedAt        time.Time         `json:"generatedAt"`
+	ProjectID          string            `json:"projectId"`
+	ProjectSlug        string            `json:"projectSlug"`
+	RunID              string            `json:"runId,omitempty"`
+	SnapshotHash       string            `json:"snapshotHash,omitempty"`
+	Mode               string            `json:"mode,omitempty"`
+	Findings           []finding.Finding `json:"findings"`
+	SecretSummary      map[string]int    `json:"secretSummary,omitempty"`
+	ExposureCount      int               `json:"exposureCount"`
+	VulnerabilityCount int               `json:"vulnerabilityCount"`
+	KEVCount           int               `json:"kevCount"`
 }
 
 func New(projectID, slug string, now time.Time) Data {
@@ -53,6 +55,14 @@ func (d Data) SeverityCounts() map[string]int {
 	counts := map[string]int{}
 	for _, f := range d.Findings {
 		counts[string(f.Severity)]++
+	}
+	return counts
+}
+
+func (d Data) StateCounts() map[string]int {
+	counts := map[string]int{}
+	for _, f := range d.Findings {
+		counts[string(f.State)]++
 	}
 	return counts
 }

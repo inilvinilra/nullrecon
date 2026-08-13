@@ -6,8 +6,12 @@ import (
 	"sort"
 
 	"github.com/nullrecon/nullrecon/analysis/confidence"
+	"github.com/nullrecon/nullrecon/contracts"
 	"github.com/nullrecon/nullrecon/core/workflow"
 	"github.com/nullrecon/nullrecon/domain/finding"
+	"github.com/nullrecon/nullrecon/domain/technology"
+	"github.com/nullrecon/nullrecon/domain/vulnerability"
+	"github.com/nullrecon/nullrecon/engines/vulnmatch"
 )
 
 func (o *Orchestrator) collectLeakSignals(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
@@ -27,13 +31,105 @@ func (o *Orchestrator) scanApprovedRepositories(ctx context.Context, nc *workflo
 }
 
 func (o *Orchestrator) enrichVulnerabilities(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
-	var plan struct {
-		Targets []discoveryTarget `json:"targets"`
+	set, err := vulnmatch.LoadRules()
+	if err != nil {
+		return nil, nil, err
 	}
-	if err := inputAt(nc, "GenerateVulnerabilityCandidates", &plan); err != nil {
-		return out(map[string]any{"enriched": 0})
+	techs, err := o.deps.DB.Technologies().ForProject(ctx, nc.Run.ProjectID)
+	if err != nil {
+		return nil, nil, err
 	}
-	return out(map[string]any{"candidates": len(plan.Targets), "note": "version-range intelligence pending vuln providers"})
+	engine := vulnmatch.New(set)
+	candidates := 0
+	kev := 0
+	bySeverity := map[string]int{}
+	for _, tech := range techs {
+		for _, cand := range engine.Match(nc.Run.ProjectID, tech) {
+			sev := severityForCandidate(cand)
+			if err := o.recordVulnCandidate(ctx, nc, tech, cand, sev); err != nil {
+				return nil, nil, err
+			}
+			candidates++
+			if cand.KEV {
+				kev++
+			}
+			bySeverity[string(sev)]++
+		}
+	}
+	return out(map[string]any{"technologies": len(techs), "candidates": candidates, "kev": kev, "bySeverity": bySeverity})
+}
+
+func (o *Orchestrator) recordVulnCandidate(ctx context.Context, nc *workflow.NodeContext, tech technology.Technology, cand vulnerability.Candidate, sev finding.Severity) error {
+	if existing, ok, err := o.deps.DB.VulnCandidates().ByKey(ctx, cand.AssetID, cand.CVE, cand.MatchedBy); err != nil {
+		return err
+	} else if ok {
+		cand.ID = existing.ID
+	}
+	if err := o.deps.DB.VulnCandidates().Upsert(ctx, cand); err != nil {
+		return err
+	}
+	now := o.now()
+	fingerprintConf := tech.Confidence
+	if fingerprintConf <= 0 {
+		fingerprintConf = 0.6
+	}
+	conf := finding.Confidence{
+		Parse:              1.0,
+		Ownership:          1.0,
+		Freshness:          0.7,
+		Fingerprint:        fingerprintConf,
+		Version:            fingerprintConf,
+		Prerequisite:       0.0,
+		ActiveVerification: 0.0,
+		CrossSource:        0.0,
+	}
+	decision := confidence.DefaultModel().Decide(conf, []string{"parse", "ownership"})
+	conf.Value = decision.Value
+	conf.Gates = append([]string{"version-inferred", "prerequisite-unverified"}, decision.Gates...)
+	key := "vuln:" + cand.CVE + ":" + cand.AssetID
+	title := cand.CVE + " affects " + tech.Product + " " + tech.Version
+	fnd := finding.Finding{
+		Versioned:       contracts.NewVersioned("finding"),
+		ID:              contracts.NewID("fnd"),
+		ProjectID:       nc.Run.ProjectID,
+		Title:           title,
+		State:           decision.State,
+		Severity:        sev,
+		Confidence:      conf,
+		AssetIDs:        []string{cand.AssetID},
+		ScopeSnapshotID: nc.Snapshot.ID,
+		SnapshotHash:    nc.Snapshot.Hash,
+		WeaknessClass:   "vulnerability:" + string(cand.MatchedBy),
+		Summary:         "Version-range match against " + cand.CVE + "; prerequisites unverified and no active confirmation",
+		FingerprintKey:  key,
+		FirstSeen:       now,
+		LastSeen:        now,
+	}
+	if existing, ok, err := o.deps.DB.Findings().ByFingerprint(ctx, nc.Run.ProjectID, key); err != nil {
+		return err
+	} else if ok {
+		fnd.ID = existing.ID
+		fnd.FirstSeen = existing.FirstSeen
+	}
+	return o.deps.DB.Findings().Upsert(ctx, fnd)
+}
+
+func severityForCandidate(c vulnerability.Candidate) finding.Severity {
+	score := 0.0
+	if c.CVSS != nil {
+		score = c.CVSS.Score
+	}
+	switch {
+	case score >= 9.0:
+		return finding.SevCritical
+	case score >= 7.0:
+		return finding.SevHigh
+	case score >= 4.0:
+		return finding.SevMedium
+	case score > 0:
+		return finding.SevLow
+	}
+	return finding.SevInfo
 }
 
 func (o *Orchestrator) deduplicateSignals(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
