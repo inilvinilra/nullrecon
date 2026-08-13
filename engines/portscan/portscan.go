@@ -33,6 +33,7 @@ type Engine struct {
 	bannerBytes    int
 	grabBanners    bool
 	maxConcurrency int
+	dialAttempts   int
 	now            func() time.Time
 }
 
@@ -44,6 +45,7 @@ func New(snapshot scopeguard.Snapshot, budget *budgetguard.Guard) *Engine {
 		bannerTimeout:  2 * time.Second,
 		bannerBytes:    256,
 		maxConcurrency: 32,
+		dialAttempts:   2,
 		now:            func() time.Time { return time.Now().UTC() },
 	}
 }
@@ -98,7 +100,18 @@ func (e *Engine) probe(ctx context.Context, target scopeguard.Target, port int) 
 	start := e.now()
 	pr := PortResult{Port: port}
 	address := net.JoinHostPort(firstNonEmpty(target.Host, target.IP), fmt.Sprintf("%d", port))
-	conn, err := net.DialTimeout("tcp", address, e.dialTimeout)
+	var conn net.Conn
+	var err error
+	for attempt := 0; attempt < e.dialAttempts; attempt++ {
+		conn, err = net.DialTimeout("tcp", address, e.dialTimeout)
+		if err == nil {
+			break
+		}
+		if opErr, ok := err.(*net.OpError); ok && opErr.Timeout() {
+			continue
+		}
+		break
+	}
 	pr.Latency = e.now().Sub(start).Round(time.Millisecond).String()
 	if err != nil {
 		pr.Error = "closed-or-filtered"
