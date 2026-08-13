@@ -133,7 +133,7 @@ func (o *Orchestrator) fingerprintTechnologies(ctx context.Context, nc *workflow
 			Headers:     res.Headers,
 			Cookies:     res.Cookies,
 			Title:       res.Title,
-			BodySnippet: res.BodySnippet,
+			BodySnippet: res.BodyFingerprint,
 			FaviconMMH3: res.FaviconMMH3,
 		}
 		if res.TLS != nil {

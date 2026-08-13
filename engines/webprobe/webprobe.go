@@ -47,6 +47,7 @@ type Result struct {
 	ContentHash     string            `json:"contentHash,omitempty"`
 	BodyBytes       int               `json:"bodyBytes"`
 	BodySnippet     string            `json:"-"`
+	BodyFingerprint string            `json:"bodyFingerprint,omitempty"`
 	FaviconMMH3     *int32            `json:"faviconMmh3,omitempty"`
 	FaviconSHA256   string            `json:"faviconSha256,omitempty"`
 	TimingMS        int64             `json:"timingMs"`
@@ -171,9 +172,21 @@ func (e *Engine) Probe(ctx context.Context, rawURL string) (Result, error) {
 		snippet = snippet[:4096]
 	}
 	res.BodySnippet = string(snippet)
+	res.BodyFingerprint = fingerprintBody(string(snippet), e.redactor)
 	res.TimingMS = e.now().Sub(start).Milliseconds()
 	e.probeFavicon(ctx, client, parsed, &res)
 	return res, nil
+}
+
+func fingerprintBody(snippet string, redactor *redaction.Redactor) string {
+	if len(snippet) > 2048 {
+		snippet = snippet[:2048]
+	}
+	text := strings.ToValidUTF8(snippet, "")
+	if redactor != nil {
+		return redactor.Redact(text).Text
+	}
+	return text
 }
 
 func (e *Engine) probeFavicon(ctx context.Context, client *http.Client, parsed *url.URL, res *Result) {
