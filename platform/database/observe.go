@@ -142,6 +142,27 @@ func (r *Technologies) Upsert(ctx context.Context, t technology.Technology) erro
 	return err
 }
 
+func (r *Technologies) ForAsset(ctx context.Context, assetID string) ([]technology.Technology, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT data FROM technologies WHERE asset_id = ? ORDER BY product", assetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []technology.Technology
+	for rows.Next() {
+		var data string
+		if err := rows.Scan(&data); err != nil {
+			return nil, err
+		}
+		var t technology.Technology
+		if err := unmarshal(data, &t); err != nil {
+			return nil, err
+		}
+		out = append(out, t)
+	}
+	return out, rows.Err()
+}
+
 type EvidenceStore struct {
 	db *DB
 }

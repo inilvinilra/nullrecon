@@ -50,6 +50,8 @@ func (o *Orchestrator) RegisterAll(e *workflow.Engine) {
 	e.Register("DiscoverServices", o.discoverServices)
 	e.Register("FingerprintTechnologies", o.fingerprintTechnologies)
 	e.Register("AssessDeception", o.assessDeception)
+	e.Register("PlanContentDiscovery", o.planContentDiscovery)
+	e.Register("RunContentDiscovery", o.runContentDiscovery)
 }
 
 func out(v any) (json.RawMessage, []byte, error) {

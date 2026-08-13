@@ -15,8 +15,8 @@ constrain dependency choices.
 - Third-party Go dependencies require a concrete justification recorded in this ADR or a new
   one, must support all three target operating systems without cgo, and are pinned by
   version in `go.mod` and verified by `go.sum`.
-- External executables (Nmap, Nuclei, ffuf, Gitleaks, TruffleHog) are discovered at runtime,
-  never vendored, and their versions are recorded in scan run metadata.
+- Detection is performed by first-party native engines, not by wrapping external scanner
+  executables (see ADR 0005). External API data providers remain permitted as data sources.
 
 ## Current approved dependencies
 
