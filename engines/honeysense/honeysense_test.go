@@ -46,12 +46,10 @@ func TestEveryComponentStored(t *testing.T) {
 	if len(v.Components) != 10 {
 		t.Fatalf("all 10 signal components must be stored, got %d", len(v.Components))
 	}
-	total := 0.0
 	for _, c := range v.Components {
-		total += c.Weight
-	}
-	if total < 0.99 || total > 1.01 {
-		t.Fatalf("component weights must sum to 1, got %f", total)
+		if c.Weight <= 0 {
+			t.Fatalf("every component must carry a positive weight: %+v", c)
+		}
 	}
 }
 
@@ -71,5 +69,28 @@ func TestProtocolContradiction(t *testing.T) {
 	}
 	if !found {
 		t.Fatal("protocol-contradiction component missing")
+	}
+}
+
+func TestClassicHoneypotIsFlagged(t *testing.T) {
+	banners := map[int]string{}
+	var ports []int
+	for p := 9001; p <= 9025; p++ {
+		ports = append(ports, p)
+		banners[p] = "SSH-2.0-OpenSSH_7.4"
+	}
+	v := Score(Signals{OpenPorts: ports, Banners: banners})
+	if v.Score < 0.65 || !v.RequiresReview {
+		t.Fatalf("25 ports with identical banners is a classic honeypot and must be flagged, got %.2f (review=%v)", v.Score, v.RequiresReview)
+	}
+}
+
+func TestNormalHostNotFlagged(t *testing.T) {
+	v := Score(Signals{
+		OpenPorts: []int{80, 443, 22},
+		Banners:   map[int]string{22: "SSH-2.0-OpenSSH_9.6", 80: "Apache/2.4.62", 443: "Apache/2.4.62"},
+	})
+	if v.Score >= 0.4 {
+		t.Fatalf("a normal 3-port host must not be flagged, got %.2f", v.Score)
 	}
 }

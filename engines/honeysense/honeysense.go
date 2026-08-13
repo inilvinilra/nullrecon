@@ -47,35 +47,35 @@ func Score(s Signals) Verdict {
 	}
 
 	density := portDensity(s.OpenPorts)
-	add("port-density", density, 0.18, portDensityDetail(len(s.OpenPorts)))
-	add("banner-repetition", bannerRepetition(s.Banners), 0.16, "repeated banners across unrelated ports")
-	add("protocol-contradiction", bannerContradiction(s.OpenPorts, s.Banners), 0.14, "banner does not match port protocol")
-	add("tls-identity", tlsContradiction(s.TLSSubjects), 0.12, "tls identities contradict across ports")
-	add("timing-uniformity", timingUniformity(s.ResponseTimesMS), 0.10, "response timing is implausibly uniform")
+	add("port-density", density, 0.35, portDensityDetail(len(s.OpenPorts)))
+	add("banner-repetition", bannerRepetition(s.Banners), 0.40, "repeated banners across unrelated ports")
+	add("protocol-contradiction", bannerContradiction(s.OpenPorts, s.Banners), 0.30, "banner does not match port protocol")
+	add("tls-identity", tlsContradiction(s.TLSSubjects), 0.20, "tls identities contradict across ports")
+	add("timing-uniformity", timingUniformity(s.ResponseTimesMS), 0.15, "response timing is implausibly uniform")
 	if s.KnownHoneypotBanner {
-		add("known-honeypot-fingerprint", 1, 0.15, "banner matches known honeypot fingerprint")
+		add("known-honeypot-fingerprint", 1, 0.55, "banner matches known honeypot fingerprint")
 	} else {
-		add("known-honeypot-fingerprint", 0, 0.15, "no known honeypot fingerprint")
+		add("known-honeypot-fingerprint", 0, 0.55, "no known honeypot fingerprint")
 	}
 	if s.SyntheticErrors > 0 {
-		add("synthetic-errors", float64(s.SyntheticErrors)/3.0, 0.05, "synthetic error patterns observed")
+		add("synthetic-errors", float64(s.SyntheticErrors)/3.0, 0.15, "synthetic error patterns observed")
 	} else {
-		add("synthetic-errors", 0, 0.05, "no synthetic error patterns")
+		add("synthetic-errors", 0, 0.15, "no synthetic error patterns")
 	}
 	if s.OSTraitInconsistent {
-		add("os-traits", 0.8, 0.03, "inconsistent operating system traits")
+		add("os-traits", 0.8, 0.10, "inconsistent operating system traits")
 	} else {
-		add("os-traits", 0, 0.03, "consistent operating system traits")
+		add("os-traits", 0, 0.10, "consistent operating system traits")
 	}
 	if s.ProviderDisagreement {
-		add("provider-disagreement", 0.7, 0.04, "providers disagree about this host")
+		add("provider-disagreement", 0.7, 0.10, "providers disagree about this host")
 	} else {
-		add("provider-disagreement", 0, 0.04, "providers agree")
+		add("provider-disagreement", 0, 0.10, "providers agree")
 	}
 	if s.ConnectionAnomalies > 0 {
-		add("connection-behavior", float64(s.ConnectionAnomalies)/3.0, 0.03, "connection behavior anomalies")
+		add("connection-behavior", float64(s.ConnectionAnomalies)/3.0, 0.10, "connection behavior anomalies")
 	} else {
-		add("connection-behavior", 0, 0.03, "normal connection behavior")
+		add("connection-behavior", 0, 0.10, "normal connection behavior")
 	}
 
 	totalWeight := 0.0
@@ -84,9 +84,10 @@ func Score(s Signals) Verdict {
 		total += c.Score * c.Weight
 		totalWeight += c.Weight
 	}
-	score := 0.0
-	if totalWeight > 0 {
-		score = total / totalWeight
+	_ = totalWeight
+	score := total
+	if score > 1 {
+		score = 1
 	}
 	sort.Slice(components, func(i, j int) bool {
 		return components[i].Score*components[i].Weight > components[j].Score*components[j].Weight
