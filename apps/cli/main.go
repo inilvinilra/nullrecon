@@ -119,7 +119,7 @@ commands:
   finding list --project SLUG
   finding show FINDINGID
   vuln list --project SLUG
-  cve sync (--kev | --cve CVE | --keyword KW | --since YYYY-MM-DDTHH:MM:SS.000)
+  cve sync (--kev | --cve CVE | --keyword KW | --since DATE [--until DATE])
   cve stats
   cve show CVE
   template list

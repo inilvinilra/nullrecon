@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/nullrecon/nullrecon/engines/cvefeed"
 	"github.com/nullrecon/nullrecon/platform/database"
@@ -68,7 +70,14 @@ func (c commandContext) cveSync(db *database.DB, args []string) int {
 			queries = append(queries, syncQuery{provider: "nvd", query: registry.Query{Capability: registry.CapCVELookup, Params: map[string]string{"keyword": kw}}})
 		}
 		if since, ok := flagValue(args, "--since"); ok {
-			queries = append(queries, syncQuery{provider: "nvd", query: registry.Query{Capability: registry.CapCVELookup, Params: map[string]string{"lastModStartDate": since}}})
+			until, _ := flagValue(args, "--until")
+			windows, err := cveWindows(since, until)
+			if err != nil {
+				return c.fail(exitUsage, "%v", err)
+			}
+			for _, wnd := range windows {
+				queries = append(queries, syncQuery{provider: "nvd", query: registry.Query{Capability: registry.CapCVELookup, Params: map[string]string{"lastModStartDate": wnd.start, "lastModEndDate": wnd.end}}})
+			}
 		}
 	}
 	if len(queries) == 0 {
@@ -117,6 +126,41 @@ func runSync(ctx context.Context, exec *registry.Executor, sq syncQuery) ([]regi
 		q.Cursor = res.NextCursor
 	}
 	return out, true, nil
+}
+
+type cveWindow struct {
+	start string
+	end   string
+}
+
+const nvdTimeLayout = "2006-01-02T15:04:05.000"
+
+func cveWindows(sinceRaw, untilRaw string) ([]cveWindow, error) {
+	since, err := time.Parse(nvdTimeLayout, sinceRaw)
+	if err != nil {
+		return nil, fmt.Errorf("--since must be like 2026-01-02T00:00:00.000: %v", err)
+	}
+	until := time.Now().UTC()
+	if untilRaw != "" {
+		until, err = time.Parse(nvdTimeLayout, untilRaw)
+		if err != nil {
+			return nil, fmt.Errorf("--until must be like 2026-01-02T00:00:00.000: %v", err)
+		}
+	}
+	if !until.After(since) {
+		return nil, fmt.Errorf("--until must be after --since")
+	}
+	const maxWindow = 119 * 24 * time.Hour
+	var windows []cveWindow
+	for cursor := since; cursor.Before(until); {
+		end := cursor.Add(maxWindow)
+		if end.After(until) {
+			end = until
+		}
+		windows = append(windows, cveWindow{start: cursor.UTC().Format(nvdTimeLayout), end: end.UTC().Format(nvdTimeLayout)})
+		cursor = end
+	}
+	return windows, nil
 }
 
 func flagPresent(args []string, flag string) bool {
