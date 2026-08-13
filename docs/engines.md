@@ -144,3 +144,25 @@ are not followed.
 
 `nullrecon exposure --project SLUG --label LABEL --mode MODE (--url URL |
 --domain DOMAIN) ...` scans each target against the signature set.
+
+## Secret Detection (`engines/secretscan`)
+
+Native detection of leaked secrets in any fetched content (HTTP bodies, exposed
+files). Detectors are a versioned code-defined set (`DetectorsVersion`,
+`nr.rules/v1`) covering AWS keys, Google API keys, GitHub and npm tokens, Slack
+tokens and webhooks, Stripe keys, JWTs, and private keys, plus an entropy-gated
+generic assignment detector.
+
+### False-positive and secret safety
+
+A regex match is not enough. Each candidate passes placeholder detection
+(documented example keys such as the AWS `AKIAIOSFODNN7EXAMPLE`, `your_*`
+markers, repeated runs) and, where the detector defines it, a Shannon-entropy
+gate. Only survivors are reported; the rest are counted as suppressed.
+
+The raw secret never leaves the engine. Each candidate carries an irreversible
+sha256 fingerprint (for dedup) and a masked preview (`prefix***(len=N)`), never
+the value. When the exposure engine runs with secret detectors, confirmed leaks
+attach these fingerprint-only hits — so an exposed `.env` reports which secret
+types leaked without ever emitting the secret. The orchestrator persists these
+as `SecretCandidate` records keyed by fingerprint.

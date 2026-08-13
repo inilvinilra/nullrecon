@@ -8,9 +8,11 @@ import (
 	"github.com/nullrecon/nullrecon/contracts"
 	"github.com/nullrecon/nullrecon/core/policy"
 	"github.com/nullrecon/nullrecon/core/workflow"
+	"github.com/nullrecon/nullrecon/domain/asset"
 	exposuredomain "github.com/nullrecon/nullrecon/domain/exposure"
 	"github.com/nullrecon/nullrecon/domain/finding"
 	"github.com/nullrecon/nullrecon/engines/exposure"
+	"github.com/nullrecon/nullrecon/engines/secretscan"
 	"github.com/nullrecon/nullrecon/reporting/redaction"
 )
 
@@ -44,7 +46,11 @@ func (o *Orchestrator) runAllowedChecks(ctx context.Context, nc *workflow.NodeCo
 		return nil, nil, err
 	}
 	engine := exposure.New(nc.Snapshot, nc.Budget, red, set)
+	if detectors, err := secretscan.DefaultDetectors(); err == nil {
+		engine.WithSecretDetectors(detectors)
+	}
 	confirmed := 0
+	secretCount := 0
 	bySeverity := map[string]int{}
 	for _, target := range plan.Targets {
 		res, err := engine.Scan(ctx, target.BaseURL)
@@ -56,10 +62,11 @@ func (o *Orchestrator) runAllowedChecks(ctx context.Context, nc *workflow.NodeCo
 				return nil, nil, err
 			}
 			confirmed++
+			secretCount += len(f.Secrets)
 			bySeverity[f.Severity]++
 		}
 	}
-	return out(map[string]any{"exposures": confirmed, "bySeverity": bySeverity})
+	return out(map[string]any{"exposures": confirmed, "secrets": secretCount, "bySeverity": bySeverity})
 }
 
 func (o *Orchestrator) recordExposure(ctx context.Context, nc *workflow.NodeContext, assetID string, f exposure.Finding) error {
@@ -102,7 +109,43 @@ func (o *Orchestrator) recordExposure(ctx context.Context, nc *workflow.NodeCont
 		fnd.ID = existing.ID
 		fnd.FirstSeen = existing.FirstSeen
 	}
-	return o.deps.DB.Findings().Upsert(ctx, fnd)
+	if err := o.deps.DB.Findings().Upsert(ctx, fnd); err != nil {
+		return err
+	}
+	for _, hit := range f.Secrets {
+		if err := o.recordSecret(ctx, nc, assetID, f.URL, hit); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (o *Orchestrator) recordSecret(ctx context.Context, nc *workflow.NodeContext, assetID, location string, hit exposure.SecretHit) error {
+	now := o.now()
+	candidate := exposuredomain.NewSecret(nc.Run.ProjectID, hit.DetectorID, secretscan.DetectorsVersion, hit.Fingerprint, hit.Preview, "", location, now)
+	candidate.AssetID = assetID
+	candidate.Ownership = asset.OwnExact
+	candidate.Sensitivity = sensitivityFor(hit.Severity)
+	candidate.Validation = exposuredomain.ValFormatValid
+	if existing, ok, err := o.deps.DB.SecretCandidates().ByFingerprint(ctx, nc.Run.ProjectID, hit.DetectorID, hit.Fingerprint, location); err != nil {
+		return err
+	} else if ok {
+		candidate.ID = existing.ID
+		candidate.FirstSeen = existing.FirstSeen
+	}
+	return o.deps.DB.SecretCandidates().Upsert(ctx, candidate)
+}
+
+func sensitivityFor(severity string) exposuredomain.Sensitivity {
+	switch severity {
+	case "critical":
+		return exposuredomain.SensCritical
+	case "high":
+		return exposuredomain.SensHigh
+	case "medium":
+		return exposuredomain.SensModerate
+	}
+	return exposuredomain.SensLow
 }
 
 func categoryFor(f exposure.Finding) exposuredomain.Category {

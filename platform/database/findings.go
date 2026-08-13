@@ -56,6 +56,71 @@ func (r *Exposures) ForProject(ctx context.Context, projectID string) ([]exposur
 	return out, rows.Err()
 }
 
+type SecretCandidates struct {
+	db *DB
+}
+
+func (d *DB) SecretCandidates() *SecretCandidates {
+	return &SecretCandidates{db: d}
+}
+
+func (r *SecretCandidates) Upsert(ctx context.Context, s exposure.SecretCandidate) error {
+	if s.ID == "" {
+		s.ID = contracts.NewID("sec")
+	}
+	if s.Version == "" {
+		s.Versioned = contracts.NewVersioned("secretcandidate")
+	}
+	data, err := marshal(s)
+	if err != nil {
+		return err
+	}
+	_, err = r.db.ExecContext(ctx,
+		"INSERT INTO secretcandidates(id, project_id, asset_id, detector, fingerprint, preview, location, validation, data, first_seen, last_seen) VALUES (?,?,?,?,?,?,?,?,?,?,?) "+
+			"ON CONFLICT(project_id, detector, fingerprint, location) DO UPDATE SET validation=excluded.validation, last_seen=excluded.last_seen, data=excluded.data",
+		s.ID, s.ProjectID, s.AssetID, s.Detector, s.Fingerprint, s.Preview, s.Location, string(s.Validation), data, timeString(s.FirstSeen), timeString(s.LastSeen))
+	return err
+}
+
+func (r *SecretCandidates) ByFingerprint(ctx context.Context, projectID, detector, fingerprint, location string) (exposure.SecretCandidate, bool, error) {
+	var data string
+	err := r.db.QueryRowContext(ctx,
+		"SELECT data FROM secretcandidates WHERE project_id = ? AND detector = ? AND fingerprint = ? AND location = ?",
+		projectID, detector, fingerprint, location).Scan(&data)
+	if errors.Is(err, sql.ErrNoRows) {
+		return exposure.SecretCandidate{}, false, nil
+	}
+	if err != nil {
+		return exposure.SecretCandidate{}, false, err
+	}
+	var s exposure.SecretCandidate
+	if err := unmarshal(data, &s); err != nil {
+		return exposure.SecretCandidate{}, false, err
+	}
+	return s, true, nil
+}
+
+func (r *SecretCandidates) ForProject(ctx context.Context, projectID string) ([]exposure.SecretCandidate, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT data FROM secretcandidates WHERE project_id = ? ORDER BY last_seen DESC", projectID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []exposure.SecretCandidate
+	for rows.Next() {
+		var data string
+		if err := rows.Scan(&data); err != nil {
+			return nil, err
+		}
+		var s exposure.SecretCandidate
+		if err := unmarshal(data, &s); err != nil {
+			return nil, err
+		}
+		out = append(out, s)
+	}
+	return out, rows.Err()
+}
+
 type Findings struct {
 	db *DB
 }

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -20,12 +21,16 @@ import (
 )
 
 func TestRunAllowedChecksStoresExposureFindings(t *testing.T) {
+	awsKey := "AKIA" + strings.Repeat("Z3", 8)
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/.git/config" {
+		switch r.URL.Path {
+		case "/.git/config":
 			w.Write([]byte("[core]\n\trepositoryformatversion = 0\n[remote \"origin\"]\n\turl = https://example.com/a/b.git\n"))
-			return
+		case "/.env":
+			w.Write([]byte("APP_ENV=production\nAWS_ACCESS_KEY_ID=" + awsKey + "\n"))
+		default:
+			w.Write([]byte("<html><body>not found</body></html>"))
 		}
-		w.Write([]byte("<html><body>not found</body></html>"))
 	}))
 	defer srv.Close()
 	host, port := hostPort(t, srv.URL)
@@ -111,6 +116,22 @@ func TestRunAllowedChecksStoresExposureFindings(t *testing.T) {
 	}
 	if len(exposures) == 0 {
 		t.Fatal("exposure record must be stored")
+	}
+
+	secrets, err := db.SecretCandidates().ForProject(ctx, project.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(secrets) == 0 {
+		t.Fatalf("leaked AWS key in .env must be stored as a secret candidate: %+v", secrets)
+	}
+	for _, s := range secrets {
+		if strings.Contains(s.Preview, awsKey) {
+			t.Fatal("stored secret must never contain the raw value")
+		}
+		if len(s.Fingerprint) != 64 {
+			t.Fatalf("secret fingerprint must be a sha256 digest, got %q", s.Fingerprint)
+		}
 	}
 }
 

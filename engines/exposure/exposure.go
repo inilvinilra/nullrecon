@@ -15,20 +15,30 @@ import (
 
 	"github.com/nullrecon/nullrecon/core/budgetguard"
 	"github.com/nullrecon/nullrecon/core/scopeguard"
+	"github.com/nullrecon/nullrecon/engines/secretscan"
 	"github.com/nullrecon/nullrecon/reporting/redaction"
 )
 
+type SecretHit struct {
+	DetectorID  string `json:"detectorId"`
+	Category    string `json:"category"`
+	Severity    string `json:"severity"`
+	Fingerprint string `json:"fingerprint"`
+	Preview     string `json:"preview"`
+}
+
 type Finding struct {
-	SignatureID     string   `json:"signatureId"`
-	Category        string   `json:"category"`
-	Severity        string   `json:"severity"`
-	URL             string   `json:"url"`
-	Status          int      `json:"status"`
-	State           string   `json:"state"`
-	Reasons         []string `json:"reasons"`
-	EvidencePreview string   `json:"evidencePreview,omitempty"`
-	ContentHash     string   `json:"contentHash"`
-	BodyBytes       int      `json:"bodyBytes"`
+	SignatureID     string      `json:"signatureId"`
+	Category        string      `json:"category"`
+	Severity        string      `json:"severity"`
+	URL             string      `json:"url"`
+	Status          int         `json:"status"`
+	State           string      `json:"state"`
+	Reasons         []string    `json:"reasons"`
+	EvidencePreview string      `json:"evidencePreview,omitempty"`
+	ContentHash     string      `json:"contentHash"`
+	BodyBytes       int         `json:"bodyBytes"`
+	Secrets         []SecretHit `json:"secrets,omitempty"`
 }
 
 type Result struct {
@@ -40,14 +50,20 @@ type Result struct {
 }
 
 type Engine struct {
-	snapshot scopeguard.Snapshot
-	budget   *budgetguard.Guard
-	redactor *redaction.Redactor
-	set      *SignatureSet
-	client   *http.Client
-	maxBody  int64
-	timeout  time.Duration
-	now      func() time.Time
+	snapshot  scopeguard.Snapshot
+	budget    *budgetguard.Guard
+	redactor  *redaction.Redactor
+	set       *SignatureSet
+	detectors *secretscan.DetectorSet
+	client    *http.Client
+	maxBody   int64
+	timeout   time.Duration
+	now       func() time.Time
+}
+
+func (e *Engine) WithSecretDetectors(set *secretscan.DetectorSet) *Engine {
+	e.detectors = set
+	return e
 }
 
 func New(snapshot scopeguard.Snapshot, budget *budgetguard.Guard, redactor *redaction.Redactor, set *SignatureSet) *Engine {
@@ -129,6 +145,21 @@ func (e *Engine) buildFinding(sig compiledSignature, full string, status int, bo
 	}
 	if sig.Category != "leak" {
 		finding.EvidencePreview = e.preview(body)
+	}
+	if e.detectors != nil {
+		scan := secretscan.Scan(e.detectors, body, full)
+		for _, cand := range scan.Candidates {
+			finding.Secrets = append(finding.Secrets, SecretHit{
+				DetectorID:  cand.DetectorID,
+				Category:    cand.Category,
+				Severity:    cand.Severity,
+				Fingerprint: cand.Fingerprint,
+				Preview:     cand.Preview,
+			})
+			if severityRank(cand.Severity) < severityRank(finding.Severity) {
+				finding.Severity = cand.Severity
+			}
+		}
 	}
 	return finding
 }
