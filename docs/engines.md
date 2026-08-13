@@ -63,3 +63,50 @@ mode and an explicit `scanClasses` grant in scope. Without that authorization th
 plan yields no targets and the run performs no requests, so the pipeline fails
 closed. `RunContentDiscovery` scans each authorized target and stores only
 candidate and redirect endpoints.
+
+## Origin IP (`engines/originip`)
+
+Discovers real IP addresses hiding behind CDN, WAF, and DDoS-protection
+services. The detection logic is native; the embedded CDN/WAF range data was
+adapted from the nullcloud project into a versioned ruleset
+(`engines/originip/cdnranges.json`, `nr.rules/v1`) covering 21 providers and
+several thousand IPv4 and IPv6 networks.
+
+### Classification
+
+Each resolved IP is checked against the provider network map:
+
+- In a provider range: `protected` (the IP belongs to the fronting service).
+- Public and outside every provider range: an origin `candidate`.
+- Private, loopback, reserved, link-local, or multicast: excluded entirely.
+
+Classification is passive and makes no requests.
+
+### Verification (false-positive control)
+
+A candidate is never reported as a confirmed origin on classification alone. The
+engine fetches a reference from the protected site (`https://<domain>/`) and then
+fetches each candidate `https://<ip>/` with the original `Host` header, comparing
+status, page title, first-8KB body hash, and favicon mmh3 hash. Weighted scoring
+yields a state:
+
+- `confirmed`: a strong signal (body hash or favicon) matched with score ≥ 0.5.
+- `likely`: exact title match with score ≥ 0.5.
+- `potential`: a weaker partial signal matched.
+- `needsreview`: not probed — see safety below.
+
+Responses that answer but match nothing are dropped, not reported.
+
+### Safety
+
+Every candidate IP is a discovered pivot, so it is re-evaluated against the scope
+snapshot before any traffic is sent. A candidate outside authorized scope is
+recorded as `needsreview` with `scopeBlocked` and is never probed, so origin
+verification fails closed. The reference fetch is likewise scope-gated, and every
+request draws from the run budget.
+
+### CLI
+
+`nullrecon origin --domain DOMAIN --project SLUG --label LABEL --mode MODE
+[--host SUBDOMAIN ...] [--ip IP ...]` resolves the domain and any supplied
+subdomains, adds explicit candidate IPs, and runs classification and verification.

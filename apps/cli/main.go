@@ -60,6 +60,12 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdProvider(rest[1:])
 	case "asset":
 		return ctx.cmdAsset(rest[1:])
+	case "workflow":
+		return ctx.cmdWorkflow(rest[1:])
+	case "scan":
+		return ctx.cmdScan(rest[1:])
+	case "origin":
+		return ctx.cmdOrigin(rest[1:])
 	case "version":
 		return ctx.emit(map[string]string{"version": versionString()})
 	}
@@ -84,5 +90,10 @@ commands:
   provider configure NAME
   provider health
   provider usage
+  workflow plan NAME --project SLUG --label LABEL --mode MODE
+  workflow run NAME --project SLUG --label LABEL --mode MODE
+  scan status --run RUNID
+  scan cancel --run RUNID
+  origin --domain DOMAIN --project SLUG --label LABEL --mode MODE [--host SUB] [--ip IP]
   version`)
 }
