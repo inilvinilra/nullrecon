@@ -1,0 +1,91 @@
+{
+  "templates": [
+    {
+      "id": "git-config-exposure",
+      "info": {
+        "name": "Exposed .git/config",
+        "severity": "high",
+        "description": "A readable .git/config exposes repository metadata and remote URLs.",
+        "tags": ["exposure", "git"],
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": ["/.git/config"],
+          "matchersCondition": "and",
+          "matchers": [
+            {"type": "status", "status": [200]},
+            {"type": "word", "part": "body", "words": ["[core]", "repositoryformatversion"], "condition": "and"}
+          ],
+          "extractors": [
+            {"type": "regex", "part": "body", "name": "remote", "regex": ["url\\s*=\\s*(\\S+)"], "group": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spring-actuator-env",
+      "info": {
+        "name": "Spring Boot Actuator env exposure",
+        "severity": "high",
+        "description": "An unauthenticated Actuator env endpoint discloses configuration and secrets.",
+        "tags": ["exposure", "spring", "actuator"],
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": ["/actuator/env", "/env"],
+          "matchersCondition": "and",
+          "matchers": [
+            {"type": "status", "status": [200]},
+            {"type": "word", "part": "body", "words": ["propertySources", "systemEnvironment"], "condition": "or"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "server-version-disclosure",
+      "info": {
+        "name": "Server version disclosure",
+        "severity": "info",
+        "description": "The Server response header discloses product and version, feeding version-based matching.",
+        "tags": ["fingerprint", "disclosure"]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": ["/"],
+          "matchersCondition": "and",
+          "matchers": [
+            {"type": "header", "header": "Server", "regex": ["\\S+/\\d"], "condition": "or"}
+          ],
+          "extractors": [
+            {"type": "regex", "part": "header", "name": "server", "regex": ["Server:\\s*([^\\r\\n]+)"], "group": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phpinfo-exposure",
+      "info": {
+        "name": "Exposed phpinfo()",
+        "severity": "medium",
+        "description": "A reachable phpinfo() page discloses environment and configuration details.",
+        "tags": ["exposure", "php"]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": ["/phpinfo.php", "/info.php"],
+          "matchersCondition": "and",
+          "matchers": [
+            {"type": "status", "status": [200]},
+            {"type": "word", "part": "body", "words": ["PHP Version", "<title>phpinfo()"], "condition": "or"}
+          ]
+        }
+      ]
+    }
+  ]
+}

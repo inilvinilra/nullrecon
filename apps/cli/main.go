@@ -76,6 +76,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdVuln(rest[1:])
 	case "cve":
 		return ctx.cmdCVE(rest[1:])
+	case "template":
+		return ctx.cmdTemplate(rest[1:])
 	case "report":
 		return ctx.cmdReport(rest[1:])
 	case "version":
@@ -116,6 +118,7 @@ commands:
   cve sync (--kev | --cve CVE | --keyword KW | --since YYYY-MM-DDTHH:MM:SS.000)
   cve stats
   cve show CVE
+  template list
   report build --project SLUG [--format json|markdown|sarif] [--out FILE] [--run RUNID]
   version`)
 }
