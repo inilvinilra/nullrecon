@@ -42,6 +42,12 @@
   </div>
   <div id="error" class="err"></div>
   <div class="tiles" id="tiles"></div>
+  <h2 id="techHead" style="font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px"></h2>
+  <table id="techTable" style="margin-bottom:24px">
+    <thead><tr><th>Product</th><th>Version</th><th>Confidence</th></tr></thead>
+    <tbody id="techRows"></tbody>
+  </table>
+  <h2 id="findHead" style="font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px">Findings</h2>
   <table id="table">
     <thead><tr><th>Severity</th><th>State</th><th>Confidence</th><th>Title</th><th>Weakness</th></tr></thead>
     <tbody id="rows"></tbody>
@@ -60,18 +66,28 @@
       if(!res.ok){ throw new Error('HTTP '+res.status+' — check API key and slug'); }
       var d = await res.json();
       var sev = d.findings.reduce(function(a,f){ a[f.severity]=(a[f.severity]||0)+1; return a; }, {});
+      var techRes = await fetch('/api/v1/projects/'+encodeURIComponent(slug)+'/technologies', auth());
+      var techs = techRes.ok ? (await techRes.json()).technologies||[] : [];
       $('tiles').innerHTML =
         tile(d.findings.length,'findings') +
+        tile(techs.length,'technologies') +
         tile(d.exposureCount||0,'exposures') +
         tile(d.vulnerabilityCount||0,'vulns') +
         tile(d.kevCount||0,'kev') +
         tile(sev.critical||0,'critical') +
         tile(sev.high||0,'high');
+      var uniqTech = {};
+      techs.forEach(function(t){ var k=t.product+'|'+(t.version||''); if(!uniqTech[k]||t.confidence>uniqTech[k].confidence) uniqTech[k]=t; });
+      var tlist = Object.keys(uniqTech).map(function(k){return uniqTech[k];}).sort(function(a,b){return (b.confidence||0)-(a.confidence||0);});
+      $('techHead').textContent = 'Technologies ('+tlist.length+')';
+      $('techRows').innerHTML = tlist.map(function(t){
+        return '<tr><td>'+esc(t.product)+'</td><td>'+esc(t.version||'')+'</td><td>'+(t.confidence!=null?Number(t.confidence).toFixed(2):'')+'</td></tr>';
+      }).join('') || '<tr><td colspan="3" class="state">No technologies detected.</td></tr>';
       var rows = d.findings.slice().sort(function(a,b){ return rank(b.severity)-rank(a.severity); }).map(function(f){
         return '<tr><td class="sev '+f.severity+'">'+f.severity+'</td><td class="state">'+f.state+'</td><td>'+(f.confidence&&f.confidence.value!=null?f.confidence.value.toFixed(2):'')+'</td><td>'+esc(f.title)+'</td><td><code>'+esc(f.weaknessClass||'')+'</code></td></tr>';
       }).join('');
       $('rows').innerHTML = rows || '<tr><td colspan="5" class="state">No findings.</td></tr>';
-    } catch(e){ $('error').textContent = e.message; $('tiles').innerHTML=''; $('rows').innerHTML=''; }
+    } catch(e){ $('error').textContent = e.message; $('tiles').innerHTML=''; $('rows').innerHTML=''; $('techRows').innerHTML=''; }
   }
   function rank(s){ return {critical:5,high:4,medium:3,low:2,info:1}[s]||0; }
   function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }

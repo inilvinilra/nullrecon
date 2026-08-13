@@ -147,6 +147,57 @@ func (s *Server) handleServices(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{"services": entries, "count": len(entries)})
 }
 
+func (s *Server) handleAssets(w http.ResponseWriter, r *http.Request) {
+	projectID, ok := s.project(r.Context(), w, r.PathValue("slug"))
+	if !ok {
+		return
+	}
+	assets, err := s.db.Assets().List(r.Context(), projectID, "")
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	byKind := map[string]int{}
+	for _, a := range assets {
+		byKind[string(a.Kind)]++
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"assets": assets, "count": len(assets), "byKind": byKind})
+}
+
+func (s *Server) handleTechnologies(w http.ResponseWriter, r *http.Request) {
+	projectID, ok := s.project(r.Context(), w, r.PathValue("slug"))
+	if !ok {
+		return
+	}
+	techs, err := s.db.Technologies().ForProject(r.Context(), projectID)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	byProduct := map[string]int{}
+	for _, t := range techs {
+		byProduct[t.Product]++
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"technologies": techs, "count": len(techs), "byProduct": byProduct})
+}
+
+func (s *Server) handleSecrets(w http.ResponseWriter, r *http.Request) {
+	projectID, ok := s.project(r.Context(), w, r.PathValue("slug"))
+	if !ok {
+		return
+	}
+	secrets, err := s.db.SecretCandidates().ForProject(r.Context(), projectID)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	byDetector := map[string]int{}
+	for _, sec := range secrets {
+		byDetector[sec.Detector]++
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"secrets": secrets, "count": len(secrets), "byDetector": byDetector})
+}
+
 func (s *Server) handleCVEStats(w http.ResponseWriter, r *http.Request) {
 	stats, err := s.db.CVEKnowledge().Stats(r.Context())
 	if err != nil {
