@@ -24,11 +24,34 @@ func (c commandContext) cmdOrigin(args []string) int {
 	}
 	ips := resolveCandidateIPs(ctx, domain, flagValuesAll(args, "--host"), flagValuesAll(args, "--ip"))
 	engine := originip.New(snap, budgetFromScope(snap), nm)
+	leaks := engine.DNSLeaks(ctx, domain)
+	for _, leak := range leaks {
+		if !leak.InCDN {
+			ips = appendUnique(ips, leak.IP)
+		}
+	}
 	res, err := engine.Scan(ctx, domain, ips)
 	if err != nil {
 		return c.fail(exitError, "%v", err)
 	}
-	return c.emit(res)
+	return c.emit(map[string]any{
+		"domain":    res.Domain,
+		"dnsLeaks":  leaks,
+		"leakCount": len(leaks),
+		"origins":   res.Origins,
+		"reference": res.Reference,
+		"requested": res.Requested,
+		"blocked":   res.Blocked,
+	})
+}
+
+func appendUnique(list []string, v string) []string {
+	for _, x := range list {
+		if x == v {
+			return list
+		}
+	}
+	return append(list, v)
 }
 
 func resolveCandidateIPs(ctx context.Context, domain string, hosts, extra []string) []string {
