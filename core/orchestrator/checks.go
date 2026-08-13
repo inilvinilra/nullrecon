@@ -14,6 +14,7 @@ import (
 	"github.com/nullrecon/nullrecon/engines/exposure"
 	"github.com/nullrecon/nullrecon/engines/secretscan"
 	"github.com/nullrecon/nullrecon/reporting/redaction"
+	"github.com/nullrecon/nullrecon/reporting/renderer"
 )
 
 func (o *Orchestrator) generateVulnerabilityCandidates(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
@@ -134,6 +135,48 @@ func (o *Orchestrator) recordSecret(ctx context.Context, nc *workflow.NodeContex
 		candidate.FirstSeen = existing.FirstSeen
 	}
 	return o.deps.DB.SecretCandidates().Upsert(ctx, candidate)
+}
+
+func (o *Orchestrator) renderReports(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
+	projectID := nc.Run.ProjectID
+	findings, err := o.deps.DB.Findings().List(ctx, projectID)
+	if err != nil {
+		return nil, nil, err
+	}
+	exposures, err := o.deps.DB.Exposures().ForProject(ctx, projectID)
+	if err != nil {
+		return nil, nil, err
+	}
+	secrets, err := o.deps.DB.SecretCandidates().ForProject(ctx, projectID)
+	if err != nil {
+		return nil, nil, err
+	}
+	slug := ""
+	if project, err := o.deps.DB.Projects().Get(ctx, projectID); err == nil {
+		slug = project.Slug
+	}
+	data := renderer.New(projectID, slug, o.now())
+	data.RunID = nc.Run.ID
+	data.SnapshotHash = nc.Snapshot.Hash
+	data.Mode = string(nc.Snapshot.Mode)
+	data.Findings = findings
+	data.ExposureCount = len(exposures)
+	summary := map[string]int{}
+	for _, s := range secrets {
+		summary[s.Detector]++
+	}
+	data.SecretSummary = summary
+	report, err := renderer.RenderJSON(data)
+	if err != nil {
+		return nil, nil, err
+	}
+	ref := ""
+	if o.deps.Raw != nil {
+		if stored, err := o.deps.Raw.Put(report); err == nil {
+			ref = stored
+		}
+	}
+	return out(map[string]any{"findings": len(findings), "exposures": len(exposures), "secrets": len(secrets), "severity": data.SeverityCounts(), "reportRef": ref})
 }
 
 func sensitivityFor(severity string) exposuredomain.Sensitivity {

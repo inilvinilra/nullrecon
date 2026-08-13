@@ -166,3 +166,13 @@ the value. When the exposure engine runs with secret detectors, confirmed leaks
 attach these fingerprint-only hits — so an exposed `.env` reports which secret
 types leaked without ever emitting the secret. The orchestrator persists these
 as `SecretCandidate` records keyed by fingerprint.
+
+## Reporting (`reporting/renderer`)
+
+Renders findings into JSON, Markdown, and SARIF 2.1.0. The report model is a
+versioned `nr.report/v1` document carrying findings, per-severity counts, an
+exposure count, and a secret summary that lists detector counts only — never a
+raw secret or preview value. SARIF severity maps to `error`/`warning`/`note` so
+findings load into code-scanning dashboards. The `RenderReports` workflow node
+stores a JSON report artifact and records counts; `nullrecon report build
+--project SLUG [--format json|markdown|sarif] [--out FILE]` renders on demand.

@@ -70,6 +70,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdExposure(rest[1:])
 	case "finding":
 		return ctx.cmdFinding(rest[1:])
+	case "report":
+		return ctx.cmdReport(rest[1:])
 	case "version":
 		return ctx.emit(map[string]string{"version": versionString()})
 	}
@@ -102,5 +104,6 @@ commands:
   exposure --project SLUG --label LABEL --mode MODE (--url URL | --domain DOMAIN) ...
   finding list --project SLUG
   finding show FINDINGID
+  report build --project SLUG [--format json|markdown|sarif] [--out FILE] [--run RUNID]
   version`)
 }
