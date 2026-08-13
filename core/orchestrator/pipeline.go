@@ -4,11 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/nullrecon/nullrecon/analysis/confidence"
 	"github.com/nullrecon/nullrecon/contracts"
 	"github.com/nullrecon/nullrecon/core/workflow"
+	"github.com/nullrecon/nullrecon/domain/evidence"
 	"github.com/nullrecon/nullrecon/domain/finding"
 	"github.com/nullrecon/nullrecon/domain/technology"
 	"github.com/nullrecon/nullrecon/domain/vulnerability"
@@ -291,13 +293,95 @@ func (o *Orchestrator) buildEvidence(ctx context.Context, nc *workflow.NodeConte
 	if err != nil {
 		return nil, nil, err
 	}
-	withEvidence := 0
+	now := o.now()
+	prevChain := nc.Snapshot.Hash
+	built := 0
+	skipped := 0
 	for _, f := range findings {
-		if len(f.EvidenceIDs) > 0 || len(f.ObservationIDs) > 0 {
-			withEvidence++
+		if has, err := o.hasRunEvidence(ctx, f.ID, nc.Run.ID); err != nil {
+			return nil, nil, err
+		} else if has {
+			skipped++
+			continue
+		}
+		payload := evidencePayload(f, nc.Snapshot.Hash)
+		contentHash := contracts.HashBytes(payload)
+		chain := contracts.HashBytes([]byte(prevChain + contentHash))
+		ev := evidence.Evidence{
+			Versioned:   contracts.NewVersioned("evidence"),
+			ID:          contracts.NewID("evd"),
+			ProjectID:   nc.Run.ProjectID,
+			FindingID:   f.ID,
+			RunID:       nc.Run.ID,
+			Kind:        evidence.KindVerifierOutput,
+			CapturedAt:  now,
+			Tool:        "nullrecon",
+			ToolVersion: "0.1",
+			ResponseMeta: map[string]string{
+				"state":      string(f.State),
+				"severity":   string(f.Severity),
+				"confidence": strconv.FormatFloat(f.Confidence.Value, 'f', 2, 64),
+			},
+			Hashes:         map[string]string{"content": contentHash, "chain": chain, "prev": prevChain},
+			RedactionState: "redacted",
+			SizeBytes:      int64(len(payload)),
+		}
+		ev.StorageRef = contentHash
+		if o.deps.Raw != nil {
+			if ref, err := o.deps.Raw.Put(payload); err == nil {
+				ev.StorageRef = ref
+			}
+		}
+		if err := o.deps.DB.Evidence().Put(ctx, ev); err != nil {
+			return nil, nil, err
+		}
+		f.EvidenceIDs = append(f.EvidenceIDs, ev.ID)
+		if err := o.deps.DB.Findings().Upsert(ctx, f); err != nil {
+			return nil, nil, err
+		}
+		prevChain = chain
+		built++
+	}
+	return out(map[string]any{"findings": len(findings), "evidenceBuilt": built, "skipped": skipped, "chainHead": prevChain})
+}
+
+func (o *Orchestrator) hasRunEvidence(ctx context.Context, findingID, runID string) (bool, error) {
+	items, err := o.deps.DB.Evidence().ForFinding(ctx, findingID)
+	if err != nil {
+		return false, err
+	}
+	for _, e := range items {
+		if e.RunID == runID {
+			return true, nil
 		}
 	}
-	return out(map[string]any{"findings": len(findings), "withEvidence": withEvidence})
+	return false, nil
+}
+
+func evidencePayload(f finding.Finding, snapshotHash string) []byte {
+	canonical := struct {
+		FindingID    string           `json:"findingId"`
+		Fingerprint  string           `json:"fingerprintKey"`
+		State        finding.State    `json:"state"`
+		Severity     finding.Severity `json:"severity"`
+		Confidence   float64          `json:"confidence"`
+		Gates        []string         `json:"gates,omitempty"`
+		WeaknessType string           `json:"weaknessClass,omitempty"`
+		AssetIDs     []string         `json:"assetIds,omitempty"`
+		SnapshotHash string           `json:"snapshotHash"`
+	}{
+		FindingID:    f.ID,
+		Fingerprint:  f.FingerprintKey,
+		State:        f.State,
+		Severity:     f.Severity,
+		Confidence:   f.Confidence.Value,
+		Gates:        f.Confidence.Gates,
+		WeaknessType: f.WeaknessClass,
+		AssetIDs:     f.AssetIDs,
+		SnapshotHash: snapshotHash,
+	}
+	data, _ := json.Marshal(canonical)
+	return data
 }
 
 func mandatoryFor(f finding.Finding) []string {
