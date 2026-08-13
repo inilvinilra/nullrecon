@@ -12,6 +12,7 @@ import (
 	"github.com/nullrecon/nullrecon/domain/asset"
 	exposuredomain "github.com/nullrecon/nullrecon/domain/exposure"
 	"github.com/nullrecon/nullrecon/domain/finding"
+	"github.com/nullrecon/nullrecon/domain/vulnerability"
 	"github.com/nullrecon/nullrecon/engines/exposure"
 	"github.com/nullrecon/nullrecon/engines/secretscan"
 	"github.com/nullrecon/nullrecon/engines/template"
@@ -142,7 +143,24 @@ func (o *Orchestrator) recordTemplateMatch(ctx context.Context, nc *workflow.Nod
 		fnd.ID = existing.ID
 		fnd.FirstSeen = existing.FirstSeen
 	}
-	return o.deps.DB.Findings().Upsert(ctx, fnd)
+	if err := o.deps.DB.Findings().Upsert(ctx, fnd); err != nil {
+		return err
+	}
+	if m.CVE != "" {
+		cand := vulnerability.New(nc.Run.ProjectID, assetID, vulnerability.MatchTemplate, "template", now)
+		cand.CVE = m.CVE
+		cand.VersionEvidence = m.URL
+		cand.State = vulnerability.CandVerified
+		if existing, ok, err := o.deps.DB.VulnCandidates().ByKey(ctx, assetID, m.CVE, vulnerability.MatchTemplate); err != nil {
+			return err
+		} else if ok {
+			cand.ID = existing.ID
+		}
+		if err := o.deps.DB.VulnCandidates().Upsert(ctx, cand); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (o *Orchestrator) recordExposure(ctx context.Context, nc *workflow.NodeContext, assetID string, f exposure.Finding) error {

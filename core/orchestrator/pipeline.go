@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"sort"
+	"strings"
 
 	"github.com/nullrecon/nullrecon/analysis/confidence"
 	"github.com/nullrecon/nullrecon/contracts"
@@ -173,17 +174,62 @@ func (o *Orchestrator) deduplicateSignals(ctx context.Context, nc *workflow.Node
 }
 
 func (o *Orchestrator) verifyCandidates(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
+	candidates, err := o.deps.DB.VulnCandidates().ForProject(ctx, nc.Run.ProjectID)
+	if err != nil {
+		return nil, nil, err
+	}
+	activeCorroboration := map[string]bool{}
+	for _, c := range candidates {
+		if c.MatchedBy == vulnerability.MatchTemplate || c.State == vulnerability.CandVerified {
+			activeCorroboration[c.AssetID+"|"+c.CVE] = true
+		}
+	}
 	findings, err := o.deps.DB.Findings().List(ctx, nc.Run.ProjectID)
 	if err != nil {
 		return nil, nil, err
 	}
-	verified := 0
+	model := confidence.DefaultModel()
+	upgraded := 0
+	alreadyActive := 0
 	for _, f := range findings {
-		if f.Confidence.ActiveVerification >= 0.8 || f.Confidence.CrossSource >= 0.5 {
-			verified++
+		cve, asset, ok := parseVulnKey(f.FingerprintKey)
+		if !ok {
+			continue
 		}
+		if f.Confidence.ActiveVerification >= 0.8 {
+			alreadyActive++
+			continue
+		}
+		if !activeCorroboration[asset+"|"+cve] {
+			continue
+		}
+		f.Confidence.ActiveVerification = 1.0
+		f.Confidence.CrossSource = 0.6
+		f.Confidence.Prerequisite = 1.0
+		f.Confidence.Fingerprint = 1.0
+		f.Confidence.Version = 1.0
+		decision := model.Decide(f.Confidence, mandatoryFor(f))
+		f.State = decision.State
+		f.Confidence.Value = decision.Value
+		f.Confidence.Gates = mergeGates(f.Confidence.Gates, append([]string{"active-template-corroborated"}, decision.Gates...))
+		if err := o.deps.DB.Findings().Upsert(ctx, f); err != nil {
+			return nil, nil, err
+		}
+		upgraded++
 	}
-	return out(map[string]any{"findings": len(findings), "verified": verified})
+	return out(map[string]any{"candidates": len(candidates), "activeCorroborations": len(activeCorroboration), "upgraded": upgraded, "alreadyActive": alreadyActive})
+}
+
+func parseVulnKey(key string) (cve, asset string, ok bool) {
+	if !strings.HasPrefix(key, "vuln:") {
+		return "", "", false
+	}
+	rest := strings.TrimPrefix(key, "vuln:")
+	idx := strings.LastIndex(rest, ":")
+	if idx <= 0 || idx == len(rest)-1 {
+		return "", "", false
+	}
+	return rest[:idx], rest[idx+1:], true
 }
 
 func (o *Orchestrator) scoreConfidence(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
