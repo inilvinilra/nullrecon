@@ -102,7 +102,35 @@ func (e *Engine) Discover(ctx context.Context, domain string, opts Options) (Sum
 		}
 		candidates = append(candidates, host)
 	}
+	e.resolveHosts(ctx, candidates, concurrency, perLookup, &summary)
+	summary.Resolved = len(summary.Results)
+	sort.Slice(summary.Results, func(i, j int) bool { return summary.Results[i].Host < summary.Results[j].Host })
+	return summary, nil
+}
 
+func (e *Engine) Verify(ctx context.Context, hosts []string) Summary {
+	summary := Summary{}
+	seen := map[string]bool{}
+	candidates := make([]string, 0, len(hosts))
+	for _, raw := range hosts {
+		host := strings.TrimSuffix(strings.ToLower(strings.TrimSpace(raw)), ".")
+		if host == "" || seen[host] {
+			continue
+		}
+		seen[host] = true
+		if d := e.snapshot.EvaluateAction(scopeguard.Target{Host: host}, "dnsresolve", e.now()); !d.Allowed {
+			summary.Blocked++
+			continue
+		}
+		candidates = append(candidates, host)
+	}
+	e.resolveHosts(ctx, candidates, 20, 3*time.Second, &summary)
+	summary.Resolved = len(summary.Results)
+	sort.Slice(summary.Results, func(i, j int) bool { return summary.Results[i].Host < summary.Results[j].Host })
+	return summary
+}
+
+func (e *Engine) resolveHosts(ctx context.Context, candidates []string, concurrency int, perLookup time.Duration, summary *Summary) {
 	jobs := make(chan string)
 	var mu sync.Mutex
 	var wg sync.WaitGroup
@@ -134,10 +162,6 @@ func (e *Engine) Discover(ctx context.Context, domain string, opts Options) (Sum
 	}
 	close(jobs)
 	wg.Wait()
-
-	summary.Resolved = len(summary.Results)
-	sort.Slice(summary.Results, func(i, j int) bool { return summary.Results[i].Host < summary.Results[j].Host })
-	return summary, nil
 }
 
 func (e *Engine) resolve(ctx context.Context, host string, timeout time.Duration) (Result, bool) {
