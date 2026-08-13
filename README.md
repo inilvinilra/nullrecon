@@ -9,8 +9,44 @@ capability is isolated behind stable, versioned contracts.
 
 ## Status
 
-Early development. See `docs/adr` for architecture decisions and `docs/roadmap.md` for the
-delivery phase plan.
+Working core with native, API-free detection engines and an optional provider layer.
+See `docs/adr` for architecture decisions and `docs/roadmap.md` for the delivery phase plan.
+
+## Capabilities
+
+All detection is first-party Go. External APIs are an optional enrichment layer, never a
+requirement — the native engines are designed to stand alone.
+
+| Capability | Engine | Native (no API) | Competes with |
+| --- | --- | --- | --- |
+| Subdomain discovery | `engines/dnsbrute` | yes | subfinder |
+| Port and service scan | `engines/portscan` | yes | nmap |
+| Web probe / TLS / fingerprint | `engines/webprobe`, `engines/fingerprint` | yes | httpx, whatweb |
+| Content discovery | `engines/contentdiscovery` | yes | ffuf, gobuster |
+| Template / exposure scan | `engines/template`, `engines/exposure` | yes | nuclei |
+| Secret / leak detection | `engines/secretscan` | yes | gitleaks, trufflehog |
+| Origin-IP discovery | `engines/originip` | yes | — |
+| Honeypot / deception sensing | `engines/honeysense` | yes | — |
+| Vulnerability intelligence | `engines/vulnmatch`, `engines/cvefeed` | version match native; CVE data via NVD/OSV/KEV/EPSS | — |
+| Confidence / false-positive control | `analysis/confidence` | yes | — |
+
+Every finding passes structural confidence gates: a passive signal alone can never reach the
+`confirmed` state; a version-inferred match is only confirmed by active corroboration.
+
+### CLI
+
+```
+nullrecon subdomain DOMAIN --project SLUG --label L --mode safeactive
+nullrecon portscan HOST --project SLUG --label L --mode safeactive --ports 80,443
+nullrecon discover URL --project SLUG --label L --mode authorizedtest --words-file W
+nullrecon template scan URL --project SLUG --label L --mode authorizedtest
+nullrecon exposure --project SLUG --label L --mode authorizedtest --url URL
+nullrecon cve sync (--kev | --since DATE [--until DATE]) ; nullrecon cve stats
+nullrecon service list ; nullrecon template list ; nullrecon vuln list --project SLUG
+nullrecon workflow run baseline --project SLUG --label L --mode authorizedtest
+nullrecon report build --project SLUG --format markdown
+nullrecon apikey create --name N --role viewer ; nullrecon serve --addr 127.0.0.1:8787
+```
 
 ## Layout
 
