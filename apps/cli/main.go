@@ -68,6 +68,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdScan(rest[1:])
 	case "origin":
 		return ctx.cmdOrigin(rest[1:])
+	case "subdomain":
+		return ctx.cmdSubdomain(rest[1:])
 	case "exposure":
 		return ctx.cmdExposure(rest[1:])
 	case "finding":
