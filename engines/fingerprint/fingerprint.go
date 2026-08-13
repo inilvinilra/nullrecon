@@ -191,7 +191,7 @@ func matchRule(c Compiled, f Features) (matchDetail, bool) {
 	return matchDetail{}, false
 }
 
-var versionPattern = regexp.MustCompile(`(?i)([0-9]+\.[0-9]+(\.[0-9]+){0,2})`)
+var versionPattern = regexp.MustCompile(`([0-9]+\.[0-9]+(\.[0-9]+){0,2}[a-z]?)`)
 
 func extractVersion(re *regexp.Regexp, text string) string {
 	if re == nil || text == "" {
