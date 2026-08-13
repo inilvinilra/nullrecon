@@ -29,6 +29,7 @@ type Scope struct {
 	CIDRs               []string     `json:"cidrs,omitempty"`
 	URLPrefixes         []string     `json:"urlPrefixes,omitempty"`
 	Ports               []int        `json:"ports,omitempty"`
+	PortRanges          []PortRange  `json:"portRanges,omitempty"`
 	Protocols           []string     `json:"protocols,omitempty"`
 	TestAccounts        []string     `json:"testAccounts,omitempty"`
 	ScanClasses         []string     `json:"scanClasses,omitempty"`
@@ -43,6 +44,15 @@ type Scope struct {
 	TimeWindows         []TimeWindow `json:"timeWindows,omitempty"`
 	RetentionDays       int          `json:"retentionDays,omitempty"`
 	EmergencyStop       []string     `json:"emergencyStop,omitempty"`
+}
+
+type PortRange struct {
+	Start int `json:"start"`
+	End   int `json:"end"`
+}
+
+func (r PortRange) contains(port int) bool {
+	return port >= r.Start && port <= r.End
 }
 
 func NewScope() Scope {

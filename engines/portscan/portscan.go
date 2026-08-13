@@ -55,6 +55,27 @@ func (e *Engine) WithBanners(enabled bool) *Engine {
 	return e
 }
 
+func (e *Engine) WithConcurrency(n int) *Engine {
+	if n > 0 {
+		e.maxConcurrency = n
+	}
+	return e
+}
+
+func (e *Engine) WithDialTimeout(d time.Duration) *Engine {
+	if d > 0 {
+		e.dialTimeout = d
+	}
+	return e
+}
+
+func (e *Engine) WithAttempts(n int) *Engine {
+	if n > 0 {
+		e.dialAttempts = n
+	}
+	return e
+}
+
 func (e *Engine) Scan(ctx context.Context, target scopeguard.Target, ports []int) (HostResult, error) {
 	res := HostResult{Target: target.Host + target.IP}
 	sem := make(chan struct{}, e.maxConcurrency)

@@ -158,7 +158,7 @@ func hostMatches(allowed, host string) bool {
 
 func (s Snapshot) portAllowed(port int, protocol string) (string, bool) {
 	if port != 0 {
-		if len(s.Scope.Ports) == 0 {
+		if len(s.Scope.Ports) == 0 && len(s.Scope.PortRanges) == 0 {
 			return fmt.Sprintf("port %d requested but scope allows no explicit ports", port), false
 		}
 		found := false
@@ -166,6 +166,14 @@ func (s Snapshot) portAllowed(port int, protocol string) (string, bool) {
 			if p == port {
 				found = true
 				break
+			}
+		}
+		if !found {
+			for _, r := range s.Scope.PortRanges {
+				if r.contains(port) {
+					found = true
+					break
+				}
 			}
 		}
 		if !found {
