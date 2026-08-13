@@ -1,0 +1,1 @@
+{"items":[{"data":{"ip":"192.0.2.10","port":443,"uri":"https://www.example.com:443/","host":"www.example.com","protocol":"https"}},{"data":{"ip":"192.0.2.12","port":9200,"uri":"http://192.0.2.12:9200/"}}],"total":40}

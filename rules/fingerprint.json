@@ -1,0 +1,22 @@
+{
+  "kind": "ruleset",
+  "version": "nr.rules/v1",
+  "name": "fingerprint-baseline",
+  "rules": [
+    {"product": "nginx", "vendor": "F5", "cpe": "cpe:/a:f5:nginx", "weight": 0.9, "match": {"headerName": "server", "headerValue": "^nginx/?([0-9.]+)?"}},
+    {"product": "apache http server", "vendor": "Apache", "cpe": "cpe:/a:apache:http_server", "weight": 0.9, "match": {"headerName": "server", "headerValue": "^Apache/?([0-9.]+)?"}},
+    {"product": "iis", "vendor": "Microsoft", "cpe": "cpe:/a:microsoft:internet_information_services", "weight": 0.9, "match": {"headerName": "server", "headerValue": "^Microsoft-IIS/([0-9.]+)"}},
+    {"product": "cloudflare", "vendor": "Cloudflare", "weight": 0.7, "match": {"headerName": "server", "headerValue": "^cloudflare$"}},
+    {"product": "wordpress", "vendor": "WordPress", "cpe": "cpe:/a:wordpress:wordpress", "weight": 0.6, "match": {"body": "wp-content/"}},
+    {"product": "wordpress", "vendor": "WordPress", "cpe": "cpe:/a:wordpress:wordpress", "weight": 0.5, "match": {"cookie": "wordpress_"}},
+    {"product": "php", "vendor": "PHP Group", "cpe": "cpe:/a:php:php", "weight": 0.8, "match": {"headerName": "x-powered-by", "headerValue": "PHP/([0-9.]+)"}},
+    {"product": "php", "vendor": "PHP Group", "cpe": "cpe:/a:php:php", "weight": 0.4, "match": {"cookie": "PHPSESSID"}},
+    {"product": "laravel", "vendor": "Laravel", "weight": 0.6, "match": {"cookie": "laravel_session"}},
+    {"product": "express", "vendor": "OpenJS", "weight": 0.7, "match": {"headerName": "x-powered-by", "headerValue": "^Express$"}},
+    {"product": "grafana", "vendor": "Grafana Labs", "cpe": "cpe:/a:grafana:grafana", "weight": 0.8, "match": {"title": "^Grafana"}},
+    {"product": "jenkins", "vendor": "Jenkins", "cpe": "cpe:/a:jenkins:jenkins", "weight": 0.8, "match": {"headerName": "x-jenkins", "headerValue": "^([0-9.]+)"}},
+    {"product": "openssh", "vendor": "OpenBSD", "cpe": "cpe:/a:openbsd:openssh", "weight": 0.95, "match": {"banner": "^SSH-[0-9.]+-OpenSSH_([0-9.]+)"}},
+    {"product": "mysql", "vendor": "Oracle", "cpe": "cpe:/a:mysql:mysql", "weight": 0.9, "match": {"banner": "mysql"}},
+    {"product": "jQuery", "vendor": "OpenJS", "weight": 0.5, "match": {"body": "jquery[-.]?([0-9.]+)?(min)?\\.js"}}
+  ]
+}

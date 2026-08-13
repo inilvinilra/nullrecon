@@ -1,0 +1,10 @@
+bin/nullrecon
+bin/
+data/
+*.db
+*.db-wal
+*.db-shm
+coverage.out
+dist/
+node_modules/
+.DS_Store

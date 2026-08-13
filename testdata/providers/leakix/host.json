@@ -1,0 +1,1 @@
+{"Services":[{"ip":"192.0.2.30","port":"443","protocol":"https","time":"2026-08-01T10:00:00Z"}],"Leaks":[{"ip":"192.0.2.30","port":"9200","type":"elasticsearch","time":"2026-07-01T10:00:00Z","plugin":"ElasticSearchExplorePlugin","dataset":{"rows":10,"size":4096,"infected":true}}]}

@@ -1,0 +1,1 @@
+{"ip_str":"192.0.2.10","ports":[22,443],"hostnames":["www.example.com"],"org":"Example Org","os":null,"data":[{"port":22,"transport":"tcp","product":"OpenSSH","version":"9.6","cpe":["cpe:/a:openbsd:openssh:9.6"],"timestamp":"2026-08-01T10:00:00.123456"},{"port":443,"transport":"tcp","product":"nginx","timestamp":"2026-08-01T10:00:00.123456"}],"vulns":["CVE-2023-0000"]}

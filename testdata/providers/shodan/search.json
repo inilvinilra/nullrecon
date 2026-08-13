@@ -1,0 +1,1 @@
+{"total":150,"matches":[{"ip_str":"192.0.2.10","ports":[443],"hostnames":["www.example.com"],"data":[{"port":443,"transport":"tcp","product":"nginx","timestamp":"2026-08-01T10:00:00.123456"}]},{"ip_str":"192.0.2.11","ports":[3306],"data":[{"port":3306,"transport":"tcp","product":"MySQL","version":"8.0.36","timestamp":"2026-08-01T11:00:00.123456"}]}]}

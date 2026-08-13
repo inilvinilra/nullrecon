@@ -1,0 +1,1 @@
+[{"ip":"192.0.2.20","port":"9200","type":"elasticsearch","time":"2026-08-01T15:20:56Z","plugin":"ElasticSearchExplorePlugin","network":{"organization_name":"Example ISP","asn":64501},"geoip":{"country_iso_code":"US"},"dataset":{"rows":1000,"size":2048000,"databases":3,"infected":false}}]
