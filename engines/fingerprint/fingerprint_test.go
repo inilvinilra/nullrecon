@@ -50,7 +50,7 @@ func TestHeaderMatch(t *testing.T) {
 	if got[0].Version != "1.25.0" {
 		t.Fatalf("version must be extracted: %+v", got[0])
 	}
-	if got[0].CPE[0] != "cpe:/a:f5:nginx" {
+	if got[0].CPE[0] != "cpe:/a:nginx:nginx" {
 		t.Fatalf("cpe candidate must be attached: %+v", got[0].CPE)
 	}
 	if len(got[0].Evidence) == 0 {
@@ -71,14 +71,14 @@ func TestMultipleSignalsAggregate(t *testing.T) {
 	if byProduct["wordpress"] <= 0.6 {
 		t.Fatalf("two wordpress signals must aggregate above single weight: %v", byProduct)
 	}
-	if byProduct["jQuery"] == 0 {
+	if byProduct["jquery"] == 0 {
 		t.Fatal("jquery must be detected from script tag")
 	}
 }
 
 func TestNoMatchReturnsEmpty(t *testing.T) {
 	e, _ := NewEngine(loadBaseline(t))
-	got := e.Apply(Features{Headers: map[string]string{"server": "caddy"}, Title: "Hello"})
+	got := e.Apply(Features{Headers: map[string]string{"server": "Zervana/9.9"}, Title: "Hello"})
 	if len(got) != 0 {
 		t.Fatalf("unknown stack must yield no candidates: %+v", got)
 	}

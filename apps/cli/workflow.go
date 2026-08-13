@@ -2,9 +2,7 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
@@ -147,13 +145,7 @@ func (c commandContext) workflowRun(args []string) int {
 		return c.fail(exitError, "%v", err)
 	}
 	exec := registry.NewExecutor(reg, vaultResolver{db: db, vault: vault}, raw)
-	var fp *fingerprint.Engine
-	if data, err := os.ReadFile("rules/fingerprint.json"); err == nil {
-		var set fingerprint.RuleSet
-		if err := json.Unmarshal(data, &set); err == nil {
-			fp, _ = fingerprint.NewEngine(set)
-		}
-	}
+	fp, _ := fingerprint.DefaultEngine()
 	idemKey, ok := flagValue(args, "--idempotency-key")
 	if !ok {
 		idemKey = contracts.NewID("idem")

@@ -72,6 +72,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdSubdomain(rest[1:])
 	case "portscan":
 		return ctx.cmdPortscan(rest[1:])
+	case "tech":
+		return ctx.cmdTech(rest[1:])
 	case "discover":
 		return ctx.cmdDiscover(rest[1:])
 	case "exposure":
