@@ -79,9 +79,19 @@ func (c commandContext) cveSync(db *database.DB, args []string) int {
 				queries = append(queries, syncQuery{provider: "nvd", query: registry.Query{Capability: registry.CapCVELookup, Params: map[string]string{"lastModStartDate": wnd.start, "lastModEndDate": wnd.end}}})
 			}
 		}
+		if pubSince, ok := flagValue(args, "--pub-since"); ok {
+			pubUntil, _ := flagValue(args, "--pub-until")
+			windows, err := cveWindows(pubSince, pubUntil)
+			if err != nil {
+				return c.fail(exitUsage, "%v", err)
+			}
+			for _, wnd := range windows {
+				queries = append(queries, syncQuery{provider: "nvd", query: registry.Query{Capability: registry.CapCVELookup, Params: map[string]string{"pubStartDate": wnd.start, "pubEndDate": wnd.end}}})
+			}
+		}
 	}
 	if len(queries) == 0 {
-		return c.fail(exitUsage, "cve sync requires one of --kev, --cve, --keyword, or --since")
+		return c.fail(exitUsage, "cve sync requires one of --kev, --cve, --keyword, --since, or --pub-since")
 	}
 
 	delay := syncDelay(ctx, db)

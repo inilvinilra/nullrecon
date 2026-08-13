@@ -40,6 +40,7 @@ func (a *Adapter) Describe() registry.Descriptor {
 	d.Terms = "https://nvd.nist.gov/developers/terms-of-use"
 	d.Redistribution = "public domain data; attribution requested"
 	d.CacheTTLSeconds = 21600
+	d.Retry = registry.RetryPolicy{MaxAttempts: 5, BaseDelayMS: 8000}
 	return d
 }
 
@@ -119,6 +120,11 @@ func (a *Adapter) Build(q registry.Query, secret string) (registry.RequestSpec, 
 			query["lastModStartDate"] = q.Params["lastModStartDate"]
 			if q.Params["lastModEndDate"] != "" {
 				query["lastModEndDate"] = q.Params["lastModEndDate"]
+			}
+		case q.Params["pubStartDate"] != "":
+			query["pubStartDate"] = q.Params["pubStartDate"]
+			if q.Params["pubEndDate"] != "" {
+				query["pubEndDate"] = q.Params["pubEndDate"]
 			}
 		default:
 			return registry.RequestSpec{}, fmt.Errorf("nvd: one of cveId, cpeName, keyword, or lastModStartDate is required")

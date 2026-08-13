@@ -267,7 +267,7 @@ func (e *Executor) doOnce(ctx context.Context, d Descriptor, spec RequestSpec) (
 			out.Headers[k] = resp.Header.Get(k)
 		}
 	}
-	if resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode >= 500 {
+	if resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode == http.StatusForbidden || resp.StatusCode >= 500 {
 		return out, true, fmt.Errorf("registry: provider %s status %d", d.Name, resp.StatusCode)
 	}
 	if resp.StatusCode >= 400 {
