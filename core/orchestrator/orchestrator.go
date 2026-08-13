@@ -63,6 +63,7 @@ func (o *Orchestrator) RegisterAll(e *workflow.Engine) {
 	e.Register("NormalizeAssets", o.normalizeAssets)
 	e.Register("ResolveOwnership", o.resolveOwnership)
 	e.Register("BuildAssetGraph", o.buildAssetGraph)
+	e.Register("DiscoverSubdomains", o.discoverSubdomains)
 	e.Register("PlanSafeActive", o.planSafeActive)
 	e.Register("ProbeHosts", o.probeHosts)
 	e.Register("DiscoverServices", o.discoverServices)

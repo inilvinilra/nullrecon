@@ -22,8 +22,8 @@ func TestBaselineValidates(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(order) != 25 {
-		t.Fatalf("baseline must have 25 nodes, got %d", len(order))
+	if len(order) != 26 {
+		t.Fatalf("baseline must have 26 nodes, got %d", len(order))
 	}
 	seen := map[string]int{}
 	for i, n := range order {
@@ -253,7 +253,7 @@ func TestPlanDryRun(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if report.SnapshotHash == "" || len(report.Nodes) != 25 {
+	if report.SnapshotHash == "" || len(report.Nodes) != 26 {
 		t.Fatalf("bad report: %+v", report)
 	}
 	for _, n := range report.Nodes {

@@ -139,8 +139,13 @@ func (o *Orchestrator) fingerprintTechnologies(ctx context.Context, nc *workflow
 		if res.TLS != nil {
 			features.TLSIssuer = res.TLS.IssuerCN
 		}
+		assetID := ev.Provenance.SourceID
+		if assetID == "" {
+			continue
+		}
 		for _, tech := range o.deps.Fingerprints.Apply(features) {
 			tech.ProjectID = nc.Run.ProjectID
+			tech.AssetID = assetID
 			tech.ObservedAt = o.now()
 			if err := o.deps.DB.Technologies().Upsert(ctx, tech); err != nil {
 				return nil, nil, err

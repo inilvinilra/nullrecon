@@ -134,7 +134,8 @@ func Baseline() Workflow {
 		n("BuildAssetGraph", "", "ResolveOwnership"),
 	}
 	active := []Node{
-		n("PlanSafeActive", "", "BuildAssetGraph"),
+		n("DiscoverSubdomains", policy.ActionDNSResolve, "BuildAssetGraph"),
+		n("PlanSafeActive", "", "DiscoverSubdomains"),
 		n("ProbeHosts", policy.ActionTCPConnect, "PlanSafeActive"),
 		n("DiscoverServices", policy.ActionServiceProbe, "ProbeHosts"),
 		n("FingerprintTechnologies", policy.ActionTechFingerprint, "DiscoverServices"),
