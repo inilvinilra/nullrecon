@@ -160,3 +160,25 @@ func TestFreshnessDecay(t *testing.T) {
 		t.Fatal("missing observation time must score low")
 	}
 }
+
+func TestIngestHostnameKindRecord(t *testing.T) {
+	in, db, projectID := setup(t)
+	ctx := context.Background()
+	records := []registry.Record{
+		{Kind: "hostname", Value: "www.example.com", Fields: map[string]string{"hostname": "www.example.com"}, FreshnessClass: "continuous", ObservedAt: time.Now().UTC()},
+		{Kind: "hostname", Value: "api.example.com", Fields: map[string]string{"hostname": "api.example.com"}, FreshnessClass: "continuous", ObservedAt: time.Now().UTC()},
+	}
+	stats, err := in.Ingest(ctx, projectID, "crtsh", records)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if stats.Assets != 2 {
+		t.Fatalf("crt.sh hostname records must create 2 host assets, got %d", stats.Assets)
+	}
+	if _, err := db.Assets().ByValue(ctx, projectID, asset.KindHostname, "www.example.com"); err != nil {
+		t.Fatalf("hostname asset from crt.sh must exist: %v", err)
+	}
+	if _, err := db.Assets().ByValue(ctx, projectID, asset.KindHostname, "api.example.com"); err != nil {
+		t.Fatalf("second hostname asset must exist: %v", err)
+	}
+}

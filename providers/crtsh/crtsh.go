@@ -34,6 +34,7 @@ func (a *Adapter) Describe() registry.Descriptor {
 	d.Terms = "https://crt.sh"
 	d.Redistribution = "public certificate transparency data"
 	d.CacheTTLSeconds = 3600
+	d.TimeoutSeconds = 90
 	return d
 }
 

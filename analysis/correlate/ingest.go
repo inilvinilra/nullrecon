@@ -66,6 +66,14 @@ func (in *Ingestor) Ingest(ctx context.Context, projectID, source string, record
 	return stats, nil
 }
 
+func isHostKind(kind string) bool {
+	switch kind {
+	case "hostname", "subdomain", "domain":
+		return true
+	}
+	return false
+}
+
 func (in *Ingestor) ingestOne(ctx context.Context, projectID, source string, rec registry.Record, stats *Stats) error {
 	now := in.now().UTC()
 	var ipAsset, hostAsset *asset.Asset
@@ -81,7 +89,14 @@ func (in *Ingestor) ingestOne(ctx context.Context, projectID, source string, rec
 		ipAsset = &a
 		stats.Assets++
 	}
-	if rawHost := rec.Fields["host"]; rawHost != "" {
+	rawHost := rec.Fields["host"]
+	if rawHost == "" {
+		rawHost = rec.Fields["hostname"]
+	}
+	if rawHost == "" && isHostKind(rec.Kind) {
+		rawHost = rec.Value
+	}
+	if rawHost != "" {
 		host, err := normalize.Host(rawHost)
 		if err == nil {
 			if _, ipErr := normalize.IP(host); ipErr != nil {
@@ -95,22 +110,6 @@ func (in *Ingestor) ingestOne(ctx context.Context, projectID, source string, rec
 				}
 			}
 		}
-	}
-	if rec.Kind == "domain" && rec.Value != "" {
-		host, err := normalize.Host(rec.Value)
-		if err != nil {
-			return err
-		}
-		kind, kerr := normalize.KindForValue(host)
-		if kerr != nil {
-			return kerr
-		}
-		a, err := in.upsert(ctx, projectID, kind, host)
-		if err != nil {
-			return err
-		}
-		hostAsset = &a
-		stats.Assets++
 	}
 	for _, a := range []*asset.Asset{ipAsset, hostAsset} {
 		if a == nil {
