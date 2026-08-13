@@ -1009,6 +1009,445 @@
       },
       "vendor": "microsoft",
       "cpe": "cpe:/a:microsoft:exchange_server"
+    },
+    {
+      "product": "google_analytics",
+      "weight": 0.4,
+      "match": {
+        "body": "google-analytics\\.com/(ga|analytics)\\.js|gtag\\('config'|UA-[0-9]+-[0-9]|GoogleAnalyticsObject"
+      },
+      "vendor": "google"
+    },
+    {
+      "product": "google_tag_manager",
+      "weight": 0.4,
+      "match": {
+        "body": "googletagmanager\\.com/gtm\\.js|GTM-[A-Z0-9]+"
+      },
+      "vendor": "google"
+    },
+    {
+      "product": "facebook_pixel",
+      "weight": 0.3,
+      "match": {
+        "body": "connect\\.facebook\\.net/[^/]+/fbevents\\.js|fbq\\('init'"
+      },
+      "vendor": "facebook"
+    },
+    {
+      "product": "hotjar",
+      "weight": 0.3,
+      "match": {
+        "body": "static\\.hotjar\\.com|hj\\('|_hjSettings"
+      }
+    },
+    {
+      "product": "matomo",
+      "weight": 0.4,
+      "match": {
+        "body": "matomo\\.js|piwik\\.js|_paq\\.push"
+      },
+      "vendor": "matomo"
+    },
+    {
+      "product": "shopify",
+      "weight": 0.6,
+      "match": {
+        "headerName": "x-shopify-stage",
+        "headerValue": ".+"
+      },
+      "vendor": "shopify"
+    },
+    {
+      "product": "shopify",
+      "weight": 0.5,
+      "match": {
+        "body": "cdn\\.shopify\\.com|Shopify\\.theme"
+      },
+      "vendor": "shopify"
+    },
+    {
+      "product": "wix",
+      "weight": 0.5,
+      "match": {
+        "body": "static\\.wixstatic\\.com|X-Wix-"
+      },
+      "vendor": "wix"
+    },
+    {
+      "product": "squarespace",
+      "weight": 0.5,
+      "match": {
+        "body": "static1\\.squarespace\\.com|Squarespace"
+      },
+      "vendor": "squarespace"
+    },
+    {
+      "product": "bitrix",
+      "weight": 0.5,
+      "match": {
+        "body": "bitrix/js|/bitrix/templates|BX\\.message"
+      },
+      "vendor": "1c-bitrix",
+      "cpe": "cpe:/a:1c-bitrix:bitrix24"
+    },
+    {
+      "product": "umbraco",
+      "weight": 0.5,
+      "match": {
+        "body": "/umbraco/|Umbraco\\.Sys"
+      },
+      "vendor": "umbraco"
+    },
+    {
+      "product": "sitecore",
+      "weight": 0.5,
+      "match": {
+        "body": "/sitecore/|Sitecore\\."
+      },
+      "vendor": "sitecore"
+    },
+    {
+      "product": "dotnetnuke",
+      "weight": 0.5,
+      "match": {
+        "body": "/DesktopModules/|DotNetNuke|dnn_"
+      },
+      "vendor": "dnnsoftware"
+    },
+    {
+      "product": "concrete5",
+      "weight": 0.5,
+      "match": {
+        "body": "concrete5|/concrete/|CCM_"
+      }
+    },
+    {
+      "product": "silverstripe",
+      "weight": 0.4,
+      "match": {
+        "body": "SilverStripe|/framework/|ss_"
+      }
+    },
+    {
+      "product": "craftcms",
+      "weight": 0.4,
+      "match": {
+        "headerName": "x-powered-by",
+        "headerValue": "Craft CMS"
+      },
+      "vendor": "craftcms"
+    },
+    {
+      "product": "statamic",
+      "weight": 0.4,
+      "match": {
+        "body": "Statamic|/vendor/statamic"
+      }
+    },
+    {
+      "product": "october_cms",
+      "weight": 0.4,
+      "match": {
+        "body": "October CMS|/modules/system/assets"
+      }
+    },
+    {
+      "product": "contao",
+      "weight": 0.4,
+      "match": {
+        "body": "Contao Open Source CMS|/system/modules"
+      }
+    },
+    {
+      "product": "nette",
+      "weight": 0.4,
+      "match": {
+        "cookie": "nette-"
+      }
+    },
+    {
+      "product": "phalcon",
+      "weight": 0.4,
+      "match": {
+        "headerName": "x-powered-by",
+        "headerValue": "Phalcon"
+      }
+    },
+    {
+      "product": "fastapi",
+      "weight": 0.4,
+      "match": {
+        "body": "\"detail\":\\[|FastAPI|/openapi\\.json"
+      }
+    },
+    {
+      "product": "gin",
+      "weight": 0.3,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Gin"
+      }
+    },
+    {
+      "product": "fiber",
+      "weight": 0.3,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Fiber"
+      }
+    },
+    {
+      "product": "actix",
+      "weight": 0.3,
+      "match": {
+        "headerName": "server",
+        "headerValue": "actix-web"
+      }
+    },
+    {
+      "product": "phoenix",
+      "weight": 0.4,
+      "match": {
+        "cookie": "_phoenix"
+      },
+      "vendor": "phoenixframework"
+    },
+    {
+      "product": "meteor",
+      "weight": 0.4,
+      "match": {
+        "body": "__meteor_runtime_config__|meteor_js_resource"
+      }
+    },
+    {
+      "product": "svelte",
+      "weight": 0.3,
+      "match": {
+        "body": "__SVELTE|svelte-[0-9a-z]{6}"
+      }
+    },
+    {
+      "product": "ember",
+      "weight": 0.3,
+      "match": {
+        "body": "ember-application|window\\.EmberENV"
+      }
+    },
+    {
+      "product": "gatsby",
+      "weight": 0.4,
+      "match": {
+        "body": "___gatsby|/page-data/|gatsby-"
+      }
+    },
+    {
+      "product": "remix",
+      "weight": 0.4,
+      "match": {
+        "body": "__remixContext|/build/_shared/"
+      }
+    },
+    {
+      "product": "astro",
+      "weight": 0.3,
+      "match": {
+        "body": "astro-island|/_astro/"
+      }
+    },
+    {
+      "product": "kestrel",
+      "weight": 0.5,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Kestrel"
+      },
+      "vendor": "microsoft"
+    },
+    {
+      "product": "uvicorn",
+      "weight": 0.5,
+      "match": {
+        "headerName": "server",
+        "headerValue": "uvicorn"
+      }
+    },
+    {
+      "product": "hypercorn",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "hypercorn"
+      }
+    },
+    {
+      "product": "daphne",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Daphne"
+      }
+    },
+    {
+      "product": "puma",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Puma"
+      }
+    },
+    {
+      "product": "unicorn",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Unicorn"
+      }
+    },
+    {
+      "product": "thin",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "thin"
+      }
+    },
+    {
+      "product": "webrick",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "WEBrick"
+      }
+    },
+    {
+      "product": "werkzeug",
+      "weight": 0.5,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Werkzeug/([0-9.]+)"
+      }
+    },
+    {
+      "product": "tornado",
+      "weight": 0.5,
+      "match": {
+        "headerName": "server",
+        "headerValue": "TornadoServer/([0-9.]+)"
+      }
+    },
+    {
+      "product": "kong",
+      "weight": 0.5,
+      "match": {
+        "headerName": "via",
+        "headerValue": "kong/([0-9.]+)"
+      },
+      "vendor": "kong"
+    },
+    {
+      "product": "envoy",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "envoy"
+      },
+      "vendor": "envoyproxy"
+    },
+    {
+      "product": "istio",
+      "weight": 0.4,
+      "match": {
+        "headerName": "x-envoy-upstream-service-time",
+        "headerValue": ".+"
+      }
+    },
+    {
+      "product": "aws-elb",
+      "weight": 0.4,
+      "match": {
+        "cookie": "AWSALB"
+      },
+      "vendor": "amazon"
+    },
+    {
+      "product": "aws-elb",
+      "weight": 0.4,
+      "match": {
+        "cookie": "AWSELB"
+      },
+      "vendor": "amazon"
+    },
+    {
+      "product": "gunicorn-hdr",
+      "weight": 0.5,
+      "match": {
+        "headerName": "server",
+        "headerValue": "gunicorn/([0-9.]+)"
+      }
+    },
+    {
+      "product": "cloudfront",
+      "weight": 0.5,
+      "match": {
+        "headerName": "x-cache",
+        "headerValue": "cloudfront|Hit from cloudfront|Miss from cloudfront"
+      },
+      "vendor": "amazon"
+    },
+    {
+      "product": "bunnycdn",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "BunnyCDN"
+      }
+    },
+    {
+      "product": "keycdn",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "KeyCDN"
+      }
+    },
+    {
+      "product": "stackpath",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "StackPath"
+      }
+    },
+    {
+      "product": "ddos-guard",
+      "weight": 0.4,
+      "match": {
+        "cookie": "__ddg"
+      }
+    },
+    {
+      "product": "qrator",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "QRATOR"
+      }
+    },
+    {
+      "product": "modsecurity",
+      "weight": 0.4,
+      "match": {
+        "headerName": "server",
+        "headerValue": "mod_security|Mod_Security"
+      }
+    },
+    {
+      "product": "wordfence",
+      "weight": 0.4,
+      "match": {
+        "body": "wordfence|wfls-"
+      }
     }
   ]
 }
