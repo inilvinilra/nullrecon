@@ -486,6 +486,511 @@
         "<!DOCTYPE",
         "<html>"
       ]
+    },
+    {
+      "id": "gitlab-ci",
+      "path": ".gitlab-ci.yml",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "stages:",
+        "script:",
+        "image:",
+        "before_script:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "github-workflow",
+      "path": ".github/workflows/main.yml",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "runs-on:",
+        "uses:",
+        "jobs:",
+        "steps:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "circleci",
+      "path": ".circleci/config.yml",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "version:",
+        "jobs:",
+        "workflows:",
+        "orbs:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "travis",
+      "path": ".travis.yml",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "language:",
+        "script:",
+        "install:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "jenkinsfile",
+      "path": "Jenkinsfile",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "pipeline {",
+        "node {",
+        "stage(",
+        "agent "
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "makefile",
+      "path": "Makefile",
+      "category": "config",
+      "severity": "low",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "(?m)^[a-zA-Z0-9_.-]+:\\s*$|^\\t@?[a-z]"
+    },
+    {
+      "id": "dockerignore",
+      "path": ".dockerignore",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "node_modules",
+        ".git",
+        "*.log",
+        "Dockerfile"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "gitignore",
+      "path": ".gitignore",
+      "category": "config",
+      "severity": "low",
+      "mustContainAny": [
+        "node_modules/",
+        "*.log",
+        ".env",
+        ".DS_Store",
+        "__pycache__"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "gitlab-runner-config",
+      "path": "config.toml",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "[[runners]]",
+        "concurrent",
+        "registration_token",
+        "token ="
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "kube-config",
+      "path": ".kube/config",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "apiVersion: v1",
+        "clusters:",
+        "client-certificate-data",
+        "current-context"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "kubeconfig-yaml",
+      "path": "kubeconfig",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "client-key-data",
+        "certificate-authority-data",
+        "current-context"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "aws-config",
+      "path": ".aws/config",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "[default]",
+        "region =",
+        "output =",
+        "aws_access_key"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "gcloud-creds",
+      "path": "application_default_credentials.json",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "\"client_secret\"",
+        "\"refresh_token\"",
+        "\"type\": \"authorized_user\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "service-account-json",
+      "path": "service-account.json",
+      "category": "secret",
+      "severity": "critical",
+      "mustContain": [
+        "\"type\": \"service_account\""
+      ],
+      "mustContainAny": [
+        "\"private_key\"",
+        "\"client_email\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "ssh-config",
+      "path": ".ssh/config",
+      "category": "secret",
+      "severity": "medium",
+      "mustContainAny": [
+        "Host ",
+        "IdentityFile",
+        "HostName",
+        "ProxyCommand"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "known-hosts",
+      "path": ".ssh/known_hosts",
+      "category": "leak",
+      "severity": "low",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "ssh-(rsa|ed25519|dss)|ecdsa-sha2"
+    },
+    {
+      "id": "bash-history",
+      "path": ".bash_history",
+      "category": "leak",
+      "severity": "medium",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "(?m)^(cd|ls|git|ssh|curl|wget|sudo|export|mysql|psql) "
+    },
+    {
+      "id": "mysql-history",
+      "path": ".mysql_history",
+      "category": "leak",
+      "severity": "medium",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "(?i)(select|insert|update|create|drop|grant)\\s"
+    },
+    {
+      "id": "pgpass",
+      "path": ".pgpass",
+      "category": "secret",
+      "severity": "high",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "[^:]+:[0-9]+:[^:]+:[^:]+:[^:]+"
+    },
+    {
+      "id": "my-cnf",
+      "path": ".my.cnf",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "[client]",
+        "[mysql]",
+        "password="
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "wp-debug-log",
+      "path": "wp-content/debug.log",
+      "category": "leak",
+      "severity": "medium",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "\\[[0-9]{2}-[A-Za-z]{3}-[0-9]{4}|PHP (Warning|Notice|Fatal|Deprecated)"
+    },
+    {
+      "id": "error-log",
+      "path": "error.log",
+      "category": "leak",
+      "severity": "low",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "\\[[a-zA-Z]{3} [A-Za-z]{3} [0-9]|PHP (Warning|Fatal|Notice)"
+    },
+    {
+      "id": "access-log",
+      "path": "access.log",
+      "category": "leak",
+      "severity": "low",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "\"(GET|POST|PUT|HEAD) [^\"]* HTTP/[0-9.]+\""
+    },
+    {
+      "id": "npm-debug",
+      "path": "npm-debug.log",
+      "category": "leak",
+      "severity": "low",
+      "mustContainAny": [
+        "npm ERR!",
+        "verbose stack",
+        "silly "
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "yarn-error",
+      "path": "yarn-error.log",
+      "category": "leak",
+      "severity": "low",
+      "mustContainAny": [
+        "Error:",
+        "yarn install",
+        "at Object"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "config-json",
+      "path": "config.json",
+      "category": "config",
+      "severity": "low",
+      "mustContain": [
+        "{"
+      ],
+      "mustContainAny": [
+        "\"host\"",
+        "\"port\"",
+        "\"database\"",
+        "\"password\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "appsettings",
+      "path": "appsettings.json",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "ConnectionStrings",
+        "DefaultConnection",
+        "\"Password\"",
+        "\"Jwt\""
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
+    },
+    {
+      "id": "application-properties",
+      "path": "application.properties",
+      "category": "secret",
+      "severity": "high",
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "(?m)^(spring\\.datasource|server\\.port|.*password)="
+    },
+    {
+      "id": "application-yml",
+      "path": "application.yml",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "datasource:",
+        "password:",
+        "spring:",
+        "server:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ]
     }
   ]
 }
