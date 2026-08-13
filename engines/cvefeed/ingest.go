@@ -46,6 +46,9 @@ func (in *Ingestor) Merge(records []registry.Record) []cve.Record {
 		}
 		switch rec.Kind {
 		case "cve":
+			if rec.Fields["status"] == "Rejected" {
+				continue
+			}
 			r := get(id)
 			applyNVD(r, rec)
 		case "kev":

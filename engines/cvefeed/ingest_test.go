@@ -78,3 +78,14 @@ func TestParseCPEEscaping(t *testing.T) {
 		t.Fatalf("escaped colon must be preserved: vendor=%q product=%q", vendor, product)
 	}
 }
+
+func TestMergeSkipsRejectedCVE(t *testing.T) {
+	records := []registry.Record{
+		{Kind: "cve", Value: "CVE-2099-9999", Fields: map[string]string{"status": "Rejected", "cvssScore": "0"}},
+		{Kind: "cve", Value: "CVE-2021-44228", Fields: map[string]string{"status": "Analyzed", "cvssScore": "10"}},
+	}
+	merged := NewIngestor().Merge(records)
+	if len(merged) != 1 || merged[0].CVE != "CVE-2021-44228" {
+		t.Fatalf("rejected CVE must be dropped, got %+v", merged)
+	}
+}
