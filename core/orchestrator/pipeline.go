@@ -15,6 +15,7 @@ import (
 	"github.com/nullrecon/nullrecon/domain/technology"
 	"github.com/nullrecon/nullrecon/domain/vulnerability"
 	"github.com/nullrecon/nullrecon/engines/vulnmatch"
+	"github.com/nullrecon/nullrecon/providers/registry"
 )
 
 func (o *Orchestrator) collectLeakSignals(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
@@ -26,7 +27,74 @@ func (o *Orchestrator) collectLeakSignals(ctx context.Context, nc *workflow.Node
 	for _, s := range secrets {
 		byDetector[s.Detector]++
 	}
-	return out(map[string]any{"signals": len(secrets), "byDetector": byDetector})
+	leakSignals := 0
+	providersQueried := 0
+	if o.deps.Registry != nil && o.deps.Executor != nil {
+		seeds := append(append([]string{}, nc.Snapshot.Scope.RootDomains...), nc.Snapshot.Scope.ExactDomains...)
+		for _, d := range o.deps.Registry.Descriptors() {
+			if !d.Supports(registry.CapLeakSearch) || !o.deps.Executor.Healthy(d.Name) {
+				continue
+			}
+			providersQueried++
+			for _, seed := range seeds {
+				q := registry.Query{Capability: registry.CapLeakSearch, Params: map[string]string{"domain": seed}, Limit: 100}
+				res, err := o.deps.Executor.Execute(ctx, d.Name, q)
+				if err != nil {
+					continue
+				}
+				for _, rec := range res.Records {
+					if err := o.recordLeakSignal(ctx, nc, d.Name, seed, rec); err != nil {
+						return nil, nil, err
+					}
+					leakSignals++
+				}
+			}
+		}
+	}
+	return out(map[string]any{"secretSignals": len(secrets), "byDetector": byDetector, "leakSignals": leakSignals, "providersQueried": providersQueried})
+}
+
+func (o *Orchestrator) recordLeakSignal(ctx context.Context, nc *workflow.NodeContext, provider, seed string, rec registry.Record) error {
+	now := o.now()
+	value := rec.Value
+	if value == "" {
+		value = seed
+	}
+	conf := finding.Confidence{
+		Parse:              1.0,
+		Ownership:          0.5,
+		Freshness:          0.5,
+		Fingerprint:        0.4,
+		ActiveVerification: 0.0,
+		CrossSource:        0.0,
+	}
+	decision := confidence.DefaultModel().Decide(conf, []string{"parse"})
+	conf.Value = decision.Value
+	conf.Gates = mergeGates([]string{"passive-leak-signal", "source:" + provider}, decision.Gates)
+	key := "leak:" + provider + ":" + rec.Kind + ":" + value
+	fnd := finding.Finding{
+		Versioned:       contracts.NewVersioned("finding"),
+		ID:              contracts.NewID("fnd"),
+		ProjectID:       nc.Run.ProjectID,
+		Title:           "Leak signal for " + seed + " (" + provider + ")",
+		State:           decision.State,
+		Severity:        finding.SevMedium,
+		Confidence:      conf,
+		ScopeSnapshotID: nc.Snapshot.ID,
+		SnapshotHash:    nc.Snapshot.Hash,
+		WeaknessClass:   "leak:" + provider,
+		Summary:         "Passive leak signal reported by " + provider + "; requires review before confirmation",
+		FingerprintKey:  key,
+		FirstSeen:       now,
+		LastSeen:        now,
+	}
+	if existing, ok, err := o.deps.DB.Findings().ByFingerprint(ctx, nc.Run.ProjectID, key); err != nil {
+		return err
+	} else if ok {
+		fnd.ID = existing.ID
+		fnd.FirstSeen = existing.FirstSeen
+	}
+	return o.deps.DB.Findings().Upsert(ctx, fnd)
 }
 
 func (o *Orchestrator) scanApprovedRepositories(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {
@@ -164,15 +232,78 @@ func (o *Orchestrator) deduplicateSignals(ctx context.Context, nc *workflow.Node
 	if err != nil {
 		return nil, nil, err
 	}
-	seen := map[string]int{}
-	duplicates := 0
+	tmplCVE := o.tmplCVEResolver()
+	clusters := map[string][]finding.Finding{}
 	for _, f := range findings {
-		seen[f.FingerprintKey]++
-		if seen[f.FingerprintKey] > 1 {
+		key := clusterKey(f, tmplCVE)
+		if key == "" {
+			continue
+		}
+		clusters[key] = append(clusters[key], f)
+	}
+	now := o.now()
+	duplicates := 0
+	clustered := 0
+	for _, group := range clusters {
+		if len(group) < 2 {
+			continue
+		}
+		clustered++
+		sort.SliceStable(group, func(i, j int) bool {
+			if group[i].Confidence.Value != group[j].Confidence.Value {
+				return group[i].Confidence.Value > group[j].Confidence.Value
+			}
+			return severityWeight(group[i].Severity) > severityWeight(group[j].Severity)
+		})
+		canonical := group[0]
+		for _, dup := range group[1:] {
+			if dup.State == finding.StateDuplicate {
+				continue
+			}
+			rel := finding.Relation{
+				ProjectID:  nc.Run.ProjectID,
+				FromID:     dup.ID,
+				ToID:       canonical.ID,
+				Kind:       finding.FindingDuplicateOf,
+				ReasonCode: "same-asset-cve",
+				CreatedAt:  now,
+			}
+			if err := o.deps.DB.Findings().Relate(ctx, rel); err != nil {
+				return nil, nil, err
+			}
+			dup.State = finding.StateDuplicate
+			dup.Confidence.Gates = mergeGates(dup.Confidence.Gates, []string{"duplicate-of:" + canonical.ID})
+			if err := o.deps.DB.Findings().Upsert(ctx, dup); err != nil {
+				return nil, nil, err
+			}
 			duplicates++
 		}
 	}
-	return out(map[string]any{"findings": len(findings), "unique": len(seen), "duplicates": duplicates})
+	return out(map[string]any{"findings": len(findings), "clusters": clustered, "duplicates": duplicates})
+}
+
+func clusterKey(f finding.Finding, tmplCVE map[string]string) string {
+	if cve, asset, ok := parseVulnKey(f.FingerprintKey); ok {
+		return asset + "|" + cve
+	}
+	if tid, asset, ok := parseTemplateKey(f.FingerprintKey); ok {
+		if cve, has := tmplCVE[tid]; has {
+			return asset + "|" + cve
+		}
+	}
+	return ""
+}
+
+func parseTemplateKey(key string) (templateID, asset string, ok bool) {
+	if !strings.HasPrefix(key, "template:") {
+		return "", "", false
+	}
+	rest := strings.TrimPrefix(key, "template:")
+	idx := strings.LastIndex(rest, ":")
+	if idx <= 0 || idx == len(rest)-1 {
+		return "", "", false
+	}
+	return rest[:idx], rest[idx+1:], true
 }
 
 func (o *Orchestrator) verifyCandidates(ctx context.Context, nc *workflow.NodeContext) (json.RawMessage, []byte, error) {

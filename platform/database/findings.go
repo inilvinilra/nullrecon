@@ -265,3 +265,42 @@ func (r *Findings) Get(ctx context.Context, id string) (finding.Finding, error) 
 	}
 	return f, nil
 }
+
+func (r *Findings) Relate(ctx context.Context, rel finding.Relation) error {
+	if rel.ID == "" {
+		rel.ID = contracts.NewID("frel")
+	}
+	if rel.Version == "" {
+		rel.Versioned = contracts.NewVersioned("findingrelation")
+	}
+	data, err := marshal(rel)
+	if err != nil {
+		return err
+	}
+	_, err = r.db.ExecContext(ctx,
+		"INSERT INTO findingrelations(id, project_id, from_id, to_id, kind, data, created_at) VALUES (?,?,?,?,?,?,?) "+
+			"ON CONFLICT(from_id, to_id, kind) DO NOTHING",
+		rel.ID, rel.ProjectID, rel.FromID, rel.ToID, string(rel.Kind), data, timeString(rel.CreatedAt))
+	return err
+}
+
+func (r *Findings) Relations(ctx context.Context, findingID string) ([]finding.Relation, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT data FROM findingrelations WHERE from_id = ? OR to_id = ?", findingID, findingID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []finding.Relation
+	for rows.Next() {
+		var data string
+		if err := rows.Scan(&data); err != nil {
+			return nil, err
+		}
+		var rel finding.Relation
+		if err := unmarshal(data, &rel); err != nil {
+			return nil, err
+		}
+		out = append(out, rel)
+	}
+	return out, rows.Err()
+}

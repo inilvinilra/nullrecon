@@ -15,6 +15,7 @@ import (
 	"github.com/nullrecon/nullrecon/domain/service"
 	"github.com/nullrecon/nullrecon/engines/fingerprint"
 	"github.com/nullrecon/nullrecon/engines/portscan"
+	"github.com/nullrecon/nullrecon/engines/template"
 	"github.com/nullrecon/nullrecon/platform/database"
 	"github.com/nullrecon/nullrecon/platform/objectstore"
 	"github.com/nullrecon/nullrecon/providers/registry"
@@ -29,12 +30,29 @@ type Deps struct {
 }
 
 type Orchestrator struct {
-	deps Deps
-	now  func() time.Time
+	deps            Deps
+	now             func() time.Time
+	tmplCVEResolver func() map[string]string
 }
 
 func New(deps Deps) *Orchestrator {
-	return &Orchestrator{deps: deps, now: func() time.Time { return time.Now().UTC() }}
+	return &Orchestrator{
+		deps:            deps,
+		now:             func() time.Time { return time.Now().UTC() },
+		tmplCVEResolver: defaultTemplateCVEs,
+	}
+}
+
+func defaultTemplateCVEs() map[string]string {
+	out := map[string]string{}
+	if set, err := template.LoadEmbedded(); err == nil {
+		for _, t := range set.Templates {
+			if t.Info.CVE != "" {
+				out[t.ID] = t.Info.CVE
+			}
+		}
+	}
+	return out
 }
 
 func (o *Orchestrator) RegisterAll(e *workflow.Engine) {
