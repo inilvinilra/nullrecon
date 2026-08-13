@@ -64,6 +64,21 @@ plan yields no targets and the run performs no requests, so the pipeline fails
 closed. `RunContentDiscovery` scans each authorized target and stores only
 candidate and redirect endpoints.
 
+## Subdomain Discovery (`engines/dnsbrute`)
+
+Native, API-free subdomain discovery. It resolves an embedded wordlist of
+common subdomains against the target domain and keeps only names that
+actually resolve, so it emits zero false positives by construction — unlike
+passive certificate-transparency sources that also list dead or historical
+names. Lookups rotate across public resolvers (`1.1.1.1`, `8.8.8.8`,
+`9.9.9.9`, `8.8.4.4`) with per-lookup retry and a worker pool, so flaky
+resolution does not drop live hosts. Every candidate is scope-gated with the
+`dnsresolve` action and draws from the run budget. The resolver is an
+interface, so tests inject a fake and never touch the network. Against a live
+domain it recovered subdomains that a passive multi-source tool missed while
+reporting nothing that did not resolve. `nullrecon subdomain DOMAIN --project
+SLUG --label LABEL --mode safeactive`.
+
 ## Origin IP (`engines/originip`)
 
 Discovers real IP addresses hiding behind CDN, WAF, and DDoS-protection
