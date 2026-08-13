@@ -32,6 +32,7 @@ type Result struct {
 	CacheHit    bool       `json:"cacheHit"`
 	Provider    string     `json:"provider"`
 	Capability  Capability `json:"capability"`
+	NextCursor  string     `json:"nextCursor,omitempty"`
 }
 
 type cacheEntry struct {
@@ -124,6 +125,7 @@ func (e *Executor) Execute(ctx context.Context, name string, q Query) (Result, e
 		res.Records = entry.page.Records
 		res.CacheHit = true
 		res.Pages = 1
+		res.NextCursor = entry.page.NextCursor
 		return res, nil
 	}
 	c := e.circuits[name]
@@ -193,6 +195,7 @@ func (e *Executor) Execute(ctx context.Context, name string, q Query) (Result, e
 	res.Records = page.Records
 	res.CreditsUsed = page.Credits
 	res.Pages = 1
+	res.NextCursor = page.NextCursor
 	return res, nil
 }
 

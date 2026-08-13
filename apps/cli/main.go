@@ -74,6 +74,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdFinding(rest[1:])
 	case "vuln":
 		return ctx.cmdVuln(rest[1:])
+	case "cve":
+		return ctx.cmdCVE(rest[1:])
 	case "report":
 		return ctx.cmdReport(rest[1:])
 	case "version":
@@ -111,6 +113,9 @@ commands:
   finding list --project SLUG
   finding show FINDINGID
   vuln list --project SLUG
+  cve sync (--kev | --cve CVE | --keyword KW | --since YYYY-MM-DDTHH:MM:SS.000)
+  cve stats
+  cve show CVE
   report build --project SLUG [--format json|markdown|sarif] [--out FILE] [--run RUNID]
   version`)
 }

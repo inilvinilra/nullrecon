@@ -40,23 +40,47 @@ func (o *Orchestrator) enrichVulnerabilities(ctx context.Context, nc *workflow.N
 		return nil, nil, err
 	}
 	engine := vulnmatch.New(set)
+	storeMatcher := vulnmatch.NewStoreMatcher()
 	candidates := 0
+	fromStore := 0
 	kev := 0
 	bySeverity := map[string]int{}
+	record := func(tech technology.Technology, cand vulnerability.Candidate) error {
+		sev := severityForCandidate(cand)
+		if err := o.recordVulnCandidate(ctx, nc, tech, cand, sev); err != nil {
+			return err
+		}
+		candidates++
+		if cand.KEV {
+			kev++
+		}
+		bySeverity[string(sev)]++
+		return nil
+	}
+	seen := map[string]bool{}
 	for _, tech := range techs {
 		for _, cand := range engine.Match(nc.Run.ProjectID, tech) {
-			sev := severityForCandidate(cand)
-			if err := o.recordVulnCandidate(ctx, nc, tech, cand, sev); err != nil {
+			if err := record(tech, cand); err != nil {
 				return nil, nil, err
 			}
-			candidates++
-			if cand.KEV {
-				kev++
+			seen[cand.AssetID+"|"+cand.CVE] = true
+		}
+		records, err := o.deps.DB.CVEKnowledge().ForProduct(ctx, tech.Product)
+		if err != nil {
+			return nil, nil, err
+		}
+		for _, cand := range storeMatcher.Match(nc.Run.ProjectID, tech, records) {
+			if seen[cand.AssetID+"|"+cand.CVE] {
+				continue
 			}
-			bySeverity[string(sev)]++
+			seen[cand.AssetID+"|"+cand.CVE] = true
+			if err := record(tech, cand); err != nil {
+				return nil, nil, err
+			}
+			fromStore++
 		}
 	}
-	return out(map[string]any{"technologies": len(techs), "candidates": candidates, "kev": kev, "bySeverity": bySeverity})
+	return out(map[string]any{"technologies": len(techs), "candidates": candidates, "fromStore": fromStore, "kev": kev, "bySeverity": bySeverity})
 }
 
 func (o *Orchestrator) recordVulnCandidate(ctx context.Context, nc *workflow.NodeContext, tech technology.Technology, cand vulnerability.Candidate, sev finding.Severity) error {
