@@ -23,8 +23,15 @@ func (c commandContext) cmdPortscan(args []string) int {
 	if raw, ok := flagValue(args, "--ports"); ok {
 		ports = parsePorts(raw)
 	}
+	if raw, ok := flagValue(args, "--top-ports"); ok {
+		n, err := parsePositiveInt(raw)
+		if err != nil {
+			return c.fail(exitUsage, "--top-ports must be a positive integer")
+		}
+		ports = portscan.TopPorts(n)
+	}
 	if len(ports) == 0 {
-		return c.fail(exitUsage, "no ports in scope; pass --ports 80,443,...")
+		return c.fail(exitUsage, "no ports in scope; pass --ports 80,443,... or --top-ports N")
 	}
 	engine := portscan.New(snap, budgetFromScope(snap)).WithBanners(true)
 	target := scopeguard.Target{Host: host, IP: ip}
