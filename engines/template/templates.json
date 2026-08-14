@@ -6990,6 +6990,465 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2022-29464-wso2-fileupload",
+      "info": {
+        "name": "WSO2 Carbon exposed (arbitrary file upload RCE)",
+        "severity": "critical",
+        "cve": "CVE-2022-29464",
+        "cwe": "CWE-434",
+        "tags": [
+          "wso2",
+          "kev",
+          "rce",
+          "upload"
+        ],
+        "description": "A WSO2 Carbon management surface is reachable (CVE-2022-29464 unauth file upload RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/carbon/admin/login.jsp",
+            "/authenticationendpoint/login.do"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "WSO2",
+                "wso2carbon",
+                "carbon-kernel",
+                "identityServerEndpointContextURL"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-7961-liferay",
+      "info": {
+        "name": "Liferay Portal exposed (JSONWS deserialization)",
+        "severity": "critical",
+        "cve": "CVE-2020-7961",
+        "cwe": "CWE-502",
+        "tags": [
+          "liferay",
+          "rce",
+          "deserialization"
+        ],
+        "description": "A Liferay Portal JSON web-service surface is reachable (CVE-2020-7961 unauth RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/api/jsonws/invoke",
+            "/c/portal/login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Liferay",
+                "liferay-portal",
+                "com.liferay",
+                "Portlet"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-18935-telerik-ui",
+      "info": {
+        "name": "Progress Telerik UI RadAsyncUpload exposed",
+        "severity": "critical",
+        "cve": "CVE-2019-18935",
+        "cwe": "CWE-502",
+        "tags": [
+          "telerik",
+          "kev",
+          "rce",
+          "deserialization"
+        ],
+        "description": "A Telerik UI RadAsyncUpload handler is reachable (CVE-2019-18935 deserialization RCE)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/Telerik.Web.UI.WebResource.axd?type=rau"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "RadAsyncUpload handler",
+                "rauPostData",
+                "Async upload"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-25296-nagios-xi",
+      "info": {
+        "name": "Nagios XI exposed (command injection)",
+        "severity": "high",
+        "cve": "CVE-2021-25296",
+        "cwe": "CWE-77",
+        "tags": [
+          "nagios",
+          "rce",
+          "command-injection"
+        ],
+        "description": "A Nagios XI interface is reachable (CVE-2021-25296 authenticated command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/nagiosxi/login.php",
+            "/nagiosxi/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Nagios XI",
+                "Nagios Enterprises",
+                "xi_version",
+                "nagiosxi_session"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-9276-prtg",
+      "info": {
+        "name": "Paessler PRTG exposed (command injection)",
+        "severity": "high",
+        "cve": "CVE-2018-9276",
+        "cwe": "CWE-77",
+        "tags": [
+          "prtg",
+          "paessler",
+          "rce"
+        ],
+        "description": "A PRTG Network Monitor interface is reachable (CVE-2018-9276 authenticated command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/index.htm",
+            "/public/login.htm"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "PRTG Network Monitor",
+                "Paessler",
+                "prtg-version",
+                "PRTG/"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-35914-glpi",
+      "info": {
+        "name": "GLPI exposed (htmLawed RCE)",
+        "severity": "critical",
+        "cve": "CVE-2022-35914",
+        "cwe": "CWE-94",
+        "tags": [
+          "glpi",
+          "rce"
+        ],
+        "description": "A GLPI instance is reachable (CVE-2022-35914 unauth PHP code injection via htmLawed).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/glpi/index.php",
+            "/index.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "GLPI",
+                "glpi_csrf_token",
+                "Teclib",
+                "by Teclib"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-25646-druid",
+      "info": {
+        "name": "Apache Druid exposed (JS-eval RCE)",
+        "severity": "critical",
+        "cve": "CVE-2021-25646",
+        "cwe": "CWE-94",
+        "tags": [
+          "druid",
+          "apache",
+          "rce"
+        ],
+        "description": "An Apache Druid console is reachable (CVE-2021-25646 unauth JS-eval RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/druid/index.html",
+            "/unified-console.html"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Apache Druid",
+                "druid-console",
+                "clusterOverview",
+                "druidVersion"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-1040-sophos-firewall",
+      "info": {
+        "name": "Sophos Firewall user portal exposed",
+        "severity": "critical",
+        "cve": "CVE-2022-1040",
+        "cwe": "CWE-287",
+        "tags": [
+          "sophos",
+          "kev",
+          "auth-bypass",
+          "rce"
+        ],
+        "description": "A Sophos Firewall user portal is reachable (CVE-2022-1040 auth-bypass RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/userportal/webpages/myaccount/",
+            "/userportal/Controller"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Sophos",
+                "Cyberoam",
+                "SF-OS",
+                "csc.sophos"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-42237-sitecore",
+      "info": {
+        "name": "Sitecore XP exposed (deserialization RCE)",
+        "severity": "critical",
+        "cve": "CVE-2021-42237",
+        "cwe": "CWE-502",
+        "tags": [
+          "sitecore",
+          "rce",
+          "deserialization"
+        ],
+        "description": "A Sitecore XP surface is reachable (CVE-2021-42237 pre-auth Report.ashx RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/sitecore/shell/sitecore.version.xml",
+            "/sitecore/login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Sitecore.NET",
+                "sc_site",
+                "Sitecore CMS",
+                "<version>"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-21587-oracle-ebs",
+      "info": {
+        "name": "Oracle E-Business Suite exposed (file upload RCE)",
+        "severity": "critical",
+        "cve": "CVE-2022-21587",
+        "cwe": "CWE-434",
+        "tags": [
+          "oracle",
+          "ebs",
+          "kev",
+          "rce",
+          "upload"
+        ],
+        "description": "An Oracle E-Business Suite surface is reachable (CVE-2022-21587 unauth file upload RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/OA_HTML/AppsLocalLogin.jsp",
+            "/OA_HTML/OA.jsp"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Oracle Applications",
+                "E-Business Suite",
+                "AppsLoginPage",
+                "oracle.apps"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

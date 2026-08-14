@@ -226,3 +226,41 @@ func TestKEVTemplatesBatch4DetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch5DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2022-29464-wso2-fileupload": newResponseView(200, []byte(`<html><body>WSO2 wso2carbon carbon-kernel identityServerEndpointContextURL</body></html>`), nil),
+		"cve-2020-7961-liferay":          newResponseView(200, []byte(`<html><body>Liferay liferay-portal com.liferay Portlet</body></html>`), nil),
+		"cve-2019-18935-telerik-ui":      newResponseView(200, []byte(`{ "message" : "RadAsyncUpload handler is registered succesfully, however http compression rauPostData" }`), nil),
+		"cve-2021-25296-nagios-xi":       newResponseView(200, []byte(`<html><body>Nagios XI by Nagios Enterprises xi_version</body></html>`), nil),
+		"cve-2018-9276-prtg":             newResponseView(200, []byte(`<html><body>PRTG Network Monitor by Paessler PRTG/22</body></html>`), nil),
+		"cve-2022-35914-glpi":            newResponseView(200, []byte(`<html><body>GLPI glpi_csrf_token by Teclib</body></html>`), nil),
+		"cve-2021-25646-druid":           newResponseView(200, []byte(`<html><body>Apache Druid druid-console clusterOverview</body></html>`), nil),
+		"cve-2022-1040-sophos-firewall":  newResponseView(200, []byte(`<html><body>Sophos SF-OS csc.sophos Cyberoam</body></html>`), nil),
+		"cve-2021-42237-sitecore":        newResponseView(200, []byte(`<html><body>Sitecore.NET sc_site Sitecore CMS <version>9.3</version></body></html>`), nil),
+		"cve-2022-21587-oracle-ebs":      newResponseView(200, []byte(`<html><body>Oracle Applications E-Business Suite AppsLoginPage oracle.apps</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}
