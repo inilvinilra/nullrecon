@@ -14,6 +14,7 @@ import (
 	"github.com/nullrecon/nullrecon/providers/crtsh"
 	"github.com/nullrecon/nullrecon/providers/epss"
 	"github.com/nullrecon/nullrecon/providers/fofa"
+	"github.com/nullrecon/nullrecon/providers/hackertarget"
 	"github.com/nullrecon/nullrecon/providers/leakix"
 	"github.com/nullrecon/nullrecon/providers/netlas"
 	"github.com/nullrecon/nullrecon/providers/nvd"
@@ -36,6 +37,7 @@ func buildRegistry() *registry.Registry {
 		epss.New(envOr("NULLRECON_EPSS_ENDPOINT", "")),
 		cisa.New(envOr("NULLRECON_CISA_ENDPOINT", "")),
 		crtsh.New(envOr("NULLRECON_CRTSH_ENDPOINT", "")),
+		hackertarget.New(envOr("NULLRECON_HACKERTARGET_ENDPOINT", "")),
 		urlscan.New(envOr("NULLRECON_URLSCAN_ENDPOINT", "")),
 		virustotal.New(envOr("NULLRECON_VIRUSTOTAL_ENDPOINT", "")),
 		zoomeye.New(envOr("NULLRECON_ZOOMEYE_ENDPOINT", "")),
