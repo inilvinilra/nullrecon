@@ -10,6 +10,7 @@ import (
 	"github.com/nullrecon/nullrecon/platform/database"
 	"github.com/nullrecon/nullrecon/platform/secretvault"
 	"github.com/nullrecon/nullrecon/providers/censys"
+	"github.com/nullrecon/nullrecon/providers/certspotter"
 	"github.com/nullrecon/nullrecon/providers/cisa"
 	"github.com/nullrecon/nullrecon/providers/crtsh"
 	"github.com/nullrecon/nullrecon/providers/epss"
@@ -18,6 +19,7 @@ import (
 	"github.com/nullrecon/nullrecon/providers/leakix"
 	"github.com/nullrecon/nullrecon/providers/netlas"
 	"github.com/nullrecon/nullrecon/providers/nvd"
+	"github.com/nullrecon/nullrecon/providers/rapiddns"
 	"github.com/nullrecon/nullrecon/providers/registry"
 	"github.com/nullrecon/nullrecon/providers/shodan"
 	"github.com/nullrecon/nullrecon/providers/urlscan"
@@ -37,6 +39,8 @@ func buildRegistry() *registry.Registry {
 		epss.New(envOr("NULLRECON_EPSS_ENDPOINT", "")),
 		cisa.New(envOr("NULLRECON_CISA_ENDPOINT", "")),
 		crtsh.New(envOr("NULLRECON_CRTSH_ENDPOINT", "")),
+		certspotter.New(envOr("NULLRECON_CERTSPOTTER_ENDPOINT", "")),
+		rapiddns.New(envOr("NULLRECON_RAPIDDNS_ENDPOINT", "")),
 		hackertarget.New(envOr("NULLRECON_HACKERTARGET_ENDPOINT", "")),
 		urlscan.New(envOr("NULLRECON_URLSCAN_ENDPOINT", "")),
 		virustotal.New(envOr("NULLRECON_VIRUSTOTAL_ENDPOINT", "")),
