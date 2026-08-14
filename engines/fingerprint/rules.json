@@ -1819,6 +1819,60 @@
       },
       "vendor": "osgeo",
       "cpe": "cpe:/a:osgeo:geoserver"
+    },
+    {
+      "product": "pan-os",
+      "weight": 0.75,
+      "match": {
+        "body": "GlobalProtect Portal|PanGlobalProtect|global-protect/portal"
+      },
+      "vendor": "paloaltonetworks",
+      "cpe": "cpe:/o:paloaltonetworks:pan-os"
+    },
+    {
+      "product": "owncloud",
+      "weight": 0.7,
+      "match": {
+        "body": "ownCloud|oc_sessionPassphrase|oc-core"
+      },
+      "vendor": "owncloud",
+      "cpe": "cpe:/a:owncloud:owncloud"
+    },
+    {
+      "product": "crushftp",
+      "weight": 0.8,
+      "match": {
+        "body": "CrushFTP|c2s\\.jar|Ben Spink"
+      },
+      "vendor": "crushftp",
+      "cpe": "cpe:/a:crushftp:crushftp"
+    },
+    {
+      "product": "workspace_one_access",
+      "weight": 0.75,
+      "match": {
+        "body": "Workspace ONE|VMware Identity|horizonInstanceId|vIDM"
+      },
+      "vendor": "vmware",
+      "cpe": "cpe:/a:vmware:workspace_one_access"
+    },
+    {
+      "product": "manageengine_adselfservice_plus",
+      "weight": 0.75,
+      "match": {
+        "body": "ADSelfService Plus|adssp|ManageEngine ADSelfService"
+      },
+      "vendor": "zohocorp",
+      "cpe": "cpe:/a:zohocorp:manageengine_adselfservice_plus"
+    },
+    {
+      "product": "sonicos",
+      "weight": 0.7,
+      "match": {
+        "body": "SonicWall|SonicOS|NSA \\d"
+      },
+      "vendor": "sonicwall",
+      "cpe": "cpe:/o:sonicwall:sonicos"
     }
   ]
 }

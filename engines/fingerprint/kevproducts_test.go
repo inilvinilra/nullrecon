@@ -52,3 +52,29 @@ func TestKEVProductFingerprints(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVProductFingerprintsBatch3(t *testing.T) {
+	e, err := DefaultEngine()
+	if err != nil {
+		t.Fatal(err)
+	}
+	detect := map[string]Features{
+		"pan-os":                          {BodySnippet: `<html><body>GlobalProtect Portal PanGlobalProtect</body></html>`},
+		"owncloud":                        {BodySnippet: `<html><body>ownCloud oc_sessionPassphrase oc-core</body></html>`},
+		"crushftp":                        {BodySnippet: `<html><body>CrushFTP c2s.jar by Ben Spink</body></html>`},
+		"workspace_one_access":            {BodySnippet: `<html><body>VMware Identity Workspace ONE vIDM horizonInstanceId</body></html>`},
+		"manageengine_adselfservice_plus": {BodySnippet: `<html><body>ManageEngine ADSelfService Plus adssp</body></html>`},
+		"sonicos":                         {BodySnippet: `<html><body>SonicWall SonicOS NSA 4700</body></html>`},
+	}
+	for product, f := range detect {
+		found := false
+		for _, tech := range e.Apply(f) {
+			if tech.Product == product {
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("%s must be detected: %+v", product, e.Apply(f))
+		}
+	}
+}
