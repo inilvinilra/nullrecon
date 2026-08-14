@@ -28,15 +28,18 @@ type Result struct {
 	Blocked  bool      `json:"blocked,omitempty"`
 }
 
+type timerFunc func(ctx context.Context, u *url.URL, param, injected string) float64
+
 type Engine struct {
-	snapshot scopeguard.Snapshot
-	budget   *budgetguard.Guard
-	client   *http.Client
-	now      func() time.Time
+	snapshot    scopeguard.Snapshot
+	budget      *budgetguard.Guard
+	client      *http.Client
+	now         func() time.Time
+	timeConfirm timerFunc
 }
 
 func New(snapshot scopeguard.Snapshot, budget *budgetguard.Guard) *Engine {
-	timeout := 10 * time.Second
+	timeout := 20 * time.Second
 	return &Engine{
 		snapshot: snapshot,
 		budget:   budget,
@@ -47,6 +50,17 @@ func New(snapshot scopeguard.Snapshot, budget *budgetguard.Guard) *Engine {
 		},
 		now: func() time.Time { return time.Now().UTC() },
 	}
+}
+
+func (e *Engine) WithTimeConfirm() *Engine {
+	e.timeConfirm = func(ctx context.Context, u *url.URL, param, injected string) float64 {
+		start := time.Now()
+		if _, ok := e.fetchWith(ctx, u, param, injected); !ok {
+			return -1
+		}
+		return time.Since(start).Seconds()
+	}
+	return e
 }
 
 var sqlErrors = []string{
@@ -130,12 +144,55 @@ func (e *Engine) testParam(ctx context.Context, u *url.URL, param, value string,
 			continue
 		}
 		if similar(base, tResp) && !similar(base, fResp) {
-			return &Finding{Parameter: param, Type: "boolean-based (" + pair.name + ")", Severity: "critical", Confirmed: true,
-				Evidence: "TRUE payload matched the baseline while FALSE payload diverged (status " +
-					itoa(base.status) + "/" + itoa(tResp.status) + "/" + itoa(fResp.status) + ")"}
+			ev := "TRUE payload matched the baseline while FALSE payload diverged (status " +
+				itoa(base.status) + "/" + itoa(tResp.status) + "/" + itoa(fResp.status) + ")"
+			if e.timeConfirm != nil {
+				if delayed := e.confirmTimeBased(ctx, u, param, value); delayed != "" {
+					ev += "; " + delayed
+				}
+			}
+			return &Finding{Parameter: param, Type: "boolean-based (" + pair.name + ")", Severity: "critical", Confirmed: true, Evidence: ev}
+		}
+	}
+	if e.timeConfirm != nil {
+		if delayed := e.confirmTimeBased(ctx, u, param, value); delayed != "" {
+			return &Finding{Parameter: param, Type: "time-based blind", Severity: "critical", Confirmed: true, Evidence: delayed}
 		}
 	}
 	return nil
+}
+
+var timePayloads = []struct {
+	name   string
+	inject func(value string, delay int) string
+}{
+	{"mssql", func(v string, d int) string { return v + ";WAITFOR DELAY '0:0:" + itoa(d) + "'--" }},
+	{"mysql", func(v string, d int) string { return v + " AND SLEEP(" + itoa(d) + ")-- -" }},
+	{"postgres", func(v string, d int) string { return v + ";SELECT pg_sleep(" + itoa(d) + ")--" }},
+}
+
+func (e *Engine) confirmTimeBased(ctx context.Context, u *url.URL, param, value string) string {
+	const delay = 5
+	for _, p := range timePayloads {
+		control := e.timeConfirm(ctx, u, param, p.inject(value, 0))
+		if control < 0 {
+			continue
+		}
+		slow := e.timeConfirm(ctx, u, param, p.inject(value, delay))
+		if slow < 0 {
+			continue
+		}
+		if slow >= control+float64(delay)-1 && slow >= 4 {
+			return "time-based confirmed via " + p.name + " (" + fmtDur(control) + " control vs " + fmtDur(slow) + " with a " + itoa(delay) + "s delay injected)"
+		}
+	}
+	return ""
+}
+
+func fmtDur(seconds float64) string {
+	whole := int(seconds)
+	tenths := int((seconds - float64(whole)) * 10)
+	return itoa(whole) + "." + itoa(tenths) + "s"
 }
 
 type response struct {

@@ -13,6 +13,9 @@ func (c commandContext) cmdSqli(args []string) int {
 	}
 	defer db.Close()
 	engine := sqli.New(snap, budgetFromScope(snap))
+	if flagPresent(args, "--confirm") {
+		engine.WithTimeConfirm()
+	}
 	res, err := engine.Scan(ctx, target)
 	if err != nil {
 		return c.fail(exitError, "%v", err)
