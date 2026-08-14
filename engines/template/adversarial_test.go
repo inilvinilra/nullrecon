@@ -4,16 +4,15 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 )
 
 func TestAdversarialTargetPrecisionRecall(t *testing.T) {
 	planted := map[string]string{
-		"/.git/config":            "[core]\n\trepositoryformatversion = 0\n[remote \"origin\"]\n\turl = https://x/y.git\n",
+		"/.git/config":             "[core]\n\trepositoryformatversion = 0\n[remote \"origin\"]\n\turl = https://x/y.git\n",
 		"/webmail/logs/errors.log": "[11-Nov-2020 11:05:05 +0000]: <abc> IMAP Error: Login failed for user@example.com\n",
-		"/phpinfo.php":            "<html><head><title>phpinfo()</title></head><body>PHP Version 7.4.3</body></html>",
-		"/server-status":          "<html><body><h1>Apache Server Status</h1>Total Traffic: 1MB<br>Server uptime: 1 day</body></html>",
+		"/phpinfo.php":             "<html><head><title>phpinfo()</title></head><body>PHP Version 7.4.3</body></html>",
+		"/server-status":           "<html><body><h1>Apache Server Status</h1>Total Traffic: 1MB<br>Server uptime: 1 day</body></html>",
 	}
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if body, ok := planted[r.URL.Path]; ok {
@@ -56,5 +55,4 @@ func TestAdversarialTargetPrecisionRecall(t *testing.T) {
 		t.Fatalf("RECALL miss on planted vulns: %v (soft-404 must not mask real content-verified findings)", missed)
 	}
 	t.Logf("adversarial target: %d/%d planted vulns detected, zero false positives against soft-404 catch-all", len(wantRecall)-len(missed), len(wantRecall))
-	_ = strings.TrimSpace
 }
