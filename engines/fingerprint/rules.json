@@ -1448,6 +1448,190 @@
       "match": {
         "body": "wordfence|wfls-"
       }
+    },
+    {
+      "product": "weblogic_server",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "WebLogic Server(?:[ /]([0-9.]+))?"
+      },
+      "vendor": "oracle",
+      "cpe": "cpe:/a:oracle:weblogic_server"
+    },
+    {
+      "product": "websphere_application_server",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "WebSphere Application Server(?:/([0-9.]+))?"
+      },
+      "vendor": "ibm",
+      "cpe": "cpe:/a:ibm:websphere_application_server"
+    },
+    {
+      "product": "glassfish_server",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "GlassFish Server(?:[ /]([0-9.]+))?"
+      },
+      "vendor": "oracle",
+      "cpe": "cpe:/a:oracle:glassfish_server"
+    },
+    {
+      "product": "wildfly",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "WildFly(?:/([0-9.]+))?"
+      },
+      "vendor": "redhat",
+      "cpe": "cpe:/a:redhat:wildfly"
+    },
+    {
+      "product": "jboss_enterprise_application_platform",
+      "weight": 0.9,
+      "match": {
+        "headerName": "x-powered-by",
+        "headerValue": "JBoss"
+      },
+      "vendor": "redhat",
+      "cpe": "cpe:/a:redhat:jboss_enterprise_application_platform"
+    },
+    {
+      "product": "coldfusion",
+      "weight": 0.85,
+      "match": {
+        "cookie": "CFTOKEN"
+      },
+      "vendor": "adobe",
+      "cpe": "cpe:/a:adobe:coldfusion"
+    },
+    {
+      "product": "confluence",
+      "weight": 0.9,
+      "match": {
+        "headerName": "x-confluence-request-time",
+        "headerValue": "."
+      },
+      "vendor": "atlassian",
+      "cpe": "cpe:/a:atlassian:confluence_server"
+    },
+    {
+      "product": "sharepoint_server",
+      "weight": 0.9,
+      "match": {
+        "headerName": "microsoftsharepointteamservices",
+        "headerValue": "([0-9.]+)"
+      },
+      "vendor": "microsoft",
+      "cpe": "cpe:/a:microsoft:sharepoint_server"
+    },
+    {
+      "product": "splunk",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Splunkd"
+      },
+      "vendor": "splunk",
+      "cpe": "cpe:/a:splunk:splunk"
+    },
+    {
+      "product": "couchdb",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "CouchDB/([0-9.]+)"
+      },
+      "vendor": "apache",
+      "cpe": "cpe:/a:apache:couchdb"
+    },
+    {
+      "product": "influxdb",
+      "weight": 0.9,
+      "match": {
+        "headerName": "x-influxdb-version",
+        "headerValue": "([0-9.]+)"
+      },
+      "vendor": "influxdata",
+      "cpe": "cpe:/a:influxdata:influxdb"
+    },
+    {
+      "product": "artifactory",
+      "weight": 0.9,
+      "match": {
+        "headerName": "x-artifactory-id",
+        "headerValue": "."
+      },
+      "vendor": "jfrog",
+      "cpe": "cpe:/a:jfrog:artifactory"
+    },
+    {
+      "product": "nexus",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Nexus/([0-9.]+)"
+      },
+      "vendor": "sonatype",
+      "cpe": "cpe:/a:sonatype:nexus_repository_manager"
+    },
+    {
+      "product": "boa",
+      "weight": 0.9,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Boa/([0-9.]+)"
+      },
+      "vendor": "boa",
+      "cpe": "cpe:/a:boa:boa"
+    },
+    {
+      "product": "big-ip",
+      "weight": 0.85,
+      "match": {
+        "cookie": "BIGipServer"
+      },
+      "vendor": "f5",
+      "cpe": "cpe:/a:f5:big-ip_local_traffic_manager"
+    },
+    {
+      "product": "netscaler",
+      "weight": 0.85,
+      "match": {
+        "cookie": "NSC_"
+      },
+      "vendor": "citrix",
+      "cpe": "cpe:/a:citrix:application_delivery_controller"
+    },
+    {
+      "product": "fortios",
+      "weight": 0.85,
+      "match": {
+        "cookie": "SVPNCOOKIE"
+      },
+      "vendor": "fortinet",
+      "cpe": "cpe:/o:fortinet:fortios"
+    },
+    {
+      "product": "play_framework",
+      "weight": 0.85,
+      "match": {
+        "cookie": "PLAY_SESSION"
+      },
+      "vendor": "lightbend",
+      "cpe": "cpe:/a:lightbend:play_framework"
+    },
+    {
+      "product": "zabbix",
+      "weight": 0.7,
+      "match": {
+        "title": "Zabbix"
+      },
+      "vendor": "zabbix",
+      "cpe": "cpe:/a:zabbix:zabbix"
     }
   ]
 }
