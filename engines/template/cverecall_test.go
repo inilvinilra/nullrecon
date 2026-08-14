@@ -264,3 +264,38 @@ func TestKEVTemplatesBatch5DetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch6DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2023-0669-goanywhere-mft":    newResponseView(200, []byte(`<html><body>GoAnywhere by Fortra (HelpSystems) Managed File Transfer</body></html>`), nil),
+		"cve-2024-24919-checkpoint-vpn":   newResponseView(200, []byte(`<html><body>Check Point SSL Network Extender cpcgi CvpnHeaderName</body></html>`), nil),
+		"cve-2023-38035-ivanti-sentry":    newResponseView(200, []byte(`<html><body>MobileIron Sentry System Manager MICSLogService</body></html>`), nil),
+		"cve-2024-28995-solarwinds-servu": newResponseView(200, []byte(`<html><body>Serv-U by SolarWinds RhinoSoft Serv-U-Session-ID</body></html>`), nil),
+		"cve-2024-31982-xwiki":            newResponseView(200, []byte(`<html><body>XWiki org.xwiki XWiki Enterprise</body></html>`), nil),
+		"cve-2024-4885-whatsup-gold":      newResponseView(200, []byte(`<html><body>WhatsUp Gold by Ipswitch Progress WhatsUp</body></html>`), nil),
+		"cve-2022-22965-spring4shell":     newResponseView(500, []byte(`<html><body>Whitelabel Error Page org.springframework This application has no explicit mapping</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}
