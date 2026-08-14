@@ -154,3 +154,60 @@ func TestActiveHTTPBannerAndTargetString(t *testing.T) {
 		t.Fatalf("active HTTP banner must capture Server header, got %q", res.Ports[0].Banner)
 	}
 }
+
+func serveOnce(t *testing.T, handler func(net.Conn)) int {
+	t.Helper()
+	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { ln.Close() })
+	go func() {
+		for {
+			conn, err := ln.Accept()
+			if err != nil {
+				return
+			}
+			go handler(conn)
+		}
+	}()
+	return ln.Addr().(*net.TCPAddr).Port
+}
+
+func TestServiceProbeRedis(t *testing.T) {
+	port := serveOnce(t, func(c net.Conn) {
+		buf := make([]byte, 64)
+		c.Read(buf)
+		c.Write([]byte("+PONG\r\n"))
+		c.Read(buf)
+		c.Write([]byte("$23\r\n# Server\r\nredis_version:7.4.5\r\n"))
+		c.Close()
+	})
+	snap := snapshotFor(t, []string{"127.0.0.0/8"}, []int{port}, policy.ModeSafeActive)
+	e := New(snap, nil).WithBanners(true)
+	res, err := e.Scan(context.Background(), scopeguard.Target{IP: "127.0.0.1"}, []int{port})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Ports) != 1 || res.Ports[0].Banner != "Redis 7.4.5" {
+		t.Fatalf("redis version banner expected, got %q", res.Ports[0].Banner)
+	}
+}
+
+func TestServiceProbePostgres(t *testing.T) {
+	port := serveOnce(t, func(c net.Conn) {
+		buf := make([]byte, 8)
+		c.Read(buf)
+		c.Write([]byte("N"))
+		c.Close()
+	})
+	snap := snapshotFor(t, []string{"127.0.0.0/8"}, []int{port}, policy.ModeSafeActive)
+	e := New(snap, nil).WithBanners(true)
+	res, err := e.Scan(context.Background(), scopeguard.Target{IP: "127.0.0.1"}, []int{port})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Ports) != 1 || res.Ports[0].Banner != "PostgreSQL" {
+		t.Fatalf("postgres banner expected, got %q", res.Ports[0].Banner)
+	}
+}

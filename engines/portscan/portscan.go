@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -139,7 +140,6 @@ func (e *Engine) probe(ctx context.Context, target scopeguard.Target, port int) 
 		pr.Error = "closed-or-filtered"
 		return pr
 	}
-	defer conn.Close()
 	pr.Open = true
 	if e.grabBanners {
 		conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
@@ -147,14 +147,56 @@ func (e *Engine) probe(ctx context.Context, target scopeguard.Target, port int) 
 		n, _ := conn.Read(buf)
 		if n > 0 {
 			pr.Banner = sanitizeBanner(buf[:n])
+			conn.Close()
 		} else {
-			pr.Banner = e.activeBanner(conn, firstNonEmpty(target.Host, target.IP))
+			conn.Close()
+			pr.Banner = e.serviceBanner(address, firstNonEmpty(target.Host, target.IP), port)
 		}
+	} else {
+		conn.Close()
 	}
 	return pr
 }
 
-func (e *Engine) activeBanner(conn net.Conn, host string) string {
+var redisVersionRe = regexp.MustCompile(`redis_version:([0-9][0-9.]*)`)
+
+func (e *Engine) serviceBanner(address, host string, port int) string {
+	for _, probe := range probeOrder(port) {
+		conn, err := net.DialTimeout("tcp", address, e.dialTimeout)
+		if err != nil {
+			continue
+		}
+		var banner string
+		switch probe {
+		case "http":
+			banner = e.probeHTTP(conn, host)
+		case "redis":
+			banner = e.probeRedis(conn)
+		case "postgres":
+			banner = e.probePostgres(conn)
+		}
+		conn.Close()
+		if banner != "" {
+			return banner
+		}
+	}
+	return ""
+}
+
+func probeOrder(port int) []string {
+	switch port {
+	case 6379:
+		return []string{"redis", "http"}
+	case 5432:
+		return []string{"postgres", "http"}
+	case 80, 443, 8000, 8008, 8080, 8081, 8443, 8888, 9000, 9200:
+		return []string{"http", "redis", "postgres"}
+	default:
+		return []string{"http", "redis", "postgres"}
+	}
+}
+
+func (e *Engine) probeHTTP(conn net.Conn, host string) string {
 	conn.SetWriteDeadline(e.now().Add(e.bannerTimeout))
 	request := "GET / HTTP/1.0\r\nHost: " + host + "\r\nUser-Agent: nullrecon/0.1\r\nAccept: */*\r\nConnection: close\r\n\r\n"
 	if _, err := conn.Write([]byte(request)); err != nil {
@@ -163,10 +205,49 @@ func (e *Engine) activeBanner(conn net.Conn, host string) string {
 	conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
 	buf := make([]byte, 2048)
 	n, _ := conn.Read(buf)
-	if n == 0 {
+	if n == 0 || !strings.HasPrefix(string(buf[:n]), "HTTP/") {
 		return ""
 	}
 	return httpBannerFrom(buf[:n])
+}
+
+func (e *Engine) probeRedis(conn net.Conn) string {
+	conn.SetWriteDeadline(e.now().Add(e.bannerTimeout))
+	if _, err := conn.Write([]byte("PING\r\n")); err != nil {
+		return ""
+	}
+	conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
+	buf := make([]byte, 256)
+	n, _ := conn.Read(buf)
+	reply := string(buf[:n])
+	if n == 0 || !(strings.HasPrefix(reply, "+PONG") || strings.Contains(reply, "NOAUTH") || strings.Contains(reply, "operation not permitted") || strings.Contains(reply, "wrong number of arguments")) {
+		return ""
+	}
+	conn.SetWriteDeadline(e.now().Add(e.bannerTimeout))
+	if _, err := conn.Write([]byte("INFO server\r\n")); err == nil {
+		conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
+		info := make([]byte, 2048)
+		m, _ := conn.Read(info)
+		if version := redisVersionRe.FindStringSubmatch(string(info[:m])); len(version) == 2 {
+			return "Redis " + version[1]
+		}
+	}
+	return "Redis"
+}
+
+func (e *Engine) probePostgres(conn net.Conn) string {
+	conn.SetWriteDeadline(e.now().Add(e.bannerTimeout))
+	sslRequest := []byte{0x00, 0x00, 0x00, 0x08, 0x04, 0xd2, 0x16, 0x2f}
+	if _, err := conn.Write(sslRequest); err != nil {
+		return ""
+	}
+	conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
+	buf := make([]byte, 1)
+	n, _ := conn.Read(buf)
+	if n == 1 && (buf[0] == 'S' || buf[0] == 'N') {
+		return "PostgreSQL"
+	}
+	return ""
 }
 
 func httpBannerFrom(raw []byte) string {
