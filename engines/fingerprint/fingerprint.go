@@ -208,8 +208,5 @@ func extractVersion(re *regexp.Regexp, text string) string {
 			return v
 		}
 	}
-	if v := versionPattern.FindString(text); v != "" && re.MatchString(text) && strings.Contains(text, v) {
-		return v
-	}
 	return ""
 }

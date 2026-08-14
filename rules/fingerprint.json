@@ -766,23 +766,24 @@
       "vendor": "fastly"
     },
     {
-      "product": "varnish",
+      "product": "varnish_cache",
       "weight": 0.6,
       "match": {
         "headerName": "via",
         "headerValue": "varnish"
       },
       "vendor": "varnish",
-      "cpe": "cpe:/a:varnish-cache:varnish"
+      "cpe": "cpe:/a:varnish_cache_project:varnish_cache"
     },
     {
-      "product": "varnish",
+      "product": "varnish_cache",
       "weight": 0.5,
       "match": {
         "headerName": "x-varnish",
         "headerValue": ".+"
       },
-      "vendor": "varnish"
+      "vendor": "varnish",
+      "cpe": "cpe:/a:varnish_cache_project:varnish_cache"
     },
     {
       "product": "cloudfront",
@@ -1687,6 +1688,36 @@
       },
       "vendor": "fontawesome",
       "cpe": "cpe:/a:fontawesome:fontawesome"
+    },
+    {
+      "product": "varnish_cache",
+      "weight": 0.6,
+      "match": {
+        "headerName": "via",
+        "headerValue": "[Vv]arnish/([0-9]+\\.[0-9]+(?:\\.[0-9]+)?)"
+      },
+      "vendor": "varnish",
+      "cpe": "cpe:/a:varnish_cache_project:varnish_cache"
+    },
+    {
+      "product": "jboss_enterprise_application_platform",
+      "weight": 0.6,
+      "match": {
+        "headerName": "x-powered-by",
+        "headerValue": "JBoss(?:Web)?[-/ ]v?([0-9]+\\.[0-9]+(?:\\.[0-9]+)?)"
+      },
+      "vendor": "redhat",
+      "cpe": "cpe:/a:redhat:jboss_enterprise_application_platform"
+    },
+    {
+      "product": "directadmin",
+      "weight": 0.6,
+      "match": {
+        "headerName": "server",
+        "headerValue": "DirectAdmin(?:\\s+Daemon)?\\s+v?([0-9]+\\.[0-9]+(?:\\.[0-9]+)?)"
+      },
+      "vendor": "directadmin",
+      "cpe": "cpe:/a:directadmin:directadmin"
     }
   ]
 }
