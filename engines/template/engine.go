@@ -86,10 +86,13 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 		return Result{}, fmt.Errorf("template: invalid target %q", target)
 	}
 	res := Result{Target: base.String()}
+	var oobPendings []*oobPending
 	for _, tmpl := range set.Templates {
 		if templateUsesOOB(tmpl) {
 			if e.interactor != nil {
-				e.runOOB(ctx, base, tmpl, &res)
+				if p := e.sendOOB(ctx, base, tmpl, &res); p != nil {
+					oobPendings = append(oobPendings, p)
+				}
 			}
 			continue
 		}
@@ -146,6 +149,7 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 			}
 		}
 	}
+	e.resolveOOB(oobPendings, &res)
 	return res, nil
 }
 
@@ -175,7 +179,16 @@ func substOOB(s, callbackURL string) string {
 	return strings.ReplaceAll(s, "{{interactsh-url}}", callbackURL)
 }
 
-func (e *Engine) runOOB(ctx context.Context, base *url.URL, tmpl Template, res *Result) {
+type oobPending struct {
+	token   string
+	tmpl    Template
+	full    string
+	status  int
+	body    []byte
+	headers map[string]string
+}
+
+func (e *Engine) sendOOB(ctx context.Context, base *url.URL, tmpl Template, res *Result) *oobPending {
 	token, callbackURL := e.interactor.NewSession()
 	client := e.chainClient()
 	vars := map[string]string{}
@@ -192,17 +205,17 @@ func (e *Engine) runOOB(ctx context.Context, base *url.URL, tmpl Template, res *
 		full := base.String() + "/" + strings.TrimLeft(path, "/")
 		parsed, perr := url.Parse(full)
 		if perr != nil {
-			return
+			return nil
 		}
 		tgt := scopeguard.Target{Host: parsed.Hostname(), Path: parsed.Path, Protocol: "tcp", Port: portOfURL(parsed)}
 		if d := e.snapshot.EvaluateAction(tgt, "httpget", e.now()); !d.Allowed {
 			res.Blocked++
-			return
+			return nil
 		}
 		if e.budget != nil {
 			if err := e.budget.Acquire(ctx, budgetguard.Cost{Requests: 1}); err != nil {
 				res.Blocked++
-				return
+				return nil
 			}
 		}
 		res.Requested++
@@ -218,7 +231,7 @@ func (e *Engine) runOOB(ctx context.Context, base *url.URL, tmpl Template, res *
 		status, body, headers, err := e.fetchVia(ctx, client, creq, full)
 		if err != nil {
 			res.Errors = append(res.Errors, tmpl.ID+": "+err.Error())
-			return
+			return nil
 		}
 		view := newResponseView(status, body, headers)
 		for name, vals := range req.extract(view) {
@@ -228,49 +241,52 @@ func (e *Engine) runOOB(ctx context.Context, base *url.URL, tmpl Template, res *
 		}
 		lastFull, lastStatus, lastBody, lastHeaders = full, status, body, headers
 	}
-	protocols := e.pollOOB(token)
-	view := newResponseView(lastStatus, lastBody, lastHeaders)
-	view.oob = protocols
-	final := tmpl.Requests[len(tmpl.Requests)-1]
-	if !final.matches(view) {
-		return
-	}
-	sum := sha256.Sum256(lastBody)
-	res.Matches = append(res.Matches, Match{
-		TemplateID:   tmpl.ID,
-		Name:         tmpl.Info.Name,
-		Severity:     tmpl.Info.Severity,
-		CVE:          tmpl.Info.CVE,
-		CWE:          tmpl.Info.CWE,
-		Tags:         tmpl.Info.Tags,
-		Prerequisite: tmpl.Info.Prerequisite,
-		URL:          lastFull,
-		Method:       final.Method,
-		Status:       lastStatus,
-		ContentHash:  hex.EncodeToString(sum[:]),
-	})
+	return &oobPending{token: token, tmpl: tmpl, full: lastFull, status: lastStatus, body: lastBody, headers: lastHeaders}
 }
 
-func (e *Engine) pollOOB(token string) string {
-	deadline := e.now().Add(e.oobWait)
-	for {
-		hits := e.interactor.Poll(token)
-		if len(hits) > 0 {
-			seen := map[string]bool{}
-			var protocols []string
-			for _, h := range hits {
-				if !seen[h.Protocol] {
-					seen[h.Protocol] = true
-					protocols = append(protocols, h.Protocol)
-				}
-			}
-			return strings.Join(protocols, "\n")
-		}
-		if !e.now().Before(deadline) {
-			return ""
-		}
-		time.Sleep(50 * time.Millisecond)
+func (e *Engine) resolveOOB(pendings []*oobPending, res *Result) {
+	if len(pendings) == 0 {
+		return
 	}
+	time.Sleep(e.oobWait)
+	for _, p := range pendings {
+		protocols := protocolsOf(e.interactor.Poll(p.token))
+		view := newResponseView(p.status, p.body, p.headers)
+		view.oob = protocols
+		final := p.tmpl.Requests[len(p.tmpl.Requests)-1]
+		if !final.matches(view) {
+			continue
+		}
+		sum := sha256.Sum256(p.body)
+		res.Matches = append(res.Matches, Match{
+			TemplateID:   p.tmpl.ID,
+			Name:         p.tmpl.Info.Name,
+			Severity:     p.tmpl.Info.Severity,
+			CVE:          p.tmpl.Info.CVE,
+			CWE:          p.tmpl.Info.CWE,
+			Tags:         p.tmpl.Info.Tags,
+			Prerequisite: p.tmpl.Info.Prerequisite,
+			URL:          p.full,
+			Method:       final.Method,
+			Status:       p.status,
+			ContentHash:  hex.EncodeToString(sum[:]),
+		})
+	}
+}
+
+func protocolsOf(hits []oob.Interaction) string {
+	if len(hits) == 0 {
+		return ""
+	}
+	seen := map[string]bool{}
+	var protocols []string
+	for _, h := range hits {
+		if !seen[h.Protocol] {
+			seen[h.Protocol] = true
+			protocols = append(protocols, h.Protocol)
+		}
+	}
+	return strings.Join(protocols, "\n")
 }
 
 func (e *Engine) runChained(ctx context.Context, base *url.URL, tmpl Template, res *Result) {

