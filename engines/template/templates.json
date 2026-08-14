@@ -4168,7 +4168,7 @@
           "traversal"
         ],
         "description": "Apache path traversal reads arbitrary files.",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -4251,7 +4251,7 @@
           "lfi"
         ],
         "description": "Pulse Connect Secure arbitrary file read.",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -4460,7 +4460,7 @@
           "traversal"
         ],
         "description": "A parameter or path allows reading /etc/passwd.",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -8674,7 +8674,7 @@
           "vuln"
         ],
         "cve": "CVE-2006-3392",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -8770,7 +8770,7 @@
           "vuln"
         ],
         "cve": "CVE-2007-4504",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -8815,7 +8815,7 @@
           "edb"
         ],
         "cve": "CVE-2008-1059",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -8859,7 +8859,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-4668",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -8903,7 +8903,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-4764",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -8990,7 +8990,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-6080",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9034,7 +9034,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-6172",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9078,7 +9078,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-6222",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9123,7 +9123,7 @@
           "vkev"
         ],
         "cve": "CVE-2008-6668",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9169,7 +9169,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-0545",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9208,7 +9208,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-0932",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9251,7 +9251,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-1496",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9296,7 +9296,7 @@
           "cisco"
         ],
         "cve": "CVE-2009-1558",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9339,7 +9339,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-2015",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9382,7 +9382,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-2100",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9425,7 +9425,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-3053",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9468,7 +9468,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-3318",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9512,7 +9512,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-4202",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9557,7 +9557,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-4679",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9600,7 +9600,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-5114",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9644,7 +9644,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0157",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9688,7 +9688,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0467",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9732,7 +9732,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0696",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9777,7 +9777,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0759",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9822,7 +9822,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0942",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9866,7 +9866,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0943",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9911,7 +9911,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0944",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9955,7 +9955,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0972",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -9999,7 +9999,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0982",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10043,7 +10043,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-0985",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10087,7 +10087,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1056",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10131,7 +10131,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1081",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10176,7 +10176,7 @@
           "je_form_creator"
         ],
         "cve": "CVE-2010-1217",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10220,7 +10220,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1219",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10265,7 +10265,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1302",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10310,7 +10310,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1304",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10354,7 +10354,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1305",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10398,7 +10398,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1306",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10442,7 +10442,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1307",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10486,7 +10486,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1308",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10531,7 +10531,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1312",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10575,7 +10575,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1313",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10620,7 +10620,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1314",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10665,7 +10665,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1315",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10710,7 +10710,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1340",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10754,7 +10754,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1345",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10799,7 +10799,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1352",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10843,7 +10843,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1353",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10888,7 +10888,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1354",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -10980,7 +10980,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1461",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11025,7 +11025,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1469",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11069,7 +11069,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1470",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11113,7 +11113,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1471",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11157,7 +11157,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1472",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11202,7 +11202,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1473",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11246,7 +11246,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1474",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11290,7 +11290,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1475",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11335,7 +11335,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1476",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11379,7 +11379,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1478",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11424,7 +11424,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1491",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11468,7 +11468,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1494",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11513,7 +11513,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1495",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11558,7 +11558,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1531",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11603,7 +11603,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1532",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11647,7 +11647,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1533",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11691,7 +11691,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1534",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11735,7 +11735,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1535",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11779,7 +11779,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1540",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11824,7 +11824,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1601",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11869,7 +11869,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1602",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11913,7 +11913,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1603",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -11957,7 +11957,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1607",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12002,7 +12002,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1653",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12046,7 +12046,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1657",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12090,7 +12090,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1658",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12134,7 +12134,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1659",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12179,7 +12179,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1714",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12224,7 +12224,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1715",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12269,7 +12269,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1717",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12313,7 +12313,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1718",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12357,7 +12357,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1719",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12401,7 +12401,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1722",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12445,7 +12445,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1723",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12490,7 +12490,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1858",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12534,7 +12534,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1875",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12579,7 +12579,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1878",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12623,7 +12623,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1952",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12667,7 +12667,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1953",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12711,7 +12711,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1954",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12755,7 +12755,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1955",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12799,7 +12799,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1956",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12844,7 +12844,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1957",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12888,7 +12888,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1977",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12932,7 +12932,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1979",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -12977,7 +12977,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1980",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13022,7 +13022,7 @@
           "joomla\\!"
         ],
         "cve": "CVE-2010-1981",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13066,7 +13066,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1982",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13111,7 +13111,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-1983",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13154,7 +13154,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2018",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13206,7 +13206,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2033",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13251,7 +13251,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2034",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13296,7 +13296,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2035",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13341,7 +13341,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2036",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13386,7 +13386,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2037",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13431,7 +13431,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2045",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13476,7 +13476,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2050",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13520,7 +13520,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2122",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13564,7 +13564,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2128",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13608,7 +13608,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2259",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13652,7 +13652,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2307",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13697,7 +13697,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2507",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13742,7 +13742,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2680",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13787,7 +13787,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2682",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13831,7 +13831,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2857",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13921,7 +13921,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2918",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -13965,7 +13965,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-2920",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14009,7 +14009,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-3203",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14054,7 +14054,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-3426",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14099,7 +14099,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-4231",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14183,7 +14183,7 @@
           "artica"
         ],
         "cve": "CVE-2010-4282",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14228,7 +14228,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-4617",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14273,7 +14273,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-4719",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14317,7 +14317,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-4769",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14362,7 +14362,7 @@
           "sqli"
         ],
         "cve": "CVE-2010-4977",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14407,7 +14407,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-5028",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14498,7 +14498,7 @@
           "vuln"
         ],
         "cve": "CVE-2010-5286",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14542,7 +14542,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-0049",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14587,7 +14587,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-1669",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14630,7 +14630,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-2744",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14672,7 +14672,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-2780",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14716,7 +14716,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-3315",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14760,7 +14760,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-4804",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14805,7 +14805,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-0392",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14850,7 +14850,7 @@
           "count_per_day_project"
         ],
         "cve": "CVE-2012-0896",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14894,7 +14894,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-0981",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14938,7 +14938,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-0991",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -14981,7 +14981,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-0996",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15025,7 +15025,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-1226",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15110,7 +15110,7 @@
           "vuln"
         ],
         "cve": "CVE-2013-5528",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15153,7 +15153,7 @@
           "vuln"
         ],
         "cve": "CVE-2013-5979",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15198,7 +15198,7 @@
           "vkev"
         ],
         "cve": "CVE-2013-7091",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15252,7 +15252,7 @@
           "westerndeal"
         ],
         "cve": "CVE-2013-7240",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15298,7 +15298,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-10037",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15387,7 +15387,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-2962",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15430,7 +15430,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-3744",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15474,7 +15474,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-4940",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15564,7 +15564,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-5258",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15609,7 +15609,7 @@
           "wp_content_source_control_project"
         ],
         "cve": "CVE-2014-5368",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15653,7 +15653,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-6308",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15745,7 +15745,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-8799",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15793,7 +15793,7 @@
           "wpscan"
         ],
         "cve": "CVE-2014-9119",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -15976,7 +15976,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-1000012",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16066,7 +16066,7 @@
           "wpscan"
         ],
         "cve": "CVE-2015-1579",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16114,7 +16114,7 @@
           "magmi"
         ],
         "cve": "CVE-2015-2067",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16158,7 +16158,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-2166",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16336,7 +16336,7 @@
           "plugin"
         ],
         "cve": "CVE-2015-3337",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16380,7 +16380,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-3648",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16563,7 +16563,7 @@
           "se_html5_album_audio_player_project"
         ],
         "cve": "CVE-2015-4414",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16606,7 +16606,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-4632",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16784,7 +16784,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-5688",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16926,7 +16926,7 @@
           "lfi"
         ],
         "cve": "CVE-2015-9406",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -16972,7 +16972,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-9480",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17148,7 +17148,7 @@
           "wp"
         ],
         "cve": "CVE-2016-10924",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17194,7 +17194,7 @@
           "vuln"
         ],
         "cve": "CVE-2016-10956",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17241,7 +17241,7 @@
           "vkev"
         ],
         "cve": "CVE-2016-2389",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17337,7 +17337,7 @@
           "vuln"
         ],
         "cve": "CVE-2016-6277",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17754,7 +17754,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-14849",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17799,7 +17799,7 @@
           "vkev"
         ],
         "cve": "CVE-2017-15363",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17847,7 +17847,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-15647",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17890,7 +17890,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-16806",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17936,7 +17936,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-16877",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -17980,7 +17980,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-16894",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18453,7 +18453,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-10822",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18498,7 +18498,7 @@
           "seclists"
         ],
         "cve": "CVE-2018-10823",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18543,7 +18543,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-10956",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18677,7 +18677,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-12031",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18722,7 +18722,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-12054",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18805,7 +18805,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-12613",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18904,7 +18904,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-1271",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -18948,7 +18948,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-12909",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19046,7 +19046,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-13980",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19269,7 +19269,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-15535",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19314,7 +19314,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-15745",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19360,7 +19360,7 @@
           "wechat_brodcast_project"
         ],
         "cve": "CVE-2018-16283",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19398,7 +19398,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-16288",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19443,7 +19443,7 @@
           "packetstorm"
         ],
         "cve": "CVE-2018-16299",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19682,7 +19682,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-16836",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19783,7 +19783,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-18777",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19874,7 +19874,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-19326",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19919,7 +19919,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-19365",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -19963,7 +19963,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-19458",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20053,7 +20053,7 @@
           "traversal"
         ],
         "cve": "CVE-2018-20463",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20198,7 +20198,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-3714",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20243,7 +20243,7 @@
           "joomla\\!"
         ],
         "cve": "CVE-2018-6008",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20287,7 +20287,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-6184",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20414,7 +20414,7 @@
           "siteeditor"
         ],
         "cve": "CVE-2018-7422",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20463,7 +20463,7 @@
           "unbit"
         ],
         "cve": "CVE-2018-7490",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20772,7 +20772,7 @@
           "wp"
         ],
         "cve": "CVE-2018-9118",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -20858,7 +20858,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-9205",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21275,7 +21275,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-12276",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21319,7 +21319,7 @@
           "vkev"
         ],
         "cve": "CVE-2019-12314",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21409,7 +21409,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-12725",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21505,7 +21505,7 @@
           "vkev"
         ],
         "cve": "CVE-2019-14205",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21550,7 +21550,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-14251",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21596,7 +21596,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-14312",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21878,7 +21878,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-16662",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -21966,7 +21966,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-17270",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22153,7 +22153,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-18371",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22571,7 +22571,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-2588",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22651,7 +22651,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-3799",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22696,7 +22696,7 @@
           "kev"
         ],
         "cve": "CVE-2019-5418",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22742,7 +22742,7 @@
           "vkev"
         ],
         "cve": "CVE-2019-7254",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22788,7 +22788,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-7315",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22920,7 +22920,7 @@
           "gracemedia_media_player_project"
         ],
         "cve": "CVE-2019-9618",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -22964,7 +22964,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-9726",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -23363,7 +23363,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-11455",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -23453,7 +23453,7 @@
           "lfi"
         ],
         "cve": "CVE-2020-11738",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -23510,7 +23510,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-11798",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24126,7 +24126,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-14864",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24412,7 +24412,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-17519",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24457,7 +24457,7 @@
           "vkev"
         ],
         "cve": "CVE-2020-17530",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24582,7 +24582,7 @@
           "vkev"
         ],
         "cve": "CVE-2020-23575",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24671,7 +24671,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-24571",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24824,7 +24824,7 @@
           "vkev"
         ],
         "cve": "CVE-2020-25540",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -24867,7 +24867,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-26073",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25202,7 +25202,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-29227",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25374,7 +25374,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-35580",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25413,7 +25413,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-35598",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25456,7 +25456,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-35736",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25659,7 +25659,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-5405",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25704,7 +25704,7 @@
           "vmware"
         ],
         "cve": "CVE-2020-5410",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25792,7 +25792,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-7209",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25881,7 +25881,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-8163",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -25925,7 +25925,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-8209",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -26020,7 +26020,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-8641",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -26176,7 +26176,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-9054",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -26410,7 +26410,7 @@
           "vkev"
         ],
         "cve": "CVE-2021-20123",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -26465,7 +26465,7 @@
           "vkev"
         ],
         "cve": "CVE-2021-20124",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -26762,7 +26762,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-23241",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -27149,7 +27149,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-25864",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -27353,7 +27353,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-28377",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -27640,7 +27640,7 @@
           "vkev"
         ],
         "cve": "CVE-2021-30497",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -27787,7 +27787,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-3223",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -27942,7 +27942,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-32820",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -28090,7 +28090,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-33564",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -28762,7 +28762,7 @@
           "wp"
         ],
         "cve": "CVE-2021-39316",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -28868,7 +28868,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-39433",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29154,7 +29154,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-40960",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29470,7 +29470,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43287",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29513,7 +29513,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43495",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29550,7 +29550,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43496",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29588,7 +29588,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43734",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29635,7 +29635,7 @@
           "vkev"
         ],
         "cve": "CVE-2021-43778",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -29820,7 +29820,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-4463",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -30040,7 +30040,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-46417",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -30615,7 +30615,7 @@
           "simplefilelist"
         ],
         "cve": "CVE-2022-1119",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -31310,7 +31310,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-23854",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -31454,7 +31454,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-24716",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -31509,7 +31509,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-24900",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -32103,7 +32103,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-26271",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -32404,7 +32404,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-29298",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -32659,7 +32659,7 @@
           "ithemes"
         ],
         "cve": "CVE-2022-31474",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -33008,7 +33008,7 @@
           "woocommerce"
         ],
         "cve": "CVE-2022-33901",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -33157,7 +33157,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-37122",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -33431,7 +33431,7 @@
           "wp"
         ],
         "cve": "CVE-2022-4060",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -33492,7 +33492,7 @@
           "unauth"
         ],
         "cve": "CVE-2022-4063",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -33641,7 +33641,7 @@
           "lfi"
         ],
         "cve": "CVE-2022-4140",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -33696,7 +33696,7 @@
           "usc-e-shop"
         ],
         "cve": "CVE-2022-41840",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -34039,7 +34039,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-22047",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -34561,7 +34561,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-33510",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -35118,7 +35118,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-38879",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -35313,7 +35313,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-40924",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -35355,7 +35355,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-41599",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -35935,7 +35935,7 @@
           "wp"
         ],
         "cve": "CVE-2023-5991",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -35988,7 +35988,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-6020",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -36041,7 +36041,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-6021",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -36094,7 +36094,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-6023",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -36392,7 +36392,7 @@
           "vkev"
         ],
         "cve": "CVE-2024-11303",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -36813,7 +36813,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-23334",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -37052,7 +37052,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-27292",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -37885,7 +37885,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-36527",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -37927,7 +37927,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-37728",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -37977,7 +37977,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-38816",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -38912,7 +38912,7 @@
           "unauth"
         ],
         "cve": "CVE-2024-9362",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -39002,7 +39002,7 @@
           "wooconvo"
         ],
         "cve": "CVE-2025-10162",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -39098,7 +39098,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-1743",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -39535,7 +39535,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-34031",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -39687,7 +39687,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-44137",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -39739,7 +39739,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-55523",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -40134,7 +40134,7 @@
           "arbitrary-file-read"
         ],
         "cve": "CVE-2026-23483",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -40281,7 +40281,7 @@
           "vkev"
         ],
         "cve": "CVE-2026-29059",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -40387,7 +40387,7 @@
           "unauth"
         ],
         "cve": "CVE-2026-30958",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -40682,7 +40682,7 @@
           "vuln"
         ],
         "cve": "CVE-2004-0519",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -40736,7 +40736,7 @@
           "vuln"
         ],
         "cve": "CVE-2005-3128",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -40787,7 +40787,7 @@
           "vuln"
         ],
         "cve": "CVE-2005-4385",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -40832,7 +40832,7 @@
           "vuln"
         ],
         "cve": "CVE-2007-0885",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -40885,7 +40885,7 @@
           "vuln"
         ],
         "cve": "CVE-2007-5728",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -40938,7 +40938,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-2398",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -40990,7 +40990,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-6465",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41044,7 +41044,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-6982",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41098,7 +41098,7 @@
           "vuln"
         ],
         "cve": "CVE-2009-1872",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41159,7 +41159,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-4336",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41212,7 +41212,7 @@
           "vuln"
         ],
         "cve": "CVE-2011-5106",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41266,7 +41266,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-4253",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41311,7 +41311,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-4547",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41366,7 +41366,7 @@
           "xss"
         ],
         "cve": "CVE-2012-4878",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41410,7 +41410,7 @@
           "vuln"
         ],
         "cve": "CVE-2012-4889",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41462,7 +41462,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-100004",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41515,7 +41515,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-2908",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41569,7 +41569,7 @@
           "podcast_channels_project"
         ],
         "cve": "CVE-2014-4544",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41623,7 +41623,7 @@
           "xss"
         ],
         "cve": "CVE-2014-5111",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41669,7 +41669,7 @@
           "xss"
         ],
         "cve": "CVE-2014-8676",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41715,7 +41715,7 @@
           "unauth"
         ],
         "cve": "CVE-2014-9444",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41767,7 +41767,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-9606",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41819,7 +41819,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-9607",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41872,7 +41872,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-9609",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41916,7 +41916,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-9615",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -41970,7 +41970,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-9618",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42018,7 +42018,7 @@
           "xss"
         ],
         "cve": "CVE-2015-2068",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42072,7 +42072,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-4666",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42116,7 +42116,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-6544",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42170,7 +42170,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-7377",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42222,7 +42222,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-8349",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42273,7 +42273,7 @@
           "vuln"
         ],
         "cve": "CVE-2016-7981",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42326,7 +42326,7 @@
           "vuln"
         ],
         "cve": "CVE-2016-8527",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42377,7 +42377,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-10075",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42430,7 +42430,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-11629",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42481,7 +42481,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-12544",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42532,7 +42532,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-12583",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42584,7 +42584,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-12794",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42636,7 +42636,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-14186",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42687,7 +42687,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-14651",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42736,7 +42736,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-18536",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42789,7 +42789,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-3132",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42842,7 +42842,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-5631",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42893,7 +42893,7 @@
           "paintballrefjosh"
         ],
         "cve": "CVE-2017-6478",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42947,7 +42947,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-7391",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -42998,7 +42998,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-7855",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43051,7 +43051,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-9140",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43098,7 +43098,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-9833",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43141,7 +43141,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-1000129",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43195,7 +43195,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-10095",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43249,7 +43249,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-10141",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43300,7 +43300,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-10230",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43354,7 +43354,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-11709",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43414,7 +43414,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-12095",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43468,7 +43468,7 @@
           "vkev"
         ],
         "cve": "CVE-2018-12998",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43520,7 +43520,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-13380",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43575,7 +43575,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-14013",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43629,7 +43629,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-14916",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43675,7 +43675,7 @@
           "xss"
         ],
         "cve": "CVE-2018-14918",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43719,7 +43719,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-16139",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43773,7 +43773,7 @@
           "xss"
         ],
         "cve": "CVE-2018-16979",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43820,7 +43820,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-18323",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43864,7 +43864,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-18570",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43915,7 +43915,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-18608",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -43967,7 +43967,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-19386",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44012,7 +44012,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-19439",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44050,7 +44050,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-19877",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44102,7 +44102,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-20824",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44148,7 +44148,7 @@
           "packetstorm"
         ],
         "cve": "CVE-2018-5316",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44201,7 +44201,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-5715",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44254,7 +44254,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-7653",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44308,7 +44308,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-8006",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44361,7 +44361,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-10475",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44412,7 +44412,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-12461",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44464,7 +44464,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-12581",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44517,7 +44517,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-14696",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44569,7 +44569,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-14974",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44614,7 +44614,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-15501",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44668,7 +44668,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-18957",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44722,7 +44722,7 @@
           "heroplugins"
         ],
         "cve": "CVE-2019-19134",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44775,7 +44775,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-19368",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44819,7 +44819,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-19908",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44871,7 +44871,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-20141",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44920,7 +44920,7 @@
           "cththemes"
         ],
         "cve": "CVE-2019-20210",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -44973,7 +44973,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-3402",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45025,7 +45025,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-3911",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45078,7 +45078,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-6112",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45122,7 +45122,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-7219",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45176,7 +45176,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-7255",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45230,7 +45230,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-8937",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45284,7 +45284,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-9955",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45325,7 +45325,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-12054",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45377,7 +45377,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-13820",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45431,7 +45431,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-14408",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45482,7 +45482,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-14413",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45534,7 +45534,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-15500",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45586,7 +45586,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-15718",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45638,7 +45638,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-15895",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45693,7 +45693,7 @@
           "themeinprogress"
         ],
         "cve": "CVE-2020-17362",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45753,7 +45753,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-17453",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45804,7 +45804,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-19282",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45855,7 +45855,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-19283",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45908,7 +45908,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-1943",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -45960,7 +45960,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-19515",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46013,7 +46013,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-20982",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46065,7 +46065,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-2140",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46119,7 +46119,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-23517",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46173,7 +46173,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-24223",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46227,7 +46227,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-24701",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46280,7 +46280,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-24902",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46335,7 +46335,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-24903",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46388,7 +46388,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-27735",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46441,7 +46441,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-27982",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46493,7 +46493,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-29164",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46545,7 +46545,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-35774",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46597,7 +46597,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-6171",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46650,7 +46650,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-8115",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46704,7 +46704,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-8512",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46756,7 +46756,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-9036",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46809,7 +46809,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-9344",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46867,7 +46867,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-20137",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46920,7 +46920,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-21799",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -46972,7 +46972,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-21800",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47026,7 +47026,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-21801",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47079,7 +47079,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-21802",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47132,7 +47132,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-21803",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47186,7 +47186,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-22122",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47228,7 +47228,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-24235",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47283,7 +47283,7 @@
           "wp-plugin"
         ],
         "cve": "CVE-2021-24291",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47338,7 +47338,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-24389",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47392,7 +47392,7 @@
           "wordpress"
         ],
         "cve": "CVE-2021-24435",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47449,7 +47449,7 @@
           "transposh"
         ],
         "cve": "CVE-2021-24910",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47504,7 +47504,7 @@
           "heateor"
         ],
         "cve": "CVE-2021-24987",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47558,7 +47558,7 @@
           "pluginus"
         ],
         "cve": "CVE-2021-25085",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47609,7 +47609,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-26247",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47660,7 +47660,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-26702",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47711,7 +47711,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-26710",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47763,7 +47763,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-26723",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47817,7 +47817,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-27309",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47869,7 +47869,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-27310",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47922,7 +47922,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-27519",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -47974,7 +47974,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-27909",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48027,7 +48027,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-29625",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48078,7 +48078,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-30049",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48131,7 +48131,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-30134",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48183,7 +48183,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-30213",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48236,7 +48236,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-31195",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48290,7 +48290,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-31249",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48337,7 +48337,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-31589",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48383,7 +48383,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-31682",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48436,7 +48436,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-32853",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48490,7 +48490,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-33904",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48545,7 +48545,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-34630",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48597,7 +48597,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-35488",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48642,7 +48642,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-37416",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48695,7 +48695,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-37833",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48758,7 +48758,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-3831",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48812,7 +48812,7 @@
           "packetstorm"
         ],
         "cve": "CVE-2021-38702",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48863,7 +48863,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-38704",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48915,7 +48915,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-40542",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -48967,7 +48967,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-40868",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49019,7 +49019,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-41174",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49073,7 +49073,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-41951",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49125,7 +49125,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-42551",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49186,7 +49186,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-42565",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49239,7 +49239,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-42566",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49294,7 +49294,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43062",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49346,7 +49346,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43574",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49402,7 +49402,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43725",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49454,7 +49454,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-43810",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49505,7 +49505,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-45380",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49559,7 +49559,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-45422",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49612,7 +49612,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-46387",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49667,7 +49667,7 @@
           "wp_accessibility_helper_project"
         ],
         "cve": "CVE-2022-0150",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49721,7 +49721,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-0201",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49770,7 +49770,7 @@
           "mappresspro"
         ],
         "cve": "CVE-2022-0208",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49825,7 +49825,7 @@
           "spider-event-calendar"
         ],
         "cve": "CVE-2022-0212",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49880,7 +49880,7 @@
           "xss"
         ],
         "cve": "CVE-2022-0250",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49934,7 +49934,7 @@
           "xss"
         ],
         "cve": "CVE-2022-0271",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -49988,7 +49988,7 @@
           "www-xml-sitemap-generator-org"
         ],
         "cve": "CVE-2022-0346",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50036,7 +50036,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-0378",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50083,7 +50083,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-0653",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50135,7 +50135,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-0666",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50173,7 +50173,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-0678",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50228,7 +50228,7 @@
           "xss"
         ],
         "cve": "CVE-2022-1168",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50283,7 +50283,7 @@
           "jobmonster"
         ],
         "cve": "CVE-2022-1170",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50338,7 +50338,7 @@
           "gwyn\\'s_imagemap_selector_project"
         ],
         "cve": "CVE-2022-1221",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50392,7 +50392,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-1439",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50439,7 +50439,7 @@
           "fatcatapps"
         ],
         "cve": "CVE-2022-1904",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50493,7 +50493,7 @@
           "wp"
         ],
         "cve": "CVE-2022-1910",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50548,7 +50548,7 @@
           "pluginus"
         ],
         "cve": "CVE-2022-1916",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50612,7 +50612,7 @@
           "xss"
         ],
         "cve": "CVE-2022-1933",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50667,7 +50667,7 @@
           "unauth"
         ],
         "cve": "CVE-2022-1946",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50718,7 +50718,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-2130",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50772,7 +50772,7 @@
           "contact_form_7_captcha_project"
         ],
         "cve": "CVE-2022-2187",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50826,7 +50826,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-22242",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50878,7 +50878,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-23808",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50934,7 +50934,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-25489",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -50988,7 +50988,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-26564",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51044,7 +51044,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-27926",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51098,7 +51098,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-28363",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51151,7 +51151,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-28508",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51204,7 +51204,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-29299",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51257,7 +51257,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-29301",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51310,7 +51310,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-29349",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51362,7 +51362,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-29548",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51413,7 +51413,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-30776",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51466,7 +51466,7 @@
           "vkev"
         ],
         "cve": "CVE-2022-30777",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51519,7 +51519,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-31299",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51574,7 +51574,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-31798",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51626,7 +51626,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-32195",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51678,7 +51678,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-32771",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51731,7 +51731,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-32772",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51784,7 +51784,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-34328",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51836,7 +51836,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-35493",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51887,7 +51887,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-3766",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51939,7 +51939,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-38322",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -51990,7 +51990,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-38463",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52042,7 +52042,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-38553",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52096,7 +52096,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-39195",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52150,7 +52150,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-40879",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52202,7 +52202,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-41473",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52254,7 +52254,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-42118",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52307,7 +52307,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-42746",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52360,7 +52360,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-42747",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52413,7 +52413,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-42748",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52466,7 +52466,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-42749",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52521,7 +52521,7 @@
           "unauth"
         ],
         "cve": "CVE-2022-4301",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52576,7 +52576,7 @@
           "wp-plugin"
         ],
         "cve": "CVE-2022-4320",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52634,7 +52634,7 @@
           "pdf-generator-for-wp"
         ],
         "cve": "CVE-2022-4321",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52690,7 +52690,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-46381",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52736,7 +52736,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-46888",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52789,7 +52789,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-46934",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52834,7 +52834,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-1434",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52888,7 +52888,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-1719",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52943,7 +52943,7 @@
           "phpgurukul"
         ],
         "cve": "CVE-2023-23161",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -52998,7 +52998,7 @@
           "tenable"
         ],
         "cve": "CVE-2023-23492",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53053,7 +53053,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-24278",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53105,7 +53105,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-24322",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53157,7 +53157,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-24367",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53203,7 +53203,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-24488",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53259,7 +53259,7 @@
           "vkev"
         ],
         "cve": "CVE-2023-24733",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53312,7 +53312,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-27641",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53365,7 +53365,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-30210",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53418,7 +53418,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-30212",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53472,7 +53472,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-30256",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53524,7 +53524,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-35156",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53577,7 +53577,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-35159",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53631,7 +53631,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-35160",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53685,7 +53685,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-35161",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53743,7 +53743,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-36346",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53795,7 +53795,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-39600",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53848,7 +53848,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-39676",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53893,7 +53893,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-4173",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53946,7 +53946,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-4174",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -53995,7 +53995,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-42343",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54035,7 +54035,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-4451",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54086,7 +54086,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-44813",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54138,7 +54138,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-4547",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54198,7 +54198,7 @@
           "xss"
         ],
         "cve": "CVE-2023-49293",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54249,7 +54249,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-6275",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54303,7 +54303,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-11587",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54356,7 +54356,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-25669",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54409,7 +54409,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-29029",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54463,7 +54463,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-35627",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54518,7 +54518,7 @@
           "12-step-meeting-list"
         ],
         "cve": "CVE-2024-35693",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54571,7 +54571,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-3850",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54624,7 +54624,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-42852",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54678,7 +54678,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-4348",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54731,7 +54731,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-52762",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54783,7 +54783,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-2127",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54832,7 +54832,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-2709",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54888,7 +54888,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-2711",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54944,7 +54944,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-2712",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -54998,7 +54998,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-41393",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55044,7 +55044,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-4388",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55096,7 +55096,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-54589",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55151,7 +55151,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-58179",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55203,7 +55203,7 @@
           "reflected"
         ],
         "cve": "CVE-2025-61224",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55254,7 +55254,7 @@
           "xss"
         ],
         "cve": "CVE-2025-66472",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55306,7 +55306,7 @@
           "majordomo"
         ],
         "cve": "CVE-2026-27176",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55358,7 +55358,7 @@
           "svg"
         ],
         "cve": "CVE-2026-29183",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55419,7 +55419,7 @@
           "svg"
         ],
         "cve": "CVE-2026-34605",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55470,7 +55470,7 @@
           "xss"
         ],
         "cve": "CVE-2026-40105",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55523,7 +55523,7 @@
           "xss"
         ],
         "cve": "CVE-2026-50229",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55575,7 +55575,7 @@
           "reflected"
         ],
         "cve": "CVE-2026-52774",
-        "prerequisite": true,
+        "prerequisite": false,
         "reflection": true
       },
       "requests": [
@@ -55636,7 +55636,7 @@
           "vuln"
         ],
         "cve": "CVE-2008-2650",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -55682,7 +55682,7 @@
           "vkev"
         ],
         "cve": "CVE-2009-1151",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -55727,7 +55727,7 @@
           "vkev"
         ],
         "cve": "CVE-2011-3600",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -55954,7 +55954,7 @@
           "vuln"
         ],
         "cve": "CVE-2014-1203",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -56039,7 +56039,7 @@
           "vkev"
         ],
         "cve": "CVE-2014-3120",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -56202,7 +56202,7 @@
           "vuln"
         ],
         "cve": "CVE-2015-7245",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -56340,7 +56340,7 @@
           "vkev"
         ],
         "cve": "CVE-2016-3081",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -56640,7 +56640,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-14535",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -56771,7 +56771,7 @@
           "vkev"
         ],
         "cve": "CVE-2017-5638",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -56817,7 +56817,7 @@
           "kev"
         ],
         "cve": "CVE-2017-9822",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57052,7 +57052,7 @@
           "dnnsoftware"
         ],
         "cve": "CVE-2018-15811",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57099,7 +57099,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-16763",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57245,7 +57245,7 @@
           "dnnsoftware"
         ],
         "cve": "CVE-2018-18325",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57492,7 +57492,7 @@
           "vkev"
         ],
         "cve": "CVE-2018-7600",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57585,7 +57585,7 @@
           "vuln"
         ],
         "cve": "CVE-2018-8033",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57869,7 +57869,7 @@
           "vkev"
         ],
         "cve": "CVE-2019-15107",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -57909,7 +57909,7 @@
           "vkev"
         ],
         "cve": "CVE-2019-16278",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -58090,7 +58090,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-17538",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -58438,7 +58438,7 @@
           "vuln"
         ],
         "cve": "CVE-2019-7238",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -58567,7 +58567,7 @@
           "synacor"
         ],
         "cve": "CVE-2019-9670",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -59135,7 +59135,7 @@
           "pandorafms"
         ],
         "cve": "CVE-2020-13851",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -59289,7 +59289,7 @@
           "vkev"
         ],
         "cve": "CVE-2020-17496",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -59823,7 +59823,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-29390",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -60366,7 +60366,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-8515",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -62729,7 +62729,7 @@
           "vkev"
         ],
         "cve": "CVE-2021-31805",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -63308,7 +63308,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-36749",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -63552,7 +63552,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-38647",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -63813,7 +63813,7 @@
           "wp"
         ],
         "cve": "CVE-2021-39312",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -64328,7 +64328,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-41291",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -64367,7 +64367,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-41293",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -64572,7 +64572,7 @@
           "visual-tools"
         ],
         "cve": "CVE-2021-42071",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -64812,7 +64812,7 @@
           "hd-network_real-time_monitoring_system_project"
         ],
         "cve": "CVE-2021-45043",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -65166,7 +65166,7 @@
           "rce"
         ],
         "cve": "CVE-2022-0679",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -65711,7 +65711,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-2414",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -65913,7 +65913,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-24816",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -66191,7 +66191,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-26960",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -66237,7 +66237,7 @@
           "vkev"
         ],
         "cve": "CVE-2022-29014",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -66529,7 +66529,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-31137",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -67570,7 +67570,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-38840",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -67968,7 +67968,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-40881",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -68338,7 +68338,7 @@
           "thimpress"
         ],
         "cve": "CVE-2022-47615",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -70364,7 +70364,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-34960",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -72101,7 +72101,7 @@
           "vkev"
         ],
         "cve": "CVE-2024-2053",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -72154,7 +72154,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-21136",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -73243,7 +73243,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-39903",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -73439,7 +73439,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-45388",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -73796,7 +73796,7 @@
           "vkev"
         ],
         "cve": "CVE-2024-50603",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -73895,7 +73895,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-5334",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -74489,7 +74489,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-6893",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -74755,7 +74755,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-7340",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -74863,7 +74863,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-7954",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -76452,7 +76452,7 @@
           "oss"
         ],
         "cve": "CVE-2025-27817",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -76597,7 +76597,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-31131",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -76645,7 +76645,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-3248",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -77130,7 +77130,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-44177",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -77184,7 +77184,7 @@
           "unauth"
         ],
         "cve": "CVE-2025-4524",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -77582,7 +77582,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-55169",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -77742,7 +77742,7 @@
           "vuln"
         ],
         "cve": "CVE-2025-59049",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -77983,7 +77983,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-66744",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -79333,7 +79333,7 @@
           "vkev"
         ],
         "cve": "CVE-2026-8037",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -79468,7 +79468,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-1000028",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -79517,7 +79517,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-10974",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -79723,7 +79723,7 @@
           "vuln"
         ],
         "cve": "CVE-2017-9416",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -79957,7 +79957,7 @@
           "vkev"
         ],
         "cve": "CVE-2018-11776",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -80494,7 +80494,7 @@
           "vkev"
         ],
         "cve": "CVE-2019-25213",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -80661,7 +80661,7 @@
           "kev"
         ],
         "cve": "CVE-2019-9621",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -80905,7 +80905,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-13886",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -81061,7 +81061,7 @@
           "vuln"
         ],
         "cve": "CVE-2020-24285",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -81559,7 +81559,7 @@
           "vuln"
         ],
         "cve": "CVE-2021-21234",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -82671,7 +82671,7 @@
           "vuln"
         ],
         "cve": "CVE-2022-27043",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -83538,7 +83538,7 @@
           "vuln"
         ],
         "cve": "CVE-2023-23063",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -83921,7 +83921,7 @@
           "file-inclusion"
         ],
         "cve": "CVE-2023-3643",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -85484,7 +85484,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-32399",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -86060,7 +86060,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-48766",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -86138,7 +86138,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-4956",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -86435,7 +86435,7 @@
           "vuln"
         ],
         "cve": "CVE-2024-55457",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -86908,7 +86908,7 @@
           "vkev"
         ],
         "cve": "CVE-2024-9047",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -87356,7 +87356,7 @@
           "woocommerce"
         ],
         "cve": "CVE-2025-13339",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -87755,7 +87755,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-24963",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -88293,7 +88293,7 @@
           "vkev"
         ],
         "cve": "CVE-2025-4078",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -88332,7 +88332,7 @@
           "uri"
         ],
         "cve": "CVE-2025-41242",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -89338,7 +89338,7 @@
           "vkev"
         ],
         "cve": "CVE-2026-1557",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
@@ -89841,7 +89841,7 @@
           "vkev"
         ],
         "cve": "CVE-2026-27971",
-        "prerequisite": true
+        "prerequisite": false
       },
       "requests": [
         {
