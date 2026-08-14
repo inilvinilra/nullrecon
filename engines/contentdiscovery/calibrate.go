@@ -18,6 +18,7 @@ type Baseline struct {
 	Words        int      `json:"words,omitempty"`
 	Lines        int      `json:"lines,omitempty"`
 	BodyHashes   []string `json:"bodyHashes,omitempty"`
+	NormHashes   []string `json:"-"`
 	Probes       int      `json:"probes"`
 }
 
@@ -49,7 +50,7 @@ func (e *Engine) calibrate(ctx context.Context, base *url.URL, opt Options) (Bas
 			}
 		}
 		requested++
-		pr, err := e.request(ctx, full)
+		pr, err := e.request(ctx, full, path)
 		if err != nil {
 			lastErr = err
 			continue
@@ -83,6 +84,7 @@ func summarize(probes []probe) Baseline {
 	words := probes[0].words
 	lines := probes[0].lines
 	seenHash := map[string]bool{}
+	seenNorm := map[string]bool{}
 	for _, pr := range probes {
 		if pr.length != length {
 			baseline.StableLength = false
@@ -93,6 +95,10 @@ func summarize(probes []probe) Baseline {
 		if !seenHash[pr.bodyHash] {
 			seenHash[pr.bodyHash] = true
 			baseline.BodyHashes = append(baseline.BodyHashes, pr.bodyHash)
+		}
+		if !seenNorm[pr.normHash] {
+			seenNorm[pr.normHash] = true
+			baseline.NormHashes = append(baseline.NormHashes, pr.normHash)
 		}
 	}
 	if baseline.StableLength {

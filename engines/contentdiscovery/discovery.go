@@ -36,6 +36,7 @@ type Hit struct {
 	ContentType string `json:"contentType,omitempty"`
 	Redirect    string `json:"redirect,omitempty"`
 	BodyHash    string `json:"bodyHash,omitempty"`
+	NormHash    string `json:"-"`
 	Class       string `json:"class"`
 }
 
@@ -85,6 +86,7 @@ type probe struct {
 	contentType string
 	location    string
 	bodyHash    string
+	normHash    string
 }
 
 func (e *Engine) Scan(ctx context.Context, target string, opt Options) (Result, error) {
@@ -139,7 +141,7 @@ func (e *Engine) Scan(ctx context.Context, target string, opt Options) (Result, 
 		go func(path, full string) {
 			defer wg.Done()
 			defer func() { <-sem }()
-			pr, err := e.request(ctx, full)
+			pr, err := e.request(ctx, full, path)
 			mu.Lock()
 			res.Requested++
 			if err != nil {
@@ -161,6 +163,7 @@ func (e *Engine) Scan(ctx context.Context, target string, opt Options) (Result, 
 				ContentType: pr.contentType,
 				Redirect:    pr.location,
 				BodyHash:    pr.bodyHash,
+				NormHash:    pr.normHash,
 			}
 			mu.Lock()
 			hits = append(hits, hit)
@@ -172,7 +175,7 @@ func (e *Engine) Scan(ctx context.Context, target string, opt Options) (Result, 
 	return res, nil
 }
 
-func (e *Engine) request(ctx context.Context, full string) (probe, error) {
+func (e *Engine) request(ctx context.Context, full, path string) (probe, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, full, nil)
 	if err != nil {
 		return probe{}, err
@@ -186,6 +189,7 @@ func (e *Engine) request(ctx context.Context, full string) (probe, error) {
 	defer resp.Body.Close()
 	body, _ := io.ReadAll(io.LimitReader(resp.Body, e.maxBody))
 	sum := sha256.Sum256(body)
+	norm := sha256.Sum256(normalizeBody(body, path))
 	pr := probe{
 		status:      resp.StatusCode,
 		length:      int64(len(body)),
@@ -194,8 +198,21 @@ func (e *Engine) request(ctx context.Context, full string) (probe, error) {
 		contentType: normalizeContentType(resp.Header.Get("Content-Type")),
 		location:    strings.TrimSpace(resp.Header.Get("Location")),
 		bodyHash:    hex.EncodeToString(sum[:]),
+		normHash:    hex.EncodeToString(norm[:]),
 	}
 	return pr, nil
+}
+
+func normalizeBody(body []byte, path string) []byte {
+	path = strings.Trim(path, "/")
+	if path == "" {
+		return body
+	}
+	text := string(body)
+	for _, token := range []string{path, "/" + path} {
+		text = strings.ReplaceAll(text, token, "")
+	}
+	return []byte(text)
 }
 
 func buildPaths(words, extensions []string) []string {

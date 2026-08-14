@@ -18,6 +18,10 @@ func classify(hits []Hit, baseline Baseline, filterSizes map[int64]bool) []Hit {
 	for _, h := range baseline.BodyHashes {
 		baselineHashes[h] = true
 	}
+	baselineNormHashes := map[string]bool{}
+	for _, h := range baseline.NormHashes {
+		baselineNormHashes[h] = true
+	}
 	statusCounts := map[int]map[int64]int{}
 	total := 0
 	for _, h := range hits {
@@ -33,7 +37,7 @@ func classify(hits []Hit, baseline Baseline, filterSizes map[int64]bool) []Hit {
 	dominant := dominantClusters(statusCounts, total)
 	out := make([]Hit, 0, len(hits))
 	for _, h := range hits {
-		h.Class = decide(h, baseline, baselineHashes, dominant, filterSizes)
+		h.Class = decide(h, baseline, baselineHashes, baselineNormHashes, dominant, filterSizes)
 		out = append(out, h)
 	}
 	sort.SliceStable(out, func(i, j int) bool {
@@ -45,7 +49,7 @@ func classify(hits []Hit, baseline Baseline, filterSizes map[int64]bool) []Hit {
 	return out
 }
 
-func decide(h Hit, baseline Baseline, baselineHashes map[string]bool, dominant map[int]int64, filterSizes map[int64]bool) string {
+func decide(h Hit, baseline Baseline, baselineHashes, baselineNormHashes map[string]bool, dominant map[int]int64, filterSizes map[int64]bool) string {
 	if filterSizes[h.Length] {
 		return classFiltered
 	}
@@ -56,10 +60,10 @@ func decide(h Hit, baseline Baseline, baselineHashes map[string]bool, dominant m
 		if baselineHashes[h.BodyHash] {
 			return classNoise
 		}
-		if baseline.StableLength && h.Length == baseline.Length {
+		if baselineNormHashes[h.NormHash] {
 			return classNoise
 		}
-		if baseline.StableShape && h.Words == baseline.Words && h.Lines == baseline.Lines {
+		if baseline.StableLength && h.Length == baseline.Length {
 			return classNoise
 		}
 	}
