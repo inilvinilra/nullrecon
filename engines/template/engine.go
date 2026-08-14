@@ -70,6 +70,10 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 	}
 	res := Result{Target: base.String()}
 	for _, tmpl := range set.Templates {
+		if len(tmpl.Requests) > 1 {
+			e.runChained(ctx, base, tmpl, &res)
+			continue
+		}
 		for _, req := range tmpl.Requests {
 			for _, path := range req.Paths {
 				full := base.String() + "/" + strings.TrimLeft(path, "/")
@@ -120,6 +124,93 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 		}
 	}
 	return res, nil
+}
+
+func (e *Engine) runChained(ctx context.Context, base *url.URL, tmpl Template, res *Result) {
+	vars := map[string]string{}
+	allMatched := true
+	hadMatchers := false
+	var lastFull string
+	var lastStatus int
+	var lastBody []byte
+	for _, req := range tmpl.Requests {
+		path := "/"
+		if len(req.Paths) > 0 {
+			path = req.Paths[0]
+		}
+		path = substChainVars(path, vars)
+		full := base.String() + "/" + strings.TrimLeft(path, "/")
+		parsed, perr := url.Parse(full)
+		if perr != nil {
+			return
+		}
+		tgt := scopeguard.Target{Host: parsed.Hostname(), Path: parsed.Path, Protocol: "tcp", Port: portOfURL(parsed)}
+		if d := e.snapshot.EvaluateAction(tgt, "httpget", e.now()); !d.Allowed {
+			res.Blocked++
+			return
+		}
+		if e.budget != nil {
+			if err := e.budget.Acquire(ctx, budgetguard.Cost{Requests: 1}); err != nil {
+				res.Blocked++
+				return
+			}
+		}
+		res.Requested++
+		creq := req
+		if len(req.Headers) > 0 {
+			h := make(map[string]string, len(req.Headers))
+			for k, v := range req.Headers {
+				h[k] = substChainVars(v, vars)
+			}
+			creq.Headers = h
+		}
+		creq.Body = substChainVars(req.Body, vars)
+		status, body, headers, err := e.fetch(ctx, creq, full)
+		if err != nil {
+			res.Errors = append(res.Errors, tmpl.ID+": "+err.Error())
+			return
+		}
+		view := newResponseView(status, body, headers)
+		for name, vals := range req.extract(view) {
+			if len(vals) > 0 {
+				vars[name] = vals[0]
+			}
+		}
+		if len(req.Matchers) > 0 {
+			hadMatchers = true
+			if !req.matches(view) {
+				allMatched = false
+			}
+		}
+		lastFull, lastStatus, lastBody = full, status, body
+	}
+	if !hadMatchers || !allMatched {
+		return
+	}
+	sum := sha256.Sum256(lastBody)
+	res.Matches = append(res.Matches, Match{
+		TemplateID:   tmpl.ID,
+		Name:         tmpl.Info.Name,
+		Severity:     tmpl.Info.Severity,
+		CVE:          tmpl.Info.CVE,
+		CWE:          tmpl.Info.CWE,
+		Tags:         tmpl.Info.Tags,
+		Prerequisite: tmpl.Info.Prerequisite,
+		URL:          lastFull,
+		Method:       tmpl.Requests[len(tmpl.Requests)-1].Method,
+		Status:       lastStatus,
+		ContentHash:  hex.EncodeToString(sum[:]),
+	})
+}
+
+func substChainVars(s string, vars map[string]string) string {
+	if len(vars) == 0 || !strings.Contains(s, "{{") {
+		return s
+	}
+	for k, v := range vars {
+		s = strings.ReplaceAll(s, "{{"+k+"}}", v)
+	}
+	return s
 }
 
 func substituteVars(s string, u *url.URL) string {

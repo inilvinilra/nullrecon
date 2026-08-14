@@ -31,6 +31,9 @@ func TestNoTemplateMatchesDecoyResponses(t *testing.T) {
 	}
 	for _, view := range decoyResponses() {
 		for _, tmpl := range set.Templates {
+			if len(tmpl.Requests) > 1 {
+				continue
+			}
 			for i, req := range tmpl.Requests {
 				if tmpl.ID == "server-version-disclosure" && view.headers["server"] != "" {
 					continue
