@@ -1651,6 +1651,42 @@
       },
       "vendor": "jquery",
       "cpe": "cpe:/a:jquery:jquery"
+    },
+    {
+      "product": "phpmyadmin",
+      "weight": 0.5,
+      "match": {
+        "body": "phpMyAdmin[^0-9<]{0,18}([0-9]+\\.[0-9]+\\.[0-9]+)"
+      },
+      "vendor": "phpmyadmin",
+      "cpe": "cpe:/a:phpmyadmin:phpmyadmin"
+    },
+    {
+      "product": "adminer",
+      "weight": 0.5,
+      "match": {
+        "body": "Adminer[^0-9<]{0,6}([0-9]+\\.[0-9]+(?:\\.[0-9]+)?)"
+      },
+      "vendor": "adminer",
+      "cpe": "cpe:/a:adminer:adminer"
+    },
+    {
+      "product": "typo3",
+      "weight": 0.5,
+      "match": {
+        "body": "TYPO3(?:\\s+CMS)?\\s+([0-9]+\\.[0-9]+(?:\\.[0-9]+)?)"
+      },
+      "vendor": "typo3",
+      "cpe": "cpe:/a:typo3:typo3"
+    },
+    {
+      "product": "font_awesome",
+      "weight": 0.4,
+      "match": {
+        "body": "font-?awesome[/@-]([0-9]+\\.[0-9]+\\.[0-9]+)"
+      },
+      "vendor": "fontawesome",
+      "cpe": "cpe:/a:fontawesome:fontawesome"
     }
   ]
 }
