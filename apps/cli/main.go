@@ -78,6 +78,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdTLS(rest[1:])
 	case "dns":
 		return ctx.cmdDNS(rest[1:])
+	case "svc":
+		return ctx.cmdSvc(rest[1:])
 	case "honeypot":
 		return ctx.cmdHoneypot(rest[1:])
 	case "discover":
