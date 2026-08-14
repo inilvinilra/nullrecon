@@ -1632,6 +1632,16 @@
       },
       "vendor": "zabbix",
       "cpe": "cpe:/a:zabbix:zabbix"
+    },
+    {
+      "product": "python",
+      "weight": 0.85,
+      "match": {
+        "headerName": "server",
+        "headerValue": "Python/([0-9.]+)"
+      },
+      "vendor": "python",
+      "cpe": "cpe:/a:python:python"
     }
   ]
 }

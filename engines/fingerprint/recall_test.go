@@ -32,6 +32,7 @@ func TestHardenedCMSRulesStillDetect(t *testing.T) {
 		"fortios":                               {Cookies: []string{"SVPNCOOKIE=deadbeef; path=/"}},
 		"play_framework":                        {Cookies: []string{"PLAY_SESSION=eyJ...; path=/"}},
 		"zabbix":                                {Title: "Zabbix"},
+		"python":                                {Headers: map[string]string{"server": "BaseHTTP/0.6 Python/3.14.7"}},
 	}
 	for product, f := range cases {
 		got := e.Apply(f)
