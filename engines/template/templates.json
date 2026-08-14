@@ -5676,6 +5676,485 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2021-26855-exchange-owa",
+      "info": {
+        "name": "Microsoft Exchange OWA/ECP exposed (ProxyLogon)",
+        "severity": "critical",
+        "cve": "CVE-2021-26855",
+        "cwe": "CWE-918",
+        "tags": [
+          "exchange",
+          "microsoft",
+          "kev",
+          "ssrf",
+          "rce"
+        ],
+        "description": "An Exchange OWA/ECP surface is reachable (CVE-2021-26855 ProxyLogon / ProxyShell family).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/owa/auth/logon.aspx",
+            "/ecp/default.aspx"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302,
+                401,
+                403
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Outlook Web App",
+                "OwaPage",
+                "aria-label=\"Outlook",
+                "exchangecookie",
+                "logonForm"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-22005-vcenter",
+      "info": {
+        "name": "VMware vCenter vSphere Client exposed",
+        "severity": "critical",
+        "cve": "CVE-2021-22005",
+        "cwe": "CWE-434",
+        "tags": [
+          "vcenter",
+          "vmware",
+          "kev",
+          "rce",
+          "upload"
+        ],
+        "description": "A VMware vCenter surface is reachable (CVE-2021-22005 / CVE-2021-21972 upload RCE family).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/ui/",
+            "/websso/SAML2/Metadata/vsphere.local"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "vSphere Client",
+                "VMware vSphere",
+                "vmware-vsphere",
+                "EntityDescriptor entityID"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-46805-ivanti-connect-secure",
+      "info": {
+        "name": "Ivanti Connect Secure VPN exposed",
+        "severity": "critical",
+        "cve": "CVE-2023-46805",
+        "cwe": "CWE-287",
+        "tags": [
+          "ivanti",
+          "pulse",
+          "kev",
+          "auth-bypass",
+          "rce"
+        ],
+        "description": "An Ivanti Connect Secure / Pulse VPN surface is reachable (CVE-2023-46805 + CVE-2024-21887 chain).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/dana-na/auth/url_default/welcome.cgi",
+            "/dana-na/nc/nc_gina_ver.txt"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Ivanti",
+                "Pulse Secure",
+                "DSSignInURL",
+                "DSSignInBanner"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-46169-cacti",
+      "info": {
+        "name": "Cacti exposed (unauth command injection)",
+        "severity": "critical",
+        "cve": "CVE-2022-46169",
+        "cwe": "CWE-77",
+        "tags": [
+          "cacti",
+          "kev",
+          "rce",
+          "command-injection"
+        ],
+        "description": "A Cacti interface is reachable (CVE-2022-46169 unauthenticated command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/cacti/",
+            "/cacti/index.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "The Cacti Group",
+                "cacti_version",
+                "auth_login.php",
+                "Console -&gt; Log"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-38646-metabase",
+      "info": {
+        "name": "Metabase pre-auth setup-token exposed",
+        "severity": "critical",
+        "cve": "CVE-2023-38646",
+        "cwe": "CWE-94",
+        "tags": [
+          "metabase",
+          "kev",
+          "rce"
+        ],
+        "description": "A Metabase instance leaks its setup-token (CVE-2023-38646 pre-auth RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/api/session/properties"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "setup-token",
+                "\"engines\":{",
+                "report-timezone",
+                "metabase.info"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-1709-screenconnect",
+      "info": {
+        "name": "ConnectWise ScreenConnect setup exposed",
+        "severity": "critical",
+        "cve": "CVE-2024-1709",
+        "cwe": "CWE-288",
+        "tags": [
+          "screenconnect",
+          "connectwise",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "A ConnectWise ScreenConnect setup surface is reachable (CVE-2024-1709 auth bypass).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/SetupWizard.aspx",
+            "/Login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "ScreenConnect",
+                "ConnectWise",
+                "scScriptData",
+                "Elsinore Technologies"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-49070-ofbiz",
+      "info": {
+        "name": "Apache OFBiz exposed (XML-RPC deserialization)",
+        "severity": "critical",
+        "cve": "CVE-2023-49070",
+        "cwe": "CWE-502",
+        "tags": [
+          "ofbiz",
+          "apache",
+          "kev",
+          "rce",
+          "deserialization"
+        ],
+        "description": "An Apache OFBiz surface is reachable (CVE-2023-49070 / CVE-2023-51467 pre-auth RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/webtools/control/main",
+            "/accounting/control/main"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Apache OFBiz",
+                "OFBiz.Visitor",
+                "org.apache.ofbiz",
+                "ofbiz-ecommerce"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-0604-sharepoint",
+      "info": {
+        "name": "Microsoft SharePoint exposed (XML deserialization RCE)",
+        "severity": "critical",
+        "cve": "CVE-2019-0604",
+        "cwe": "CWE-502",
+        "tags": [
+          "sharepoint",
+          "microsoft",
+          "kev",
+          "rce",
+          "deserialization"
+        ],
+        "description": "A SharePoint surface is reachable (CVE-2019-0604 pre-auth RCE, also ToolShell targets).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/_layouts/15/start.aspx",
+            "/_layouts/15/AllItems.aspx",
+            "/_vti_bin/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302,
+                401,
+                403
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "SharePoint",
+                "MicrosoftSharePointTeamServices",
+                "_spPageContextInfo",
+                "SP.Runtime"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-27925-zimbra",
+      "info": {
+        "name": "Zimbra Collaboration exposed (RCE)",
+        "severity": "high",
+        "cve": "CVE-2022-27925",
+        "cwe": "CWE-22",
+        "tags": [
+          "zimbra",
+          "kev",
+          "rce",
+          "traversal"
+        ],
+        "description": "A Zimbra Collaboration surface is reachable (CVE-2022-27925 + CVE-2022-37042 auth-bypass RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/zimbra/",
+            "/mail/",
+            "/zimbraAdmin/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Zimbra",
+                "zimbraLoginRedirect",
+                "ZmLogin",
+                "zimbraBuildVersion"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-35078-ivanti-epmm",
+      "info": {
+        "name": "Ivanti EPMM (MobileIron) exposed",
+        "severity": "critical",
+        "cve": "CVE-2023-35078",
+        "cwe": "CWE-287",
+        "tags": [
+          "ivanti",
+          "mobileiron",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "An Ivanti EPMM / MobileIron surface is reachable (CVE-2023-35078 unauth API access).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/mifs/",
+            "/mifs/user/login.jsp"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "MobileIron",
+                "Ivanti EPMM",
+                "corePropertyBundle",
+                "mifs_home"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

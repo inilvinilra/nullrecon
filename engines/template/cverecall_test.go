@@ -114,3 +114,41 @@ func TestKEVTemplatesDetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch2DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2021-26855-exchange-owa":          newResponseView(200, []byte(`<html><head><title>Outlook Web App</title></head><body><form id="logonForm">OwaPage exchangecookie</form></body></html>`), nil),
+		"cve-2021-22005-vcenter":               newResponseView(200, []byte(`<html><body>VMware vSphere - vSphere Client</body></html>`), nil),
+		"cve-2023-46805-ivanti-connect-secure": newResponseView(200, []byte(`<html><body>Ivanti Connect Secure DSSignInURL Pulse Secure DSSignInBanner</body></html>`), nil),
+		"cve-2022-46169-cacti":                 newResponseView(200, []byte(`<html><body>The Cacti Group auth_login.php cacti_version 1.2.22</body></html>`), nil),
+		"cve-2023-38646-metabase":              newResponseView(200, []byte(`{"setup-token":"249fa03d","engines":{"h2":{}},"report-timezone":"UTC"}`), nil),
+		"cve-2024-1709-screenconnect":          newResponseView(200, []byte(`<html><body>ScreenConnect by ConnectWise scScriptData Elsinore Technologies</body></html>`), nil),
+		"cve-2023-49070-ofbiz":                 newResponseView(200, []byte(`<html><body>Apache OFBiz org.apache.ofbiz OFBiz.Visitor</body></html>`), nil),
+		"cve-2019-0604-sharepoint":             newResponseView(200, []byte(`<html><body>SharePoint _spPageContextInfo SP.Runtime</body></html>`), nil),
+		"cve-2022-27925-zimbra":                newResponseView(200, []byte(`<html><body>Zimbra ZmLogin zimbraLoginRedirect zimbraBuildVersion</body></html>`), nil),
+		"cve-2023-35078-ivanti-epmm":           newResponseView(200, []byte(`<html><body>MobileIron Ivanti EPMM corePropertyBundle mifs_home</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: KEV template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}
