@@ -77,6 +77,12 @@ var baseDetectors = []Detector{
 	{ID: "terraform-cloud-token", Category: "token", Severity: "high", Pattern: `\b([A-Za-z0-9]{14}\.atlasv1\.[A-Za-z0-9\-_=]{60,70})\b`, Group: 1},
 	{ID: "prefect-api-key", Category: "token", Severity: "medium", Pattern: `\b(pnu_[0-9a-zA-Z]{36})\b`, Group: 1},
 	{ID: "openai-project-key", Category: "key", Severity: "high", Pattern: `\b(sk-proj-[0-9A-Za-z_\-]{40,})`, Group: 1, MinEntropy: 3.8},
+	{ID: "cloudflare-origin-ca-key", Category: "key", Severity: "high", Pattern: `\b(v1\.0-[0-9A-Fa-f]{171})\b`, Group: 1},
+	{ID: "alibaba-access-key", Category: "key", Severity: "high", Pattern: `\b(LTAI[0-9A-Za-z]{20})\b`, Group: 1},
+	{ID: "flutterwave-secret-key", Category: "key", Severity: "high", Pattern: `\b(FLWSECK-[0-9a-f]{32}-X)\b`, Group: 1},
+	{ID: "clojars-token", Category: "token", Severity: "high", Pattern: `\b(CLOJARS_[0-9A-Za-z]{60})\b`, Group: 1},
+	{ID: "grafana-cloud-token", Category: "token", Severity: "high", Pattern: `\b(glc_[0-9A-Za-z+/]{32,}={0,2})`, Group: 1, MinEntropy: 3.5},
+	{ID: "frameio-token", Category: "token", Severity: "medium", Pattern: `\b(fio-u-[0-9A-Za-z_\-]{64})\b`, Group: 1, MinEntropy: 3.5},
 	{ID: "generic-secret-assign", Category: "credential", Severity: "medium", Pattern: `(?i)(?:api[_-]?key|secret|passwd|password|token|auth[_-]?token|access[_-]?token|client[_-]?secret)['"]?\s*[:=]\s*['"]([0-9a-zA-Z\-_./+=]{16,64})['"]`, Group: 1, MinEntropy: 3.6},
 }
 
