@@ -1080,9 +1080,10 @@
               "type": "word",
               "part": "body",
               "words": [
-                "Telescope",
                 "laravel-telescope",
-                "telescope-"
+                "Telescope</title>",
+                "window.Telescope",
+                "/vendor/telescope/"
               ],
               "condition": "or"
             }
@@ -1123,8 +1124,9 @@
               "part": "body",
               "words": [
                 "Symfony Profiler",
-                "sf-toolbar",
-                "_profiler"
+                "sf-toolbar-block",
+                "sf-dump",
+                "<title>Symfony"
               ],
               "condition": "or"
             }
@@ -1165,9 +1167,10 @@
               "type": "word",
               "part": "body",
               "words": [
-                "Adminer",
                 "adminer.org",
-                "Login - Adminer"
+                "name=\"auth[server]\"",
+                "Login - Adminer",
+                "adminer.css"
               ],
               "condition": "or"
             }
@@ -1209,9 +1212,11 @@
               "type": "word",
               "part": "body",
               "words": [
-                "phpMyAdmin",
                 "pma_username",
-                "phpmyadmin.css"
+                "phpmyadmin.css.php",
+                "class=\"login",
+                "name=\"pma_password\"",
+                "PMA_sendHeaderLocation"
               ],
               "condition": "or"
             }
@@ -1252,9 +1257,10 @@
               "type": "word",
               "part": "body",
               "words": [
-                "Swagger UI",
-                "swagger-ui",
-                "swagger-ui-bundle"
+                "swagger-ui-bundle",
+                "swagger-ui.css",
+                "SwaggerUIBundle",
+                "<title>Swagger UI"
               ],
               "condition": "or"
             }
@@ -1549,10 +1555,10 @@
               "type": "word",
               "part": "body",
               "words": [
-                "\"kibana\"",
-                "kbn-",
-                "\"nickname\"",
-                "Looking for"
+                "kbn-injected-metadata",
+                "kbn-version",
+                "Looking for",
+                "bootstrapConfig"
               ],
               "condition": "or"
             }
@@ -1636,9 +1642,10 @@
               "type": "word",
               "part": "all",
               "words": [
-                "GitLab",
                 "gon.gitlab_url",
-                "gitlab-session"
+                "gitlab-session",
+                "GitLab Community",
+                "GitLab Enterprise"
               ],
               "condition": "or"
             }
@@ -1722,10 +1729,9 @@
               "words": [
                 "\"Config\"",
                 "\"NodeName\"",
-                "Consul Agent",
                 "\"Datacenter\""
               ],
-              "condition": "or"
+              "condition": "and"
             }
           ]
         }
@@ -1807,9 +1813,10 @@
               "type": "word",
               "part": "body",
               "words": [
-                "Kubernetes Dashboard",
+                "kd-chrome-container",
                 "kubernetesDashboard",
-                "kubernetes-dashboard"
+                "<kd-login",
+                "angular"
               ],
               "condition": "or"
             }
@@ -2721,10 +2728,9 @@
               "part": "body",
               "words": [
                 "\"__schema\"",
-                "\"queryType\"",
-                "\"types\""
+                "\"queryType\""
               ],
-              "condition": "or"
+              "condition": "and"
             }
           ],
           "body": "{\"query\":\"{__schema{queryType{name}}}\"}"
@@ -2763,16 +2769,8 @@
               "type": "regex",
               "part": "body",
               "regex": [
-                "\"slug\"\\s*:",
-                "\"id\"\\s*:\\s*[0-9]"
-              ],
-              "condition": "or"
-            },
-            {
-              "type": "word",
-              "part": "body",
-              "words": [
-                "\"name\""
+                "\"slug\"\\s*:\\s*\"[^\"]+\",\"name\"",
+                "\\[\\{\"id\":[0-9]+,\"name\""
               ],
               "condition": "or"
             },
@@ -2781,10 +2779,7 @@
               "part": "body",
               "words": [
                 "<html",
-                "<!doctype",
-                "<head>",
-                "<HTML",
-                "<!DOCTYPE"
+                "<!doctype"
               ],
               "condition": "or",
               "negative": true
@@ -2827,8 +2822,7 @@
               "words": [
                 "\"serverTitle\"",
                 "\"buildNumber\"",
-                "\"versionNumbers\"",
-                "JIRA"
+                "\"versionNumbers\""
               ],
               "condition": "or"
             }
@@ -2871,10 +2865,9 @@
               "words": [
                 "\"lucene\"",
                 "\"solr_home\"",
-                "Solr Admin",
                 "\"jvm\""
               ],
-              "condition": "or"
+              "condition": "and"
             }
           ]
         }
@@ -2904,7 +2897,7 @@
           "matchers": [
             {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
                 "-DENIED Redis is running",
                 "-NOAUTH Authentication required",
@@ -2948,8 +2941,7 @@
               "part": "body",
               "words": [
                 "It looks like you are trying to access MongoDB",
-                "mongoDBStandalone",
-                "serverStatus"
+                "mongoDBStandalone"
               ],
               "condition": "or"
             }
@@ -3077,9 +3069,9 @@
               "type": "word",
               "part": "body",
               "words": [
-                "\"plugins\"",
                 "\"tagline\":\"Welcome to kong\"",
-                "\"lua_version\""
+                "\"lua_version\"",
+                "\"configuration\""
               ],
               "condition": "or"
             }
@@ -3121,10 +3113,9 @@
               "words": [
                 "\"routers\"",
                 "\"middlewares\"",
-                "Traefik",
                 "\"providers\""
               ],
-              "condition": "or"
+              "condition": "and"
             }
           ]
         }
@@ -3201,8 +3192,8 @@
               "part": "all",
               "words": [
                 "Nexus Repository Manager",
-                "edition",
-                "sonatype"
+                "\"edition\"",
+                "Sonatype Nexus"
               ],
               "condition": "or"
             }
@@ -3235,7 +3226,8 @@
               "part": "all",
               "words": [
                 "SonarQube",
-                "sonarqube"
+                "sonarqube",
+                "window.serverStatus"
               ],
               "condition": "or"
             }
@@ -3266,13 +3258,18 @@
           "matchersCondition": "and",
           "matchers": [
             {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
                 "\"metadatabase\"",
                 "\"scheduler\":{\"status\"",
-                "Airflow",
-                "airflow"
+                "Apache Airflow"
               ],
               "condition": "or"
             }
@@ -3312,11 +3309,11 @@
             },
             {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
-                "Jupyter Notebook",
                 "jupyter-config-data",
-                "JupyterLab"
+                "/static/notebook/",
+                "JupyterLab Server"
               ],
               "condition": "or"
             }
@@ -3357,8 +3354,7 @@
               "part": "body",
               "words": [
                 "\"resourceManagerVersion\"",
-                "\"hadoopVersion\"",
-                "\"clusterInfo\""
+                "\"hadoopVersion\""
               ],
               "condition": "or"
             }
@@ -3444,8 +3440,7 @@
               "part": "body",
               "words": [
                 "\"kind\":\"PodList\"",
-                "\"apiVersion\"",
-                "container_"
+                "\"apiVersion\":\"v1\""
               ],
               "condition": "or"
             }
@@ -3716,11 +3711,12 @@
             },
             {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
                 "WordPress &rsaquo; Installation",
                 "Welcome to the famous five-minute",
-                "setup-config"
+                "name=\"weblog_title\"",
+                "wp-admin/install.css"
               ],
               "condition": "or"
             }
@@ -3758,13 +3754,14 @@
             },
             {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
+                "name=\"token\"",
+                "Overview",
                 "phpMyAdmin setup",
-                "Configuration file",
-                "Overview"
+                "setup.js"
               ],
-              "condition": "or"
+              "condition": "and"
             }
           ]
         }
@@ -3799,11 +3796,12 @@
             },
             {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
-                "Joomla",
-                "installation",
-                "Main Configuration"
+                "Joomla! Web Installer",
+                "installation-language",
+                "Main Configuration",
+                "joomla.javascript"
               ],
               "condition": "or"
             }
@@ -3838,9 +3836,8 @@
               "type": "regex",
               "part": "all",
               "regex": [
-                "apiKey['\\\"]?\\s*:\\s*['\\\"]AIza",
-                "firebaseio\\.com",
-                "projectId['\\\"]?\\s*:"
+                "apiKey['\\\"]?\\s*:\\s*['\\\"]AIza[0-9A-Za-z_-]{35}",
+                "[a-z0-9-]+\\.firebaseio\\.com"
               ],
               "condition": "or"
             }
@@ -3881,10 +3878,9 @@
               "words": [
                 "\"route_id\"",
                 "\"predicate\"",
-                "\"filters\"",
-                "\"uri\""
+                "\"filters\""
               ],
-              "condition": "or"
+              "condition": "and"
             }
           ]
         }
@@ -3913,11 +3909,11 @@
           "matchers": [
             {
               "type": "word",
-              "part": "all",
+              "part": "body",
               "words": [
                 "Struts Problem Report",
                 "struts.devMode",
-                "There is no Action mapped"
+                "There is no Action mapped for namespace"
               ],
               "condition": "or"
             }
