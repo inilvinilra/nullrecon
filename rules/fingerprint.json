@@ -1711,6 +1711,114 @@
       },
       "vendor": "directadmin",
       "cpe": "cpe:/a:directadmin:directadmin"
+    },
+    {
+      "product": "connect_secure",
+      "weight": 0.85,
+      "match": {
+        "cookie": "DSID"
+      },
+      "vendor": "ivanti",
+      "cpe": "cpe:/a:ivanti:connect_secure"
+    },
+    {
+      "product": "connect_secure",
+      "weight": 0.7,
+      "match": {
+        "body": "DSSignInURL|welcome\\.cgi\\?p=logo|/dana-na/"
+      },
+      "vendor": "ivanti",
+      "cpe": "cpe:/a:ivanti:connect_secure"
+    },
+    {
+      "product": "metabase",
+      "weight": 0.7,
+      "match": {
+        "body": "application-name\"\\s+content=\"Metabase\"|metabase-bootstrap|__MB_"
+      },
+      "vendor": "metabase",
+      "cpe": "cpe:/a:metabase:metabase"
+    },
+    {
+      "product": "screenconnect",
+      "weight": 0.7,
+      "match": {
+        "body": "ScreenConnect|scScriptData|Elsinore Technologies"
+      },
+      "vendor": "connectwise",
+      "cpe": "cpe:/a:connectwise:screenconnect"
+    },
+    {
+      "product": "ofbiz",
+      "weight": 0.8,
+      "match": {
+        "cookie": "OFBiz.Visitor"
+      },
+      "vendor": "apache",
+      "cpe": "cpe:/a:apache:ofbiz"
+    },
+    {
+      "product": "cacti",
+      "weight": 0.75,
+      "match": {
+        "body": "The Cacti Group|cacti_version|auth_login\\.php"
+      },
+      "vendor": "cacti",
+      "cpe": "cpe:/a:cacti:cacti"
+    },
+    {
+      "product": "geoserver",
+      "weight": 0.75,
+      "match": {
+        "body": "org\\.geoserver|GeoServer\\s+([0-9.]+)|geoserver-application"
+      },
+      "vendor": "osgeo",
+      "cpe": "cpe:/a:osgeo:geoserver"
+    },
+    {
+      "product": "teamcity",
+      "weight": 0.75,
+      "match": {
+        "body": "JetBrains TeamCity|tc-header|Login to TeamCity"
+      },
+      "vendor": "jetbrains",
+      "cpe": "cpe:/a:jetbrains:teamcity"
+    },
+    {
+      "product": "papercut_mf",
+      "weight": 0.7,
+      "match": {
+        "body": "com\\.papercut|PaperCut MF|PaperCut NG"
+      },
+      "vendor": "papercut",
+      "cpe": "cpe:/a:papercut:papercut_mf"
+    },
+    {
+      "product": "endpoint_manager_mobile",
+      "weight": 0.75,
+      "match": {
+        "body": "MobileIron|Ivanti EPMM|corePropertyBundle"
+      },
+      "vendor": "ivanti",
+      "cpe": "cpe:/a:ivanti:endpoint_manager_mobile"
+    },
+    {
+      "product": "cacti",
+      "weight": 0.4,
+      "match": {
+        "body": "cacti_version['\"]?\\s*[:=]\\s*['\"]?([0-9.]+)"
+      },
+      "vendor": "cacti",
+      "cpe": "cpe:/a:cacti:cacti"
+    },
+    {
+      "product": "geoserver",
+      "weight": 0.4,
+      "match": {
+        "body": "GeoServer\\s+([0-9]+\\.[0-9]+(?:\\.[0-9]+)?)"
+      },
+      "vendor": "osgeo",
+      "cpe": "cpe:/a:osgeo:geoserver"
     }
   ]
 }
