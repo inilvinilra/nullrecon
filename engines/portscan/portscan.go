@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"strings"
 	"sync"
 	"time"
 
@@ -77,7 +78,7 @@ func (e *Engine) WithAttempts(n int) *Engine {
 }
 
 func (e *Engine) Scan(ctx context.Context, target scopeguard.Target, ports []int) (HostResult, error) {
-	res := HostResult{Target: target.Host + target.IP}
+	res := HostResult{Target: firstNonEmpty(target.Host, target.IP)}
 	sem := make(chan struct{}, e.maxConcurrency)
 	var mu sync.Mutex
 	var wg sync.WaitGroup
@@ -146,9 +147,50 @@ func (e *Engine) probe(ctx context.Context, target scopeguard.Target, port int) 
 		n, _ := conn.Read(buf)
 		if n > 0 {
 			pr.Banner = sanitizeBanner(buf[:n])
+		} else {
+			pr.Banner = e.activeBanner(conn, firstNonEmpty(target.Host, target.IP))
 		}
 	}
 	return pr
+}
+
+func (e *Engine) activeBanner(conn net.Conn, host string) string {
+	conn.SetWriteDeadline(e.now().Add(e.bannerTimeout))
+	request := "GET / HTTP/1.0\r\nHost: " + host + "\r\nUser-Agent: nullrecon/0.1\r\nAccept: */*\r\nConnection: close\r\n\r\n"
+	if _, err := conn.Write([]byte(request)); err != nil {
+		return ""
+	}
+	conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
+	buf := make([]byte, 2048)
+	n, _ := conn.Read(buf)
+	if n == 0 {
+		return ""
+	}
+	return httpBannerFrom(buf[:n])
+}
+
+func httpBannerFrom(raw []byte) string {
+	text := string(raw)
+	if !strings.HasPrefix(text, "HTTP/") {
+		return sanitizeBanner(raw)
+	}
+	lines := strings.Split(text, "\n")
+	statusLine := strings.TrimRight(lines[0], "\r")
+	var server string
+	for _, line := range lines[1:] {
+		trimmed := strings.TrimRight(line, "\r")
+		if trimmed == "" {
+			break
+		}
+		if key, value, ok := strings.Cut(trimmed, ":"); ok && strings.EqualFold(strings.TrimSpace(key), "Server") {
+			server = strings.TrimSpace(value)
+			break
+		}
+	}
+	if server != "" {
+		return sanitizeBanner([]byte(statusLine + " | " + server))
+	}
+	return sanitizeBanner([]byte(statusLine))
 }
 
 func sanitizeBanner(raw []byte) string {

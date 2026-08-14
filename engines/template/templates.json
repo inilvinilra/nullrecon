@@ -100927,6 +100927,163 @@
           ]
         }
       ]
+    },
+    {
+      "id": "config-json-exposure",
+      "info": {
+        "name": "Exposed config.json with credentials",
+        "severity": "high",
+        "tags": [
+          "exposure",
+          "config"
+        ],
+        "description": "A readable config.json exposes application configuration containing credentials.",
+        "cwe": "CWE-538"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/config.json"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "header",
+              "header": "Content-Type",
+              "words": [
+                "json"
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "password",
+                "apiKey",
+                "api_key",
+                "secret",
+                "token"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cookie-httponly-missing",
+      "info": {
+        "name": "Cookie without HttpOnly flag",
+        "severity": "low",
+        "tags": [
+          "misconfig",
+          "cookie"
+        ],
+        "description": "A Set-Cookie response omits the HttpOnly flag, exposing the cookie to client-side scripts.",
+        "cwe": "CWE-1004"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "header",
+              "header": "Set-Cookie"
+            },
+            {
+              "type": "header",
+              "header": "Set-Cookie",
+              "regex": [
+                "(?i)httponly"
+              ],
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cookie-secure-missing",
+      "info": {
+        "name": "Cookie without Secure flag",
+        "severity": "low",
+        "tags": [
+          "misconfig",
+          "cookie"
+        ],
+        "description": "A Set-Cookie response omits the Secure flag, allowing transmission over cleartext.",
+        "cwe": "CWE-614"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "header",
+              "header": "Set-Cookie"
+            },
+            {
+              "type": "header",
+              "header": "Set-Cookie",
+              "regex": [
+                "(?i)secure"
+              ],
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cookie-samesite-missing",
+      "info": {
+        "name": "Cookie without SameSite attribute",
+        "severity": "info",
+        "tags": [
+          "misconfig",
+          "cookie"
+        ],
+        "description": "A Set-Cookie response omits the SameSite attribute, weakening CSRF protection.",
+        "cwe": "CWE-1275"
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "header",
+              "header": "Set-Cookie"
+            },
+            {
+              "type": "header",
+              "header": "Set-Cookie",
+              "regex": [
+                "(?i)samesite"
+              ],
+              "negative": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }
