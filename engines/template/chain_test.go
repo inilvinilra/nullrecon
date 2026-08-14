@@ -79,3 +79,43 @@ func TestMultiRequestChainRejectsWhenTokenMissing(t *testing.T) {
 		t.Fatalf("without an extractable token the chain must not confirm, got %d", len(res.Matches))
 	}
 }
+
+func TestMultiRequestCarriesSessionCookie(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/login":
+			http.SetCookie(w, &http.Cookie{Name: "SESSION", Value: "authed-xyz", Path: "/"})
+			w.WriteHeader(302)
+			w.Write([]byte("redirecting"))
+		case "/admin":
+			if c, err := r.Cookie("SESSION"); err == nil && c.Value == "authed-xyz" {
+				w.WriteHeader(200)
+				w.Write([]byte(`<html>admin dashboard: session-confirmed</html>`))
+				return
+			}
+			w.WriteHeader(401)
+			w.Write([]byte("unauthorized"))
+		default:
+			w.WriteHeader(200)
+			w.Write([]byte("soft-404"))
+		}
+	}))
+	defer srv.Close()
+	host, port := hostPort(t, srv.URL)
+	set, err := Parse([]byte(`{"templates":[{
+	  "id":"session-chain","info":{"name":"login then action","severity":"high","cve":"CVE-9999-0005"},
+	  "requests":[
+	    {"method":"POST","path":["/login"],"body":"user=admin&pass=admin","matchers":[{"type":"status","status":[302]}]},
+	    {"method":"GET","path":["/admin"],"matchersCondition":"and","matchers":[{"type":"status","status":[200]},{"type":"word","part":"body","words":["session-confirmed"]}]}
+	  ]}]}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := New(testSnapshot(t, host, port), nil).Run(context.Background(), srv.URL, set)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Matches) != 1 {
+		t.Fatalf("session cookie from login must be carried to the authenticated action, got %d matches", len(res.Matches))
+	}
+}

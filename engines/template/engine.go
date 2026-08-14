@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
 	"strconv"
 	"strings"
@@ -127,6 +128,7 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 }
 
 func (e *Engine) runChained(ctx context.Context, base *url.URL, tmpl Template, res *Result) {
+	client := e.chainClient()
 	vars := map[string]string{}
 	allMatched := true
 	hadMatchers := false
@@ -165,7 +167,7 @@ func (e *Engine) runChained(ctx context.Context, base *url.URL, tmpl Template, r
 			creq.Headers = h
 		}
 		creq.Body = substChainVars(req.Body, vars)
-		status, body, headers, err := e.fetch(ctx, creq, full)
+		status, body, headers, err := e.fetchVia(ctx, client, creq, full)
 		if err != nil {
 			res.Errors = append(res.Errors, tmpl.ID+": "+err.Error())
 			return
@@ -257,6 +259,20 @@ func portOfURL(u *url.URL) int {
 }
 
 func (e *Engine) fetch(ctx context.Context, req Request, full string) (int, []byte, map[string]string, error) {
+	return e.fetchVia(ctx, e.client, req, full)
+}
+
+func (e *Engine) chainClient() *http.Client {
+	jar, _ := cookiejar.New(nil)
+	return &http.Client{
+		Timeout:       e.client.Timeout,
+		Transport:     e.client.Transport,
+		CheckRedirect: e.client.CheckRedirect,
+		Jar:           jar,
+	}
+}
+
+func (e *Engine) fetchVia(ctx context.Context, client *http.Client, req Request, full string) (int, []byte, map[string]string, error) {
 	var bodyReader io.Reader
 	if req.Body != "" {
 		bodyReader = strings.NewReader(req.Body)
@@ -276,7 +292,7 @@ func (e *Engine) fetch(ctx context.Context, req Request, full string) (int, []by
 			httpReq.ContentLength = int64(len(sub))
 		}
 	}
-	resp, err := e.client.Do(httpReq)
+	resp, err := client.Do(httpReq)
 	if err != nil {
 		return 0, nil, nil, err
 	}
