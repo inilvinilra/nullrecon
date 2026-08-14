@@ -1,6 +1,9 @@
 package main
 
-import "github.com/nullrecon/nullrecon/engines/template"
+import (
+	"github.com/nullrecon/nullrecon/engines/oob"
+	"github.com/nullrecon/nullrecon/engines/template"
+)
 
 func (c commandContext) cmdTemplate(args []string) int {
 	if len(args) == 0 {
@@ -51,6 +54,15 @@ func (c commandContext) templateScan(args []string) int {
 	}
 	defer db.Close()
 	engine := template.New(snap, budgetFromScope(snap))
+	if flagPresent(args, "--oob") {
+		listen, _ := flagValue(args, "--oob-listen")
+		interactor, ierr := oob.NewInteractor(listen)
+		if ierr != nil {
+			return c.fail(exitError, "oob: %v", ierr)
+		}
+		defer interactor.Close()
+		engine.WithInteractor(interactor)
+	}
 	res, err := engine.Run(ctx, target, set)
 	if err != nil {
 		return c.fail(exitError, "%v", err)

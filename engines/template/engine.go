@@ -16,6 +16,7 @@ import (
 
 	"github.com/nullrecon/nullrecon/core/budgetguard"
 	"github.com/nullrecon/nullrecon/core/scopeguard"
+	"github.com/nullrecon/nullrecon/engines/oob"
 )
 
 type Match struct {
@@ -42,11 +43,26 @@ type Result struct {
 }
 
 type Engine struct {
-	snapshot scopeguard.Snapshot
-	budget   *budgetguard.Guard
-	client   *http.Client
-	maxBody  int64
-	now      func() time.Time
+	snapshot   scopeguard.Snapshot
+	budget     *budgetguard.Guard
+	client     *http.Client
+	maxBody    int64
+	now        func() time.Time
+	interactor Interactor
+	oobWait    time.Duration
+}
+
+type Interactor interface {
+	NewSession() (token, callbackURL string)
+	Poll(token string) []oob.Interaction
+}
+
+func (e *Engine) WithInteractor(it Interactor) *Engine {
+	e.interactor = it
+	if e.oobWait == 0 {
+		e.oobWait = 3 * time.Second
+	}
+	return e
 }
 
 func New(snapshot scopeguard.Snapshot, budget *budgetguard.Guard) *Engine {
@@ -71,6 +87,12 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 	}
 	res := Result{Target: base.String()}
 	for _, tmpl := range set.Templates {
+		if templateUsesOOB(tmpl) {
+			if e.interactor != nil {
+				e.runOOB(ctx, base, tmpl, &res)
+			}
+			continue
+		}
 		if len(tmpl.Requests) > 1 {
 			e.runChained(ctx, base, tmpl, &res)
 			continue
@@ -125,6 +147,130 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 		}
 	}
 	return res, nil
+}
+
+func templateUsesOOB(tmpl Template) bool {
+	for _, req := range tmpl.Requests {
+		for _, p := range req.Paths {
+			if strings.Contains(p, "{{interactsh-url}}") {
+				return true
+			}
+		}
+		if strings.Contains(req.Body, "{{interactsh-url}}") {
+			return true
+		}
+		for _, v := range req.Headers {
+			if strings.Contains(v, "{{interactsh-url}}") {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func substOOB(s, callbackURL string) string {
+	if !strings.Contains(s, "{{interactsh-url}}") {
+		return s
+	}
+	return strings.ReplaceAll(s, "{{interactsh-url}}", callbackURL)
+}
+
+func (e *Engine) runOOB(ctx context.Context, base *url.URL, tmpl Template, res *Result) {
+	token, callbackURL := e.interactor.NewSession()
+	client := e.chainClient()
+	vars := map[string]string{}
+	var lastFull string
+	var lastStatus int
+	var lastBody []byte
+	var lastHeaders map[string]string
+	for _, req := range tmpl.Requests {
+		path := "/"
+		if len(req.Paths) > 0 {
+			path = req.Paths[0]
+		}
+		path = substOOB(substChainVars(path, vars), callbackURL)
+		full := base.String() + "/" + strings.TrimLeft(path, "/")
+		parsed, perr := url.Parse(full)
+		if perr != nil {
+			return
+		}
+		tgt := scopeguard.Target{Host: parsed.Hostname(), Path: parsed.Path, Protocol: "tcp", Port: portOfURL(parsed)}
+		if d := e.snapshot.EvaluateAction(tgt, "httpget", e.now()); !d.Allowed {
+			res.Blocked++
+			return
+		}
+		if e.budget != nil {
+			if err := e.budget.Acquire(ctx, budgetguard.Cost{Requests: 1}); err != nil {
+				res.Blocked++
+				return
+			}
+		}
+		res.Requested++
+		creq := req
+		if len(req.Headers) > 0 {
+			h := make(map[string]string, len(req.Headers))
+			for k, v := range req.Headers {
+				h[k] = substOOB(substChainVars(v, vars), callbackURL)
+			}
+			creq.Headers = h
+		}
+		creq.Body = substOOB(substChainVars(req.Body, vars), callbackURL)
+		status, body, headers, err := e.fetchVia(ctx, client, creq, full)
+		if err != nil {
+			res.Errors = append(res.Errors, tmpl.ID+": "+err.Error())
+			return
+		}
+		view := newResponseView(status, body, headers)
+		for name, vals := range req.extract(view) {
+			if len(vals) > 0 {
+				vars[name] = vals[0]
+			}
+		}
+		lastFull, lastStatus, lastBody, lastHeaders = full, status, body, headers
+	}
+	protocols := e.pollOOB(token)
+	view := newResponseView(lastStatus, lastBody, lastHeaders)
+	view.oob = protocols
+	final := tmpl.Requests[len(tmpl.Requests)-1]
+	if !final.matches(view) {
+		return
+	}
+	sum := sha256.Sum256(lastBody)
+	res.Matches = append(res.Matches, Match{
+		TemplateID:   tmpl.ID,
+		Name:         tmpl.Info.Name,
+		Severity:     tmpl.Info.Severity,
+		CVE:          tmpl.Info.CVE,
+		CWE:          tmpl.Info.CWE,
+		Tags:         tmpl.Info.Tags,
+		Prerequisite: tmpl.Info.Prerequisite,
+		URL:          lastFull,
+		Method:       final.Method,
+		Status:       lastStatus,
+		ContentHash:  hex.EncodeToString(sum[:]),
+	})
+}
+
+func (e *Engine) pollOOB(token string) string {
+	deadline := e.now().Add(e.oobWait)
+	for {
+		hits := e.interactor.Poll(token)
+		if len(hits) > 0 {
+			seen := map[string]bool{}
+			var protocols []string
+			for _, h := range hits {
+				if !seen[h.Protocol] {
+					seen[h.Protocol] = true
+					protocols = append(protocols, h.Protocol)
+				}
+			}
+			return strings.Join(protocols, "\n")
+		}
+		if !e.now().Before(deadline) {
+			return ""
+		}
+		time.Sleep(50 * time.Millisecond)
+	}
 }
 
 func (e *Engine) runChained(ctx context.Context, base *url.URL, tmpl Template, res *Result) {

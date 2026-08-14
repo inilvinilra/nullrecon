@@ -10,6 +10,7 @@ type responseView struct {
 	body       string
 	headerText string
 	headers    map[string]string
+	oob        string
 }
 
 func newResponseView(status int, body []byte, headers map[string]string) responseView {
@@ -31,6 +32,8 @@ func (v responseView) part(name string) string {
 		return v.headerText
 	case "all":
 		return v.headerText + "\n" + v.body
+	case "interactsh_protocol", "interactsh_request", "interactsh-protocol":
+		return v.oob
 	default:
 		return v.body
 	}
