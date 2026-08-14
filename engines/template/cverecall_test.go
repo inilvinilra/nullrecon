@@ -41,3 +41,37 @@ func TestCVETemplatesDetectRealVulnResponses(t *testing.T) {
 		}
 	}
 }
+
+func TestServiceExposureTemplatesDetectRealResponses(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"solr-admin-exposure":         newResponseView(200, []byte(`{"responseHeader":{"status":0},"lucene":{"solr-spec-version":"8.11.1"},"solr_home":"/var/solr/data"}`), nil),
+		"docker-api-exposure":         newResponseView(200, []byte(`{"Platform":{"Name":"Docker Engine"},"ApiVersion":"1.41","GoVersion":"go1.16.15","Os":"linux"}`), nil),
+		"kibana-app-exposure":         newResponseView(200, []byte(`<html><head><kbn-injected-metadata data='{"version":"7.10.0"}'></kbn-injected-metadata></head></html>`), nil),
+		"prometheus-metrics-exposure": newResponseView(200, []byte("# HELP go_goroutines Number of goroutines.\n# TYPE go_goroutines gauge\ngo_goroutines 24\n"), nil),
+		"etcd-keys-exposure":          newResponseView(200, []byte(`{"action":"get","node":{"dir":true,"nodes":[{"key":"/db","value":"secret"}]}}`), nil),
+		"consul-agent-exposure":       newResponseView(200, []byte(`{"Config":{"NodeName":"web-1","Datacenter":"dc1","Server":true}}`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: service-exposure template %q does not detect a real service response", id)
+		}
+	}
+}

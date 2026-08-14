@@ -4904,6 +4904,315 @@
           ]
         }
       ]
+    },
+    {
+      "id": "solr-admin-exposure",
+      "info": {
+        "name": "Unauthenticated Apache Solr admin",
+        "severity": "high",
+        "cve": "CVE-2019-0193",
+        "cwe": "CWE-306",
+        "tags": [
+          "solr",
+          "exposure",
+          "apache"
+        ],
+        "description": "An Apache Solr admin API answers without authentication."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/solr/admin/info/system?wt=json",
+            "/solr/admin/cores?wt=json"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "solr_home",
+                "\"lucene\""
+              ],
+              "condition": "or"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "docker-api-exposure",
+      "info": {
+        "name": "Exposed Docker Engine API",
+        "severity": "critical",
+        "cve": "CVE-2019-5736",
+        "cwe": "CWE-306",
+        "tags": [
+          "docker",
+          "exposure",
+          "rce"
+        ],
+        "description": "A Docker Engine API is reachable without auth (container escape / RCE risk)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/version",
+            "/v1.24/version"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"ApiVersion\"",
+                "\"GoVersion\""
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kibana-app-exposure",
+      "info": {
+        "name": "Exposed Kibana instance",
+        "severity": "medium",
+        "cwe": "CWE-284",
+        "tags": [
+          "kibana",
+          "exposure",
+          "elastic"
+        ],
+        "description": "A Kibana web application is reachable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/app/kibana",
+            "/api/status"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "kbn-injected-metadata",
+                "\"kibana\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prometheus-metrics-exposure",
+      "info": {
+        "name": "Exposed Prometheus metrics",
+        "severity": "low",
+        "cwe": "CWE-200",
+        "tags": [
+          "prometheus",
+          "exposure",
+          "metrics"
+        ],
+        "description": "A Prometheus metrics endpoint is publicly readable.",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/metrics"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "# HELP ",
+                "# TYPE ",
+                "go_goroutines"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "etcd-keys-exposure",
+      "info": {
+        "name": "Unauthenticated etcd v2 keyspace",
+        "severity": "high",
+        "cwe": "CWE-306",
+        "tags": [
+          "etcd",
+          "exposure",
+          "k8s"
+        ],
+        "description": "An etcd v2 keyspace answers without authentication."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/v2/keys/",
+            "/v2/keys/?recursive=true"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"action\"",
+                "\"node\""
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "consul-agent-exposure",
+      "info": {
+        "name": "Exposed HashiCorp Consul agent",
+        "severity": "high",
+        "cwe": "CWE-306",
+        "tags": [
+          "consul",
+          "exposure",
+          "hashicorp"
+        ],
+        "description": "A Consul agent HTTP API answers without authentication."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/v1/agent/self"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"NodeName\"",
+                "\"Datacenter\""
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }
