@@ -299,3 +299,39 @@ func TestKEVTemplatesBatch6DetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch7DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2023-20198-cisco-ios-xe":    newResponseView(200, []byte(`<html><body>Cisco Systems IOS-XE webui_login Cisco IOS</body></html>`), nil),
+		"cve-2024-23692-rejetto-hfs":     newResponseView(200, []byte(`<html><body>HttpFileServer by Rejetto - HFS 2.3 hfs.js</body></html>`), nil),
+		"cve-2023-36845-juniper-jweb":    newResponseView(200, []byte(`<html><body>J-Web by Juniper Networks jweb-manager SRX</body></html>`), nil),
+		"cve-2020-3452-cisco-asa":        newResponseView(200, []byte(`<html><body>SSL VPN Service by Cisco Systems, Inc AnyConnect webvpnlogin</body></html>`), nil),
+		"cve-2024-27348-hugegraph":       newResponseView(200, []byte(`{"versions":{"version":"0.0.1","core":"1.0.0","gremlin":"3.5.1"}}`), nil),
+		"cve-2024-1212-kemp-loadmaster":  newResponseView(200, []byte(`<html><body>LoadMaster by KEMP Technologies lmadmin</body></html>`), nil),
+		"cve-2023-23368-qnap-qts":        newResponseView(200, []byte(`<html><body>QNAP QTS quTShero QNAP Systems</body></html>`), nil),
+		"cve-2022-26134-confluence-ognl": newResponseView(200, []byte(`<html><body>com.atlassian.confluence confluence-context-path Confluence atlassian-token</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}

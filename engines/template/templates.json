@@ -7779,6 +7779,388 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2023-20198-cisco-ios-xe",
+      "info": {
+        "name": "Cisco IOS XE Web UI exposed",
+        "severity": "critical",
+        "cve": "CVE-2023-20198",
+        "cwe": "CWE-420",
+        "tags": [
+          "cisco",
+          "ios-xe",
+          "kev",
+          "auth-bypass",
+          "rce"
+        ],
+        "description": "A Cisco IOS XE Web UI is reachable (CVE-2023-20198 unauth privileged account creation).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/webui/",
+            "/webui/logoutconfirm.html?logon_hash=1"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302,
+                401
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Cisco Systems",
+                "IOS-XE",
+                "webui_login",
+                "Cisco IOS"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-23692-rejetto-hfs",
+      "info": {
+        "name": "Rejetto HTTP File Server exposed",
+        "severity": "critical",
+        "cve": "CVE-2024-23692",
+        "cwe": "CWE-94",
+        "tags": [
+          "rejetto",
+          "hfs",
+          "kev",
+          "rce",
+          "ssti"
+        ],
+        "description": "A Rejetto HTTP File Server (HFS) is reachable (CVE-2024-23692 unauth template-injection RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/?mode=section&id=login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "HttpFileServer",
+                "Rejetto",
+                "HFS ",
+                "hfs.js"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-36845-juniper-jweb",
+      "info": {
+        "name": "Juniper J-Web exposed (PHP env RCE)",
+        "severity": "critical",
+        "cve": "CVE-2023-36845",
+        "cwe": "CWE-473",
+        "tags": [
+          "juniper",
+          "junos",
+          "kev",
+          "rce"
+        ],
+        "description": "A Juniper J-Web interface is reachable (CVE-2023-36845 unauth PHP env modification RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "J-Web",
+                "Juniper Networks",
+                "jweb-manager",
+                "SRX"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-3452-cisco-asa",
+      "info": {
+        "name": "Cisco ASA/FTD WebVPN traversal",
+        "severity": "high",
+        "cve": "CVE-2020-3452",
+        "cwe": "CWE-22",
+        "tags": [
+          "cisco",
+          "asa",
+          "kev",
+          "traversal"
+        ],
+        "description": "A Cisco ASA/FTD WebVPN surface leaks files via path traversal (CVE-2020-3452).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/+CSCOE+/logon.html",
+            "/+CSCOU+/../+CSCOE+/files/file_list.json?path=%2Bwebvpn%2B"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "SSL VPN Service",
+                "Cisco Systems, Inc",
+                "webvpnlogin",
+                "AnyConnect"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-27348-hugegraph",
+      "info": {
+        "name": "Apache HugeGraph Server exposed (OGNL RCE)",
+        "severity": "critical",
+        "cve": "CVE-2024-27348",
+        "cwe": "CWE-94",
+        "tags": [
+          "hugegraph",
+          "apache",
+          "kev",
+          "rce",
+          "ognl"
+        ],
+        "description": "An Apache HugeGraph Server is reachable (CVE-2024-27348 unauth OGNL RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/apis/version",
+            "/apis"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "HugeGraph",
+                "hugegraph",
+                "\"core\":\"",
+                "\"gremlin\":"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-1212-kemp-loadmaster",
+      "info": {
+        "name": "Progress KEMP LoadMaster exposed",
+        "severity": "critical",
+        "cve": "CVE-2024-1212",
+        "cwe": "CWE-78",
+        "tags": [
+          "kemp",
+          "loadmaster",
+          "kev",
+          "rce",
+          "command-injection"
+        ],
+        "description": "A KEMP LoadMaster management surface is reachable (CVE-2024-1212 unauth command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/progs/",
+            "/access/set"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302,
+                401
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "LoadMaster",
+                "KEMP Technologies",
+                "Progress LoadMaster",
+                "lmadmin"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-23368-qnap-qts",
+      "info": {
+        "name": "QNAP QTS exposed (command injection)",
+        "severity": "high",
+        "cve": "CVE-2023-23368",
+        "cwe": "CWE-77",
+        "tags": [
+          "qnap",
+          "qts",
+          "kev",
+          "rce",
+          "command-injection"
+        ],
+        "description": "A QNAP QTS/QuTS surface is reachable (CVE-2023-23368 unauth command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/cgi-bin/",
+            "/indexailish.html"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "QNAP",
+                "QTS",
+                "quTShero",
+                "QNAP Systems"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-26134-confluence-ognl",
+      "info": {
+        "name": "Atlassian Confluence OGNL RCE surface",
+        "severity": "critical",
+        "cve": "CVE-2022-26134",
+        "cwe": "CWE-917",
+        "tags": [
+          "confluence",
+          "atlassian",
+          "kev",
+          "rce",
+          "ognl"
+        ],
+        "description": "A Confluence surface is reachable (CVE-2022-26134 unauth OGNL injection RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/dologin.action",
+            "/login.action?logout=true"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "com.atlassian.confluence",
+                "confluence-context-path",
+                "Confluence",
+                "atlassian-token"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
