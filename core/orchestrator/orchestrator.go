@@ -266,7 +266,7 @@ func (o *Orchestrator) probeHosts(ctx context.Context, nc *workflow.NodeContext)
 	if err := inputAt(nc, "PlanSafeActive", &plan); err != nil {
 		return nil, nil, err
 	}
-	engine := portscan.New(nc.Snapshot, nc.Budget)
+	engine := portscan.New(nc.Snapshot, nc.Budget).WithBanners(true)
 	if maxPortsPerTarget(plan.Targets) > 2000 {
 		engine.WithConcurrency(1000).WithDialTimeout(1500 * time.Millisecond).WithAttempts(1)
 	}
