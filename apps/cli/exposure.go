@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/nullrecon/nullrecon/engines/exposure"
+	"github.com/nullrecon/nullrecon/engines/secretscan"
 	"github.com/nullrecon/nullrecon/reporting/redaction"
 )
 
@@ -33,6 +34,9 @@ func (c commandContext) cmdExposure(args []string) int {
 		return c.fail(exitError, "%v", err)
 	}
 	engine := exposure.New(snap, budgetFromScope(snap), red, set)
+	if detectors, err := secretscan.DefaultDetectors(); err == nil {
+		engine.WithSecretDetectors(detectors)
+	}
 	results := make([]exposure.Result, 0, len(targets))
 	for _, target := range targets {
 		res, err := engine.Scan(ctx, target)
