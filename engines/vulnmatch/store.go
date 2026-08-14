@@ -18,14 +18,14 @@ func NewStoreMatcher() *StoreMatcher {
 }
 
 func (m *StoreMatcher) Match(projectID string, tech technology.Technology, records []cve.Record) []vulnerability.Candidate {
-	v := parseVersion(normalizeVersion(tech.Product, tech.Version))
-	if !v.ok {
+	versions := candidateVersions(tech.Product, tech.Version)
+	if len(versions) == 0 {
 		return nil
 	}
 	now := m.now()
 	var out []vulnerability.Candidate
 	for _, rec := range records {
-		if !affectsVersion(rec.Products, tech, v) {
+		if !affectsVersion(rec.Products, tech, versions) {
 			continue
 		}
 		c := vulnerability.New(projectID, tech.AssetID, vulnerability.MatchCPE, "cvestore", now)
@@ -47,7 +47,20 @@ func (m *StoreMatcher) Match(projectID string, tech technology.Technology, recor
 	return out
 }
 
-func affectsVersion(products []cve.Affected, tech technology.Technology, v version) bool {
+func candidateVersions(product, raw string) []version {
+	var out []version
+	if v := parseVersion(raw); v.ok {
+		out = append(out, v)
+	}
+	if norm := normalizeVersion(product, raw); norm != raw {
+		if v := parseVersion(norm); v.ok {
+			out = append(out, v)
+		}
+	}
+	return out
+}
+
+func affectsVersion(products []cve.Affected, tech technology.Technology, versions []version) bool {
 	product := strings.ToLower(strings.TrimSpace(tech.Product))
 	for _, p := range products {
 		if strings.ToLower(p.Product) != product {
@@ -56,8 +69,11 @@ func affectsVersion(products []cve.Affected, tech technology.Technology, v versi
 		if !vendorMatches(p.Vendor, tech.Vendor) {
 			continue
 		}
-		if constraintFromAffected(p).matches(v) {
-			return true
+		c := constraintFromAffected(p)
+		for _, v := range versions {
+			if c.matches(v) {
+				return true
+			}
 		}
 	}
 	return false

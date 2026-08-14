@@ -59,21 +59,37 @@ var exchangeBuildYear = map[string]string{
 }
 
 func normalizeVersion(product, raw string) string {
-	if !strings.EqualFold(strings.TrimSpace(product), "exchange_server") {
-		return raw
-	}
 	v := parseVersion(raw)
 	if !v.ok || len(v.parts) == 0 {
 		return raw
 	}
-	major := strconv.Itoa(v.parts[0])
-	if len(v.parts) >= 2 {
-		if y, ok := exchangeBuildYear[major+"."+strconv.Itoa(v.parts[1])]; ok {
+	switch strings.ToLower(strings.TrimSpace(product)) {
+	case "exchange_server":
+		major := strconv.Itoa(v.parts[0])
+		if len(v.parts) >= 2 {
+			if y, ok := exchangeBuildYear[major+"."+strconv.Itoa(v.parts[1])]; ok {
+				return y
+			}
+		}
+		if y, ok := exchangeBuildYear[major]; ok {
 			return y
 		}
-	}
-	if y, ok := exchangeBuildYear[major]; ok {
-		return y
+	case "sharepoint_server":
+		if len(v.parts) >= 2 {
+			switch {
+			case v.parts[0] == 12 && v.parts[1] == 0:
+				return "2007"
+			case v.parts[0] == 14 && v.parts[1] == 0:
+				return "2010"
+			case v.parts[0] == 15 && v.parts[1] == 0:
+				return "2013"
+			case v.parts[0] == 16 && v.parts[1] == 0:
+				if len(v.parts) >= 3 && v.parts[2] >= 10000 {
+					return "2019"
+				}
+				return "2016"
+			}
+		}
 	}
 	return raw
 }
