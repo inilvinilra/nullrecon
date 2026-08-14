@@ -238,7 +238,7 @@ func (p *dslParser) parsePrimary() dslValue {
 }
 
 func (p *dslParser) parseFunc(name string) dslValue {
-	p.next() // (
+	p.next()
 	var args []dslValue
 	for p.peek() != ")" && p.peek() != "" {
 		args = append(args, p.parseOr())
