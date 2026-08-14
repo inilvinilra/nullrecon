@@ -105,3 +105,29 @@ func TestKEVProductFingerprintsBatch4(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVProductFingerprintsBatch7(t *testing.T) {
+	e, err := DefaultEngine()
+	if err != nil {
+		t.Fatal(err)
+	}
+	detect := map[string]Features{
+		"ios_xe":           {BodySnippet: `<html><body>Cisco IOS-XE Software webui_login</body></html>`},
+		"http_file_server": {BodySnippet: `<html><body>HttpFileServer by Rejetto</body></html>`},
+		"hugegraph":        {BodySnippet: `<html><body>HugeGraph hugegraph-server</body></html>`},
+		"loadmaster":       {BodySnippet: `<html><body>LoadMaster KEMP Technologies</body></html>`},
+		"qts":              {BodySnippet: `<html><body>QNAP Systems quTShero QTS </body></html>`},
+		"junos":            {BodySnippet: `<html><body>J-Web Juniper Networks</body></html>`},
+	}
+	for product, f := range detect {
+		found := false
+		for _, tech := range e.Apply(f) {
+			if tech.Product == product {
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("%s must be detected: %+v", product, e.Apply(f))
+		}
+	}
+}

@@ -1936,6 +1936,69 @@
       },
       "vendor": "minio",
       "cpe": "cpe:/a:minio:minio"
+    },
+    {
+      "product": "ios_xe",
+      "weight": 0.7,
+      "match": {
+        "body": "Cisco IOS-XE|IOS-XE Software|webui_login"
+      },
+      "vendor": "cisco",
+      "cpe": "cpe:/o:cisco:ios_xe"
+    },
+    {
+      "product": "http_file_server",
+      "weight": 0.8,
+      "match": {
+        "body": "HttpFileServer|Rejetto"
+      },
+      "vendor": "rejetto",
+      "cpe": "cpe:/a:rejetto:http_file_server"
+    },
+    {
+      "product": "hugegraph",
+      "weight": 0.8,
+      "match": {
+        "body": "HugeGraph|hugegraph-server"
+      },
+      "vendor": "apache",
+      "cpe": "cpe:/a:apache:hugegraph"
+    },
+    {
+      "product": "loadmaster",
+      "weight": 0.75,
+      "match": {
+        "body": "LoadMaster|KEMP Technologies"
+      },
+      "vendor": "kemp_technologies",
+      "cpe": "cpe:/a:kemp_technologies:loadmaster"
+    },
+    {
+      "product": "qts",
+      "weight": 0.7,
+      "match": {
+        "body": "QNAP Systems|quTShero|QTS "
+      },
+      "vendor": "qnap",
+      "cpe": "cpe:/o:qnap:qts"
+    },
+    {
+      "product": "junos",
+      "weight": 0.7,
+      "match": {
+        "body": "J-Web|Juniper Networks"
+      },
+      "vendor": "juniper",
+      "cpe": "cpe:/o:juniper:junos"
+    },
+    {
+      "product": "adaptive_security_appliance_software",
+      "weight": 0.7,
+      "match": {
+        "body": "SSL VPN Service|Cisco Systems, Inc|webvpnlogin|/+CSCOE+/"
+      },
+      "vendor": "cisco",
+      "cpe": "cpe:/o:cisco:adaptive_security_appliance_software"
     }
   ]
 }
