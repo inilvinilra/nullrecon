@@ -1999,6 +1999,33 @@
       },
       "vendor": "cisco",
       "cpe": "cpe:/o:cisco:adaptive_security_appliance_software"
+    },
+    {
+      "product": "nifi",
+      "weight": 0.75,
+      "match": {
+        "body": "Apache NiFi|nifi-web"
+      },
+      "vendor": "apache",
+      "cpe": "cpe:/a:apache:nifi"
+    },
+    {
+      "product": "gitea",
+      "weight": 0.75,
+      "match": {
+        "body": "Powered by Gitea|Gitea: Git with a cup"
+      },
+      "vendor": "gitea",
+      "cpe": "cpe:/a:gitea:gitea"
+    },
+    {
+      "product": "sonarqube",
+      "weight": 0.75,
+      "match": {
+        "body": "SonarQube|sonar\\.core|window\\.sonar"
+      },
+      "vendor": "sonarsource",
+      "cpe": "cpe:/a:sonarsource:sonarqube"
     }
   ]
 }
