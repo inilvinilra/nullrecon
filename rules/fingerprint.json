@@ -1873,6 +1873,69 @@
       },
       "vendor": "sonicwall",
       "cpe": "cpe:/o:sonicwall:sonicos"
+    },
+    {
+      "product": "superset",
+      "weight": 0.7,
+      "match": {
+        "body": "superset-frontend|Superset|appbuilder"
+      },
+      "vendor": "apache",
+      "cpe": "cpe:/a:apache:superset"
+    },
+    {
+      "product": "thinkphp",
+      "weight": 0.7,
+      "match": {
+        "body": "ThinkPHP|topthink|think\\\\app"
+      },
+      "vendor": "thinkphp",
+      "cpe": "cpe:/a:thinkphp:thinkphp"
+    },
+    {
+      "product": "harbor",
+      "weight": 0.75,
+      "match": {
+        "body": "harbor-app|with_notary|Harbor"
+      },
+      "vendor": "linuxfoundation",
+      "cpe": "cpe:/a:linuxfoundation:harbor"
+    },
+    {
+      "product": "argo_cd",
+      "weight": 0.75,
+      "match": {
+        "body": "Argo CD|argocd|__CONFIG__"
+      },
+      "vendor": "argoproj",
+      "cpe": "cpe:/a:argoproj:argo_cd"
+    },
+    {
+      "product": "airflow",
+      "weight": 0.7,
+      "match": {
+        "body": "Apache Airflow|airflow-webserver|Airflow"
+      },
+      "vendor": "apache",
+      "cpe": "cpe:/a:apache:airflow"
+    },
+    {
+      "product": "bitbucket",
+      "weight": 0.75,
+      "match": {
+        "body": "com\\.atlassian\\.bitbucket|Bitbucket|stash-"
+      },
+      "vendor": "atlassian",
+      "cpe": "cpe:/a:atlassian:bitbucket"
+    },
+    {
+      "product": "minio",
+      "weight": 0.8,
+      "match": {
+        "body": "MinioEnv|MinioEndpoints|MINIO_ROOT_"
+      },
+      "vendor": "minio",
+      "cpe": "cpe:/a:minio:minio"
     }
   ]
 }

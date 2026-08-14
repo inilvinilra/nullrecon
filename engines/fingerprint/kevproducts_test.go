@@ -78,3 +78,30 @@ func TestKEVProductFingerprintsBatch3(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVProductFingerprintsBatch4(t *testing.T) {
+	e, err := DefaultEngine()
+	if err != nil {
+		t.Fatal(err)
+	}
+	detect := map[string]Features{
+		"superset":  {BodySnippet: `<html><body>Superset superset-frontend appbuilder</body></html>`},
+		"thinkphp":  {BodySnippet: `<html><body>ThinkPHP topthink think\app</body></html>`},
+		"harbor":    {BodySnippet: `<html><body>Harbor harbor-app with_notary</body></html>`},
+		"argo_cd":   {BodySnippet: `<html><body>Argo CD argocd __CONFIG__</body></html>`},
+		"airflow":   {BodySnippet: `<html><body>Apache Airflow airflow-webserver</body></html>`},
+		"bitbucket": {BodySnippet: `<html><body>Bitbucket com.atlassian.bitbucket stash-</body></html>`},
+		"minio":     {BodySnippet: `{"MinioEnv":{"MINIO_ROOT_USER":"x"},"MinioEndpoints":[]}`},
+	}
+	for product, f := range detect {
+		found := false
+		for _, tech := range e.Apply(f) {
+			if tech.Product == product {
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("%s must be detected: %+v", product, e.Apply(f))
+		}
+	}
+}
