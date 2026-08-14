@@ -24,7 +24,7 @@
       "cpe": "cpe:/a:nginx:nginx"
     },
     {
-      "product": "iis",
+      "product": "internet_information_services",
       "weight": 0.9,
       "match": {
         "headerName": "server",
@@ -88,7 +88,8 @@
         "headerName": "server",
         "headerValue": "gunicorn/([0-9.]+)"
       },
-      "vendor": "gunicorn"
+      "vendor": "gunicorn",
+      "cpe": "cpe:/a:gunicorn:gunicorn"
     },
     {
       "product": "caddy",
@@ -1002,7 +1003,7 @@
       "cpe": "cpe:/a:dovecot:dovecot"
     },
     {
-      "product": "microsoft_exchange_server",
+      "product": "exchange_server",
       "weight": 0.7,
       "match": {
         "headerName": "x-owa-version",
@@ -1378,14 +1379,6 @@
         "cookie": "AWSELB"
       },
       "vendor": "amazon"
-    },
-    {
-      "product": "gunicorn-hdr",
-      "weight": 0.5,
-      "match": {
-        "headerName": "server",
-        "headerValue": "gunicorn/([0-9.]+)"
-      }
     },
     {
       "product": "cloudfront",
