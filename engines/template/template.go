@@ -36,6 +36,7 @@ type Matcher struct {
 	Regexes   []string `json:"regex,omitempty"`
 	Status    []int    `json:"status,omitempty"`
 	Header    string   `json:"header,omitempty"`
+	DSL       []string `json:"dsl,omitempty"`
 	Condition string   `json:"condition,omitempty"`
 	Negative  bool     `json:"negative,omitempty"`
 
@@ -171,7 +172,7 @@ func compileMatcher(m *Matcher, id string) error {
 		m.compiled = append(m.compiled, re)
 	}
 	switch m.Type {
-	case "status", "word", "regex", "header":
+	case "status", "word", "regex", "header", "dsl":
 	default:
 		return fmt.Errorf("template: %q unknown matcher type %q", id, m.Type)
 	}

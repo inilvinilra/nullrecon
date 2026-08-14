@@ -72,8 +72,31 @@ func (m Matcher) evaluateRaw(v responseView) bool {
 			return matchWords(value, m.Words, m.Condition)
 		}
 		return matchWords(v.headerText, m.Words, m.Condition)
+	case "dsl":
+		return matchDSL(v, m.DSL, m.Condition)
 	}
 	return false
+}
+
+func matchDSL(v responseView, exprs []string, condition string) bool {
+	if len(exprs) == 0 {
+		return false
+	}
+	if condition == "or" {
+		for _, e := range exprs {
+			if r, ok := evalDSL(e, v); ok && r {
+				return true
+			}
+		}
+		return false
+	}
+	for _, e := range exprs {
+		r, ok := evalDSL(e, v)
+		if !ok || !r {
+			return false
+		}
+	}
+	return true
 }
 
 func partOr(part, fallback string) string {
