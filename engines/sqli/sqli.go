@@ -120,7 +120,7 @@ func (e *Engine) Scan(ctx context.Context, target string) (Result, error) {
 func (e *Engine) testParam(ctx context.Context, u *url.URL, param, value string, base response) *Finding {
 	errResp, ok := e.fetchWith(ctx, u, param, value+"'")
 	if ok && !hasSQLError(base.body) && hasSQLError(errResp.body) {
-		return &Finding{Parameter: param, Type: "error-based", Severity: "high", Confirmed: true,
+		return &Finding{Parameter: param, Type: "error-based", Severity: "critical", Confirmed: true,
 			Evidence: "injecting a single quote surfaced a database error not present in the baseline"}
 	}
 	for _, pair := range booleanPairs {
@@ -130,7 +130,7 @@ func (e *Engine) testParam(ctx context.Context, u *url.URL, param, value string,
 			continue
 		}
 		if similar(base, tResp) && !similar(base, fResp) {
-			return &Finding{Parameter: param, Type: "boolean-based (" + pair.name + ")", Severity: "high", Confirmed: true,
+			return &Finding{Parameter: param, Type: "boolean-based (" + pair.name + ")", Severity: "critical", Confirmed: true,
 				Evidence: "TRUE payload matched the baseline while FALSE payload diverged (status " +
 					itoa(base.status) + "/" + itoa(tResp.status) + "/" + itoa(fResp.status) + ")"}
 		}
