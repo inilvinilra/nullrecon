@@ -76,6 +76,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdTech(rest[1:])
 	case "tls":
 		return ctx.cmdTLS(rest[1:])
+	case "dns":
+		return ctx.cmdDNS(rest[1:])
 	case "honeypot":
 		return ctx.cmdHoneypot(rest[1:])
 	case "discover":
