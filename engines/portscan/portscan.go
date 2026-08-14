@@ -16,6 +16,8 @@ import (
 type PortResult struct {
 	Port    int    `json:"port"`
 	Open    bool   `json:"open"`
+	Service string `json:"service,omitempty"`
+	Version string `json:"version,omitempty"`
 	Banner  string `json:"banner,omitempty"`
 	Latency string `json:"latency"`
 	Error   string `json:"error,omitempty"`
@@ -145,17 +147,94 @@ func (e *Engine) probe(ctx context.Context, target scopeguard.Target, port int) 
 		conn.SetReadDeadline(e.now().Add(e.bannerTimeout))
 		buf := make([]byte, e.bannerBytes)
 		n, _ := conn.Read(buf)
+		conn.Close()
 		if n > 0 {
-			pr.Banner = sanitizeBanner(buf[:n])
-			conn.Close()
+			if v := mysqlVersion(buf[:n]); v != "" {
+				pr.Service, pr.Version, pr.Banner = "mysql", v, "MySQL "+v
+			} else {
+				pr.Banner = sanitizeBanner(buf[:n])
+				pr.Service, pr.Version = identifyService(port, pr.Banner)
+			}
 		} else {
-			conn.Close()
 			pr.Banner = e.serviceBanner(address, firstNonEmpty(target.Host, target.IP), port)
+			pr.Service, pr.Version = identifyService(port, pr.Banner)
 		}
 	} else {
 		conn.Close()
 	}
 	return pr
+}
+
+func mysqlVersion(raw []byte) string {
+	if len(raw) < 6 || raw[4] != 0x0a {
+		return ""
+	}
+	end := 5
+	for end < len(raw) && raw[end] != 0x00 {
+		end++
+	}
+	version := string(raw[5:end])
+	if version == "" {
+		return ""
+	}
+	for _, c := range version {
+		if c < 32 || c > 126 {
+			return ""
+		}
+	}
+	if !strings.ContainsAny(version, "0123456789") {
+		return ""
+	}
+	return version
+}
+
+func identifyService(port int, banner string) (service, version string) {
+	switch {
+	case strings.HasPrefix(banner, "SSH-"):
+		fields := strings.SplitN(banner, "-", 3)
+		if len(fields) < 3 {
+			return "ssh", ""
+		}
+		rest := strings.TrimSpace(fields[2])
+		if sp := strings.IndexByte(rest, ' '); sp > 0 {
+			rest = rest[:sp]
+		}
+		return "ssh", strings.ReplaceAll(rest, "_", " ")
+	case strings.HasPrefix(banner, "Redis "):
+		return "redis", strings.TrimSpace(strings.TrimPrefix(banner, "Redis "))
+	case banner == "PostgreSQL":
+		return "postgresql", ""
+	case strings.HasPrefix(banner, "HTTP/"):
+		if i := strings.Index(banner, "| "); i >= 0 {
+			return "http", strings.TrimSpace(banner[i+2:])
+		}
+		return "http", ""
+	case strings.HasPrefix(banner, "220 ") || strings.HasPrefix(banner, "220-"):
+		low := strings.ToLower(banner)
+		if strings.Contains(low, "smtp") || strings.Contains(low, "esmtp") {
+			return "smtp", firstToken(banner)
+		}
+		if strings.Contains(low, "ftp") {
+			return "ftp", firstToken(banner)
+		}
+		return "", ""
+	case strings.HasPrefix(banner, "* OK") && strings.Contains(strings.ToUpper(banner), "IMAP"):
+		return "imap", ""
+	case strings.HasPrefix(banner, "+OK") && strings.Contains(strings.ToUpper(banner), "POP"):
+		return "pop3", ""
+	}
+	return "", ""
+}
+
+func firstToken(banner string) string {
+	for _, f := range strings.Fields(banner) {
+		if strings.ContainsAny(f, "0123456789.") && strings.ContainsAny(f, "0123456789") {
+			if strings.Count(f, ".") >= 1 {
+				return strings.Trim(f, "(),")
+			}
+		}
+	}
+	return ""
 }
 
 var redisVersionRe = regexp.MustCompile(`redis_version:([0-9][0-9.]*)`)

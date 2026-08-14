@@ -54,7 +54,7 @@ func (c commandContext) cmdPortscan(args []string) int {
 	open := []map[string]any{}
 	for _, p := range res.Ports {
 		if p.Open {
-			open = append(open, map[string]any{"port": p.Port, "banner": p.Banner})
+			open = append(open, map[string]any{"port": p.Port, "service": p.Service, "version": p.Version, "banner": p.Banner})
 		}
 	}
 	return c.emit(map[string]any{"target": res.Target, "open": open, "openCount": len(open), "blocked": res.Blocked})
