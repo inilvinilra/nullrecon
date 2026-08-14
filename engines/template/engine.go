@@ -98,6 +98,9 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 				if !req.matches(view) {
 					continue
 				}
+				if tmpl.Info.Reflection && !e.reflectionConfirmed(ctx, req, full) {
+					continue
+				}
 				sum := sha256.Sum256(body)
 				res.Matches = append(res.Matches, Match{
 					TemplateID:   tmpl.ID,
@@ -117,6 +120,22 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 		}
 	}
 	return res, nil
+}
+
+func (e *Engine) reflectionConfirmed(ctx context.Context, req Request, full string) bool {
+	q := strings.IndexByte(full, '?')
+	if q < 0 {
+		return false
+	}
+	control := full[:q]
+	cstatus, cbody, cheaders, err := e.fetch(ctx, req, control)
+	if err != nil {
+		return false
+	}
+	if req.matches(newResponseView(cstatus, cbody, cheaders)) {
+		return false
+	}
+	return true
 }
 
 func portOfURL(u *url.URL) int {

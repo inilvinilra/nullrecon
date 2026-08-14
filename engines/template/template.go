@@ -25,6 +25,7 @@ type Info struct {
 	CVE          string   `json:"cve,omitempty"`
 	CWE          string   `json:"cwe,omitempty"`
 	Prerequisite bool     `json:"prerequisite,omitempty"`
+	Reflection   bool     `json:"reflection,omitempty"`
 }
 
 type Matcher struct {

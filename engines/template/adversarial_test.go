@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -21,7 +22,8 @@ func TestAdversarialTargetPrecisionRecall(t *testing.T) {
 			return
 		}
 		w.WriteHeader(200)
-		w.Write([]byte("<!doctype html><html><head><title>Welcome</title></head><body><h1>It works</h1><p>You requested " + r.URL.Path + " but this is a soft-404 catch-all.</p></body></html>"))
+		safe := strings.NewReplacer("<", "&lt;", ">", "&gt;", "\"", "&quot;", "'", "&#39;").Replace(r.URL.Path)
+		w.Write([]byte("<!doctype html><html><head><title>Welcome</title></head><body><h1>It works</h1><p>You requested " + safe + " but this is a soft-404 catch-all.</p></body></html>"))
 	}))
 	defer srv.Close()
 	host, port := hostPort(t, srv.URL)
