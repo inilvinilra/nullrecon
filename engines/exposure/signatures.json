@@ -53,13 +53,14 @@
       "path": "wp-config.php.bak",
       "category": "leak",
       "severity": "critical",
-      "mustContainAny": [
-        "DB_PASSWORD",
-        "DB_USER"
-      ],
       "mustNotContain": [
-        "<?php"
-      ]
+        "<html",
+        "<!doctype",
+        "<head>",
+        "<!DOCTYPE",
+        "<html>"
+      ],
+      "pattern": "define\\(\\s*['\\\"]DB_(PASSWORD|NAME|USER)['\\\"]"
     },
     {
       "id": "sql-dump",
@@ -352,18 +353,14 @@
       "path": "wp-config.php.bak",
       "category": "secret",
       "severity": "critical",
-      "mustContainAny": [
-        "DB_PASSWORD",
-        "DB_NAME",
-        "AUTH_KEY"
-      ],
       "mustNotContain": [
         "<html",
         "<!doctype",
         "<head>",
         "<!DOCTYPE",
         "<html>"
-      ]
+      ],
+      "pattern": "define\\(\\s*['\\\"]DB_(PASSWORD|NAME|USER)['\\\"]"
     },
     {
       "id": "composer-json",
@@ -600,39 +597,28 @@
       "path": ".dockerignore",
       "category": "config",
       "severity": "low",
-      "mustContainAny": [
-        "node_modules",
-        ".git",
-        "*.log",
-        "Dockerfile"
-      ],
       "mustNotContain": [
         "<html",
         "<!doctype",
         "<head>",
         "<!DOCTYPE",
         "<html>"
-      ]
+      ],
+      "pattern": "(?m)^(node_modules/?|\\*\\.log|Dockerfile|\\.git/?|\\.env)\\s*$"
     },
     {
       "id": "gitignore",
       "path": ".gitignore",
       "category": "config",
       "severity": "low",
-      "mustContainAny": [
-        "node_modules/",
-        "*.log",
-        ".env",
-        ".DS_Store",
-        "__pycache__"
-      ],
       "mustNotContain": [
         "<html",
         "<!doctype",
         "<head>",
         "<!DOCTYPE",
         "<html>"
-      ]
+      ],
+      "pattern": "(?m)^(node_modules/?|\\*\\.log|\\.env|__pycache__/?|\\.DS_Store|dist/?|build/?|\\*\\.pyc)\\s*$"
     },
     {
       "id": "gitlab-runner-config",
@@ -778,7 +764,7 @@
         "<!DOCTYPE",
         "<html>"
       ],
-      "pattern": "ssh-(rsa|ed25519|dss)|ecdsa-sha2"
+      "pattern": "(?m)^[\\w.-]+ (ssh-(rsa|ed25519|dss)|ecdsa-sha2)"
     },
     {
       "id": "bash-history",
@@ -827,18 +813,14 @@
       "path": ".my.cnf",
       "category": "secret",
       "severity": "high",
-      "mustContainAny": [
-        "[client]",
-        "[mysql]",
-        "password="
-      ],
       "mustNotContain": [
         "<html",
         "<!doctype",
         "<head>",
         "<!DOCTYPE",
         "<html>"
-      ]
+      ],
+      "pattern": "(?m)^\\s*(password|user)\\s*="
     },
     {
       "id": "wp-debug-log",
@@ -923,41 +905,28 @@
       "path": "config.json",
       "category": "config",
       "severity": "low",
-      "mustContain": [
-        "{"
-      ],
-      "mustContainAny": [
-        "\"host\"",
-        "\"port\"",
-        "\"database\"",
-        "\"password\""
-      ],
       "mustNotContain": [
         "<html",
         "<!doctype",
         "<head>",
         "<!DOCTYPE",
         "<html>"
-      ]
+      ],
+      "pattern": "\"(password|db_password|secret|api_key)\"\\s*:\\s*\"[^\"]{4,}\""
     },
     {
       "id": "appsettings",
       "path": "appsettings.json",
       "category": "secret",
       "severity": "high",
-      "mustContainAny": [
-        "ConnectionStrings",
-        "DefaultConnection",
-        "\"Password\"",
-        "\"Jwt\""
-      ],
       "mustNotContain": [
         "<html",
         "<!doctype",
         "<head>",
         "<!DOCTYPE",
         "<html>"
-      ]
+      ],
+      "pattern": "\"(ConnectionStrings|DefaultConnection|Password|Jwt)\"\\s*:"
     },
     {
       "id": "application-properties",
@@ -971,7 +940,7 @@
         "<!DOCTYPE",
         "<html>"
       ],
-      "pattern": "(?m)^(spring\\.datasource|server\\.port|.*password)="
+      "pattern": "(?m)^\\s*[a-z0-9.]*password\\s*="
     },
     {
       "id": "application-yml",

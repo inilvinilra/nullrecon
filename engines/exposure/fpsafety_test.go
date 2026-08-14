@@ -15,6 +15,10 @@ func TestNoSignatureMatchesDecoyBodies(t *testing.T) {
 		[]byte(`{"status":"ok","message":"healthy"}`),
 		[]byte(`<html><head><title>500 Internal Server Error</title></head><body>Internal Server Error</body></html>`),
 		[]byte(``),
+		[]byte(`<!doctype html><html><body>You requested /.git/config but it was not found on this server.</body></html>`),
+		[]byte(`<html><body>404 Not Found: /.env /.aws/credentials /wp-config.php.bak /terraform.tfstate</body></html>`),
+		[]byte(`{"error":"not found","path":"/.git/config","status":404}`),
+		[]byte(`<html><body>Documentation: set your DB_PASSWORD and aws_access_key_id in the config file. Contact support.</body></html>`),
 	}
 	for _, sig := range set.signatures {
 		for _, body := range decoys {
