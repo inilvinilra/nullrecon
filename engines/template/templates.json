@@ -6581,6 +6581,415 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2023-23752-joomla-config",
+      "info": {
+        "name": "Joomla unauthenticated config leak",
+        "severity": "high",
+        "cve": "CVE-2023-23752",
+        "cwe": "CWE-287",
+        "tags": [
+          "joomla",
+          "kev",
+          "info-leak",
+          "auth-bypass"
+        ],
+        "description": "Joomla leaks database config via the public API (CVE-2023-23752)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/api/index.php/v1/config/application?public=true"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"dbtype\"",
+                "\"sitename\"",
+                "jsonapi.org",
+                "\"secret\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-28432-minio-leak",
+      "info": {
+        "name": "MinIO unauthenticated env leak",
+        "severity": "critical",
+        "cve": "CVE-2023-28432",
+        "cwe": "CWE-200",
+        "tags": [
+          "minio",
+          "kev",
+          "info-leak"
+        ],
+        "description": "MinIO leaks root credentials via the bootstrap verify endpoint (CVE-2023-28432)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/minio/bootstrap/v1/verify"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "MINIO_ROOT_",
+                "MinioEnv",
+                "MinioEndpoints"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-27524-superset",
+      "info": {
+        "name": "Apache Superset exposed (default secret key)",
+        "severity": "high",
+        "cve": "CVE-2023-27524",
+        "cwe": "CWE-1188",
+        "tags": [
+          "superset",
+          "apache",
+          "rce",
+          "session-forge"
+        ],
+        "description": "An Apache Superset instance is reachable (CVE-2023-27524 default SECRET_KEY session forge).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/login/",
+            "/superset/welcome/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Superset",
+                "superset-frontend",
+                "appbuilder",
+                "csrf_token"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2018-20062-thinkphp",
+      "info": {
+        "name": "ThinkPHP exposed (RCE)",
+        "severity": "critical",
+        "cve": "CVE-2018-20062",
+        "cwe": "CWE-94",
+        "tags": [
+          "thinkphp",
+          "rce"
+        ],
+        "description": "A ThinkPHP application is reachable (CVE-2018-20062 / CVE-2019-9082 pre-auth RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/index.php?s=captcha",
+            "/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "ThinkPHP",
+                "topthink",
+                "Fast &amp; Simple OOP PHP",
+                "think\\app"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-16097-harbor",
+      "info": {
+        "name": "Harbor registry exposed (admin registration)",
+        "severity": "high",
+        "cve": "CVE-2019-16097",
+        "cwe": "CWE-269",
+        "tags": [
+          "harbor",
+          "registry",
+          "privesc"
+        ],
+        "description": "A Harbor registry is reachable (CVE-2019-16097 unauth admin creation).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/harbor/sign-in",
+            "/api/v2.0/systeminfo"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Harbor",
+                "harbor-app",
+                "with_notary",
+                "registry_url"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-24348-argocd",
+      "info": {
+        "name": "Argo CD exposed (path traversal)",
+        "severity": "high",
+        "cve": "CVE-2022-24348",
+        "cwe": "CWE-22",
+        "tags": [
+          "argocd",
+          "kubernetes",
+          "traversal"
+        ],
+        "description": "An Argo CD instance is reachable (CVE-2022-24348 application path traversal).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/auth/login",
+            "/api/version"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Argo CD",
+                "argocd",
+                "__CONFIG__",
+                "\"Version\":\"v"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-23131-zabbix-saml",
+      "info": {
+        "name": "Zabbix SAML session bypass surface",
+        "severity": "high",
+        "cve": "CVE-2022-23131",
+        "cwe": "CWE-290",
+        "tags": [
+          "zabbix",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "A Zabbix frontend with SAML is reachable (CVE-2022-23131 session hijack).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/index_sso.php",
+            "/zabbix/index_sso.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Zabbix SIA",
+                "zbx_session",
+                "Zabbix",
+                "saml"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-11978-airflow",
+      "info": {
+        "name": "Apache Airflow exposed (example DAG RCE)",
+        "severity": "high",
+        "cve": "CVE-2020-11978",
+        "cwe": "CWE-94",
+        "tags": [
+          "airflow",
+          "apache",
+          "rce"
+        ],
+        "description": "An Apache Airflow surface is reachable (CVE-2020-11978 example-DAG command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/admin/",
+            "/home",
+            "/api/experimental/latest_runs"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Apache Airflow",
+                "airflow-webserver",
+                "DAGs",
+                "Airflow"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-36804-bitbucket",
+      "info": {
+        "name": "Atlassian Bitbucket exposed (command injection)",
+        "severity": "high",
+        "cve": "CVE-2022-36804",
+        "cwe": "CWE-77",
+        "tags": [
+          "bitbucket",
+          "atlassian",
+          "kev",
+          "rce"
+        ],
+        "description": "A Bitbucket Server/DC surface is reachable (CVE-2022-36804 command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/status",
+            "/rest/api/latest/repositories"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Bitbucket",
+                "com.atlassian.bitbucket",
+                "stash-",
+                "\"state\":\"RUNNING\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

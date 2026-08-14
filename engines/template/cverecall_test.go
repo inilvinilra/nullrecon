@@ -189,3 +189,40 @@ func TestKEVTemplatesBatch3DetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch4DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2023-23752-joomla-config": newResponseView(200, []byte(`{"data":[{"type":"application","attributes":{"sitename":"x","dbtype":"mysqli","secret":"abc"}}],"links":{"self":"https://jsonapi.org"}}`), nil),
+		"cve-2023-28432-minio-leak":    newResponseView(200, []byte(`{"MinioEndpoints":[],"MinioEnv":{"MINIO_ROOT_USER":"admin","MINIO_ROOT_PASSWORD":"secret"}}`), nil),
+		"cve-2023-27524-superset":      newResponseView(200, []byte(`<html><body>Superset superset-frontend appbuilder csrf_token</body></html>`), nil),
+		"cve-2018-20062-thinkphp":      newResponseView(200, []byte(`<html><body>ThinkPHP topthink Fast &amp; Simple OOP PHP think\app</body></html>`), nil),
+		"cve-2019-16097-harbor":        newResponseView(200, []byte(`<html><body>Harbor harbor-app with_notary registry_url</body></html>`), nil),
+		"cve-2022-24348-argocd":        newResponseView(200, []byte(`<html><body>Argo CD argocd __CONFIG__ "Version":"v2.3.0"</body></html>`), nil),
+		"cve-2022-23131-zabbix-saml":   newResponseView(200, []byte(`<html><body>Zabbix SIA zbx_session Zabbix saml</body></html>`), nil),
+		"cve-2020-11978-airflow":       newResponseView(200, []byte(`<html><body>Apache Airflow airflow-webserver DAGs</body></html>`), nil),
+		"cve-2022-36804-bitbucket":     newResponseView(200, []byte(`<html><body>Bitbucket com.atlassian.bitbucket stash- "state":"RUNNING"</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}
