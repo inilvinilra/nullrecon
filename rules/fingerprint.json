@@ -225,7 +225,7 @@
       "product": "wordpress",
       "weight": 0.6,
       "match": {
-        "body": "wp-content/"
+        "body": "(src|href)=[\\\"'][^\\\"']*/wp-(content|includes)/|name=[\\\"']generator[\\\"'][^>]*WordPress"
       },
       "vendor": "wordpress",
       "cpe": "cpe:/a:wordpress:wordpress"
@@ -260,7 +260,7 @@
       "product": "joomla",
       "weight": 0.5,
       "match": {
-        "body": "/media/jui/"
+        "body": "(src|href)=[\\\"'][^\\\"']*/media/(jui|system)/js/|option=com_[a-z]+"
       },
       "vendor": "joomla"
     },
@@ -286,7 +286,7 @@
       "product": "drupal",
       "weight": 0.5,
       "match": {
-        "body": "sites/all/|/sites/default/files"
+        "body": "(src|href)=[\\\"'][^\\\"']*/sites/(all|default)/|Drupal\\.settings"
       },
       "vendor": "drupal"
     },
@@ -303,7 +303,7 @@
       "product": "magento",
       "weight": 0.6,
       "match": {
-        "body": "Mage.Cookies|/skin/frontend/"
+        "body": "(src|href)=[\\\"'][^\\\"']*/skin/frontend/|Mage\\.Cookies"
       },
       "vendor": "magento"
     },
@@ -834,7 +834,7 @@
       "product": "gitlab",
       "weight": 0.7,
       "match": {
-        "body": "GitLab|gon.gitlab"
+        "body": "gon\\.gitlab_url|gitlab-session|GitLab (Community|Enterprise) Edition"
       },
       "vendor": "gitlab",
       "cpe": "cpe:/a:gitlab:gitlab"
@@ -843,7 +843,7 @@
       "product": "phpmyadmin",
       "weight": 0.8,
       "match": {
-        "body": "phpMyAdmin|pma_"
+        "body": "phpMyAdmin[^<]*</title>|pma_username|phpmyadmin\\.css|PMA_commonParams"
       },
       "vendor": "phpmyadmin",
       "cpe": "cpe:/a:phpmyadmin:phpmyadmin"
@@ -860,7 +860,7 @@
       "product": "adminer",
       "weight": 0.7,
       "match": {
-        "body": "Adminer|adminer.org"
+        "body": "adminer\\.org|name=\\\"auth\\[server\\]\\\"|Login - Adminer"
       }
     },
     {
