@@ -5213,6 +5213,469 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2017-10271-weblogic-wsat",
+      "info": {
+        "name": "Oracle WebLogic wls-wsat endpoint (RCE)",
+        "severity": "critical",
+        "cve": "CVE-2017-10271",
+        "cwe": "CWE-502",
+        "tags": [
+          "weblogic",
+          "oracle",
+          "rce",
+          "kev",
+          "deserialization"
+        ],
+        "description": "The WebLogic wls-wsat SOAP endpoint is reachable (CVE-2017-10271 RCE surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/wls-wsat/CoordinatorPortType",
+            "/wls-wsat/CoordinatorPortType11"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                500
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<S:Envelope",
+                "<soapenv:Envelope",
+                "<S:Fault",
+                "faultstring",
+                "weblogic.wsee"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-2725-weblogic-async",
+      "info": {
+        "name": "Oracle WebLogic async endpoint (RCE)",
+        "severity": "critical",
+        "cve": "CVE-2019-2725",
+        "cwe": "CWE-502",
+        "tags": [
+          "weblogic",
+          "oracle",
+          "rce",
+          "kev",
+          "deserialization"
+        ],
+        "description": "The WebLogic AsyncResponseService is reachable (CVE-2019-2725 RCE surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/_async/AsyncResponseService"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                500
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "<S:Envelope",
+                "<soapenv:Envelope",
+                "<S:Fault",
+                "faultstring",
+                "weblogic.wsee"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-26360-coldfusion-admin",
+      "info": {
+        "name": "Adobe ColdFusion Administrator exposed",
+        "severity": "critical",
+        "cve": "CVE-2023-26360",
+        "cwe": "CWE-284",
+        "tags": [
+          "coldfusion",
+          "adobe",
+          "rce",
+          "kev",
+          "traversal"
+        ],
+        "description": "The Adobe ColdFusion Administrator is reachable (CVE-2023-26360 pre-auth RCE surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/CFIDE/administrator/index.cfm",
+            "/CFIDE/adminapi/base.cfc?wsdl"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "ColdFusion Administrator",
+                "Adobe ColdFusion",
+                "cfusion"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-27350-papercut-admin",
+      "info": {
+        "name": "PaperCut NG/MF admin exposed",
+        "severity": "critical",
+        "cve": "CVE-2023-27350",
+        "cwe": "CWE-284",
+        "tags": [
+          "papercut",
+          "rce",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "A PaperCut NG/MF interface is reachable (CVE-2023-27350 auth-bypass RCE surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/app?service=page/SetupCompleted",
+            "/app"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "PaperCut",
+                "csrf-token\" content",
+                "com.papercut"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-36401-geoserver",
+      "info": {
+        "name": "GeoServer instance exposed (OGC RCE)",
+        "severity": "critical",
+        "cve": "CVE-2024-36401",
+        "cwe": "CWE-94",
+        "tags": [
+          "geoserver",
+          "rce",
+          "kev",
+          "ognl"
+        ],
+        "description": "A GeoServer instance is reachable (CVE-2024-36401 pre-auth OGC RCE surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/geoserver/web/",
+            "/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "org.geoserver",
+                "<wms:",
+                "GeoServer Configuration",
+                "geoserver-application"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-4966-citrix-bleed",
+      "info": {
+        "name": "Citrix NetScaler Gateway exposed (Citrix Bleed)",
+        "severity": "high",
+        "cve": "CVE-2023-4966",
+        "cwe": "CWE-119",
+        "tags": [
+          "citrix",
+          "netscaler",
+          "kev",
+          "info-leak"
+        ],
+        "description": "A Citrix NetScaler Gateway logon surface is reachable (CVE-2023-4966 Citrix Bleed).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/logon/LogonPoint/tmindex.html",
+            "/vpn/index.html"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "NetScaler",
+                "Citrix Gateway",
+                "_ctxstxt_",
+                "ns_gui"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-40684-fortios-login",
+      "info": {
+        "name": "Fortinet FortiOS admin login exposed",
+        "severity": "high",
+        "cve": "CVE-2022-40684",
+        "cwe": "CWE-288",
+        "tags": [
+          "fortinet",
+          "fortios",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "A FortiOS/FortiGate admin interface is reachable (CVE-2022-40684 auth-bypass surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/remote/login?lang=en",
+            "/login?redir=/ng"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "fgt_lang",
+                "logincheck",
+                "FortiGate",
+                "forticlient"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-22205-gitlab-signin",
+      "info": {
+        "name": "GitLab instance exposed (ExifTool RCE)",
+        "severity": "high",
+        "cve": "CVE-2021-22205",
+        "cwe": "CWE-94",
+        "tags": [
+          "gitlab",
+          "kev",
+          "rce"
+        ],
+        "description": "A GitLab sign-in surface is reachable (CVE-2021-22205 pre-auth RCE affects older versions).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/users/sign_in"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "gon.gitlab_url",
+                "GitLab Community Edition",
+                "GitLab Enterprise",
+                "gitlab-session"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-42793-teamcity-login",
+      "info": {
+        "name": "JetBrains TeamCity exposed (auth-bypass RCE)",
+        "severity": "critical",
+        "cve": "CVE-2023-42793",
+        "cwe": "CWE-288",
+        "tags": [
+          "teamcity",
+          "jetbrains",
+          "kev",
+          "auth-bypass",
+          "rce"
+        ],
+        "description": "A JetBrains TeamCity server is reachable (CVE-2023-42793 auth-bypass RCE surface).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/login.html",
+            "/app/rest/server"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "TeamCity",
+                "JetBrains",
+                "tc-header",
+                "Login to TeamCity"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-22515-confluence-setup",
+      "info": {
+        "name": "Atlassian Confluence broken-access surface",
+        "severity": "critical",
+        "cve": "CVE-2023-22515",
+        "cwe": "CWE-284",
+        "tags": [
+          "confluence",
+          "atlassian",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "A Confluence setup/admin surface is reachable (CVE-2023-22515 privilege escalation).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/server-info.action",
+            "/setup/setupadministrator.action"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Confluence",
+                "com.atlassian.confluence",
+                "confluence-context-path",
+                "ajs-"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

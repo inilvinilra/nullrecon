@@ -75,3 +75,42 @@ func TestServiceExposureTemplatesDetectRealResponses(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesDetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	soapFault := `<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><S:Fault><faultstring>weblogic.wsee.wstx.wsat.CoordinatorPortType</faultstring></S:Fault></S:Body></S:Envelope>`
+	cases := map[string]responseView{
+		"cve-2017-10271-weblogic-wsat":    newResponseView(500, []byte(soapFault), nil),
+		"cve-2019-2725-weblogic-async":    newResponseView(500, []byte(soapFault), nil),
+		"cve-2023-26360-coldfusion-admin": newResponseView(200, []byte(`<html><head><title>ColdFusion Administrator Login</title></head><body>Adobe ColdFusion</body></html>`), nil),
+		"cve-2023-27350-papercut-admin":   newResponseView(200, []byte(`<html><head><meta name="csrf-token" content="x"></head><body>PaperCut MF Admin</body></html>`), nil),
+		"cve-2024-36401-geoserver":        newResponseView(200, []byte(`<html><body>GeoServer Configuration powered by org.geoserver.web</body></html>`), nil),
+		"cve-2023-4966-citrix-bleed":      newResponseView(200, []byte(`<html><body>NetScaler Gateway logon _ctxstxt_ portal</body></html>`), nil),
+		"cve-2022-40684-fortios-login":    newResponseView(200, []byte(`<html><script>var fgt_lang='en'; function logincheck(){}</script></html>`), nil),
+		"cve-2021-22205-gitlab-signin":    newResponseView(200, []byte(`<html><body><script>gon.gitlab_url="https://x";</script>GitLab Community Edition</body></html>`), nil),
+		"cve-2023-42793-teamcity-login":   newResponseView(200, []byte(`<html><head><title>Log in to TeamCity</title></head><body>JetBrains TeamCity</body></html>`), nil),
+		"cve-2023-22515-confluence-setup": newResponseView(200, []byte(`<html><body>com.atlassian.confluence context Confluence setup</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: KEV template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}
