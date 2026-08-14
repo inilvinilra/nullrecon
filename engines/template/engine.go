@@ -122,6 +122,21 @@ func (e *Engine) Run(ctx context.Context, target string, set *Set) (Result, erro
 	return res, nil
 }
 
+func substituteVars(s string, u *url.URL) string {
+	if !strings.Contains(s, "{{") {
+		return s
+	}
+	base := u.Scheme + "://" + u.Host
+	r := strings.NewReplacer(
+		"{{BaseURL}}", base,
+		"{{RootURL}}", base,
+		"{{Hostname}}", u.Host,
+		"{{Host}}", u.Hostname(),
+		"{{Port}}", u.Port(),
+	)
+	return r.Replace(s)
+}
+
 func (e *Engine) reflectionConfirmed(ctx context.Context, req Request, full string) bool {
 	q := strings.IndexByte(full, '?')
 	if q < 0 {
@@ -162,7 +177,13 @@ func (e *Engine) fetch(ctx context.Context, req Request, full string) (int, []by
 	httpReq.Header.Set("User-Agent", "nullrecon/0.1")
 	httpReq.Header.Set("Accept", "*/*")
 	for k, v := range req.Headers {
-		httpReq.Header.Set(k, v)
+		httpReq.Header.Set(k, substituteVars(v, httpReq.URL))
+	}
+	if req.Body != "" {
+		if sub := substituteVars(req.Body, httpReq.URL); sub != req.Body {
+			httpReq.Body = io.NopCloser(strings.NewReader(sub))
+			httpReq.ContentLength = int64(len(sub))
+		}
 	}
 	resp, err := e.client.Do(httpReq)
 	if err != nil {

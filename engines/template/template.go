@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/nullrecon/nullrecon/contracts"
 )
@@ -54,11 +55,48 @@ type Extractor struct {
 type Request struct {
 	Method            string            `json:"method"`
 	Paths             []string          `json:"path"`
+	Raw               []string          `json:"raw,omitempty"`
 	Headers           map[string]string `json:"headers,omitempty"`
 	Body              string            `json:"body,omitempty"`
 	MatchersCondition string            `json:"matchersCondition,omitempty"`
 	Matchers          []Matcher         `json:"matchers"`
 	Extractors        []Extractor       `json:"extractors,omitempty"`
+}
+
+func parseRaw(raw string) (method, path string, headers map[string]string, body string, ok bool) {
+	raw = strings.ReplaceAll(raw, "\r\n", "\n")
+	head := raw
+	if idx := strings.Index(raw, "\n\n"); idx >= 0 {
+		head = raw[:idx]
+		body = strings.TrimRight(raw[idx+2:], "\n")
+	}
+	lines := strings.Split(strings.TrimSpace(head), "\n")
+	if len(lines) == 0 {
+		return
+	}
+	fields := strings.Fields(lines[0])
+	if len(fields) < 2 {
+		return
+	}
+	method = fields[0]
+	path = fields[1]
+	for _, pfx := range []string{"{{BaseURL}}", "{{RootURL}}"} {
+		path = strings.TrimPrefix(path, pfx)
+	}
+	headers = map[string]string{}
+	for _, l := range lines[1:] {
+		i := strings.IndexByte(l, ':')
+		if i <= 0 {
+			continue
+		}
+		k := strings.TrimSpace(l[:i])
+		if strings.EqualFold(k, "Host") || strings.EqualFold(k, "Content-Length") {
+			continue
+		}
+		headers[k] = strings.TrimSpace(l[i+1:])
+	}
+	ok = method != "" && strings.HasPrefix(path, "/")
+	return
 }
 
 type Template struct {
@@ -86,6 +124,20 @@ func Parse(data []byte) (*Set, error) {
 		}
 		for j := range t.Requests {
 			r := &t.Requests[j]
+			if len(r.Raw) > 0 {
+				method, path, headers, body, ok := parseRaw(r.Raw[0])
+				if !ok {
+					return nil, fmt.Errorf("template: %q has an unparseable raw request", t.ID)
+				}
+				r.Method = method
+				r.Paths = []string{path}
+				if r.Headers == nil {
+					r.Headers = headers
+				}
+				if r.Body == "" {
+					r.Body = body
+				}
+			}
 			if r.Method == "" {
 				r.Method = "GET"
 			}
