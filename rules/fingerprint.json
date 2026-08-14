@@ -1642,6 +1642,15 @@
       },
       "vendor": "python",
       "cpe": "cpe:/a:python:python"
+    },
+    {
+      "product": "jquery",
+      "weight": 0.5,
+      "match": {
+        "body": "jquery(?:\\.min)?\\.js\\?ver=([0-9.]+)"
+      },
+      "vendor": "jquery",
+      "cpe": "cpe:/a:jquery:jquery"
     }
   ]
 }

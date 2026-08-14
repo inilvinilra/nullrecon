@@ -171,6 +171,12 @@ func matchRule(c Compiled, f Features) (matchDetail, bool) {
 		return matchDetail{}, false
 	}
 	if m.Body != "" {
+		if match := c.re.FindString(f.BodySnippet); match != "" {
+			if len(match) > 160 {
+				match = match[:160]
+			}
+			return matchDetail{"body", match}, true
+		}
 		if c.re.MatchString(f.BodySnippet) {
 			return matchDetail{"body", ""}, true
 		}
