@@ -6155,6 +6155,432 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2022-1388-f5-bigip",
+      "info": {
+        "name": "F5 BIG-IP iControl REST / TMUI exposed",
+        "severity": "critical",
+        "cve": "CVE-2022-1388",
+        "cwe": "CWE-306",
+        "tags": [
+          "f5",
+          "big-ip",
+          "kev",
+          "auth-bypass",
+          "rce"
+        ],
+        "description": "An F5 BIG-IP management surface is reachable (CVE-2022-1388 iControl REST auth bypass RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/tmui/login.jsp",
+            "/mgmt/shared/authn/login"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                401,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "BIG-IP",
+                "F5 Networks",
+                "BIGIP",
+                "logmein.html"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-3400-globalprotect",
+      "info": {
+        "name": "Palo Alto GlobalProtect portal exposed",
+        "severity": "critical",
+        "cve": "CVE-2024-3400",
+        "cwe": "CWE-77",
+        "tags": [
+          "paloalto",
+          "globalprotect",
+          "kev",
+          "rce",
+          "command-injection"
+        ],
+        "description": "A Palo Alto GlobalProtect portal is reachable (CVE-2024-3400 unauth command injection).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/global-protect/login.esp",
+            "/global-protect/portal/css/login.css"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "GlobalProtect Portal",
+                "Global Protect",
+                "PanGlobalProtect",
+                "gp-portal"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-49103-owncloud-graphapi",
+      "info": {
+        "name": "ownCloud graphapi phpinfo leak",
+        "severity": "critical",
+        "cve": "CVE-2023-49103",
+        "cwe": "CWE-200",
+        "tags": [
+          "owncloud",
+          "kev",
+          "info-leak"
+        ],
+        "description": "The ownCloud graphapi endpoint leaks environment via phpinfo (CVE-2023-49103)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/apps/graphapi/vendor/microsoft/microsoft-graph/tests/GetPhpInfo.php",
+            "/owncloud/apps/graphapi/vendor/microsoft/microsoft-graph/tests/GetPhpInfo.php"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "PHP Version",
+                "phpinfo()",
+                "PHP Extension",
+                "OWNCLOUD_"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-4040-crushftp",
+      "info": {
+        "name": "CrushFTP WebInterface exposed",
+        "severity": "critical",
+        "cve": "CVE-2024-4040",
+        "cwe": "CWE-22",
+        "tags": [
+          "crushftp",
+          "kev",
+          "traversal",
+          "rce"
+        ],
+        "description": "A CrushFTP WebInterface is reachable (CVE-2024-4040 VFS sandbox escape / traversal).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/WebInterface/function/",
+            "/WebInterface/login.html"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "CrushFTP",
+                "crushftp",
+                "c2s.jar",
+                "Ben Spink"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-22954-vmware-workspace-one",
+      "info": {
+        "name": "VMware Workspace ONE Access exposed",
+        "severity": "critical",
+        "cve": "CVE-2022-22954",
+        "cwe": "CWE-94",
+        "tags": [
+          "vmware",
+          "workspace-one",
+          "kev",
+          "rce",
+          "ssti"
+        ],
+        "description": "A VMware Workspace ONE Access / vIDM surface is reachable (CVE-2022-22954 SSTI RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/SAAS/auth/login",
+            "/catalog-portal/ui/oauth/verify"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Workspace ONE",
+                "VMware Identity",
+                "vIDM",
+                "horizonInstanceId"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-40539-manageengine-adselfservice",
+      "info": {
+        "name": "Zoho ManageEngine ADSelfService exposed",
+        "severity": "critical",
+        "cve": "CVE-2021-40539",
+        "cwe": "CWE-287",
+        "tags": [
+          "zoho",
+          "manageengine",
+          "kev",
+          "auth-bypass",
+          "rce"
+        ],
+        "description": "A ManageEngine ADSelfService Plus surface is reachable (CVE-2021-40539 auth-bypass RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/help/admin-guide/",
+            "/samlLogin/"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "ManageEngine",
+                "ADSelfService",
+                "adssp",
+                "Zoho Corporation"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2017-12149-jboss-invoker",
+      "info": {
+        "name": "JBoss invoker endpoint exposed (deserialization)",
+        "severity": "critical",
+        "cve": "CVE-2017-12149",
+        "cwe": "CWE-502",
+        "tags": [
+          "jboss",
+          "redhat",
+          "kev",
+          "rce",
+          "deserialization"
+        ],
+        "description": "A JBoss invoker endpoint is reachable (CVE-2017-12149 unauth deserialization RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/invoker/readonly",
+            "/invoker/JMXInvokerServlet"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                200,
+                500
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "org.jboss",
+                "MarshalledInvocation",
+                "java.io.ObjectInputStream",
+                "<faultstring"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2021-43798-grafana-traversal",
+      "info": {
+        "name": "Grafana exposed (plugin path traversal)",
+        "severity": "high",
+        "cve": "CVE-2021-43798",
+        "cwe": "CWE-22",
+        "tags": [
+          "grafana",
+          "kev",
+          "traversal"
+        ],
+        "description": "A Grafana instance is reachable (CVE-2021-43798 authenticated-plugin path traversal affects 8.x).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/login",
+            "/api/health"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Grafana",
+                "grafanaBootData",
+                "grafana-app",
+                "\"commit\":",
+                "\"database\":"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2024-40766-sonicwall",
+      "info": {
+        "name": "SonicWall SSL-VPN exposed",
+        "severity": "high",
+        "cve": "CVE-2024-40766",
+        "cwe": "CWE-284",
+        "tags": [
+          "sonicwall",
+          "kev",
+          "auth-bypass"
+        ],
+        "description": "A SonicWall SSL-VPN / management surface is reachable (CVE-2024-40766 access control).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/auth.html",
+            "/cgi-bin/welcome"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "SonicWall",
+                "sonicwall",
+                "NSA ",
+                "SSL-VPN"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

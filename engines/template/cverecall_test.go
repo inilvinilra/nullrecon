@@ -152,3 +152,40 @@ func TestKEVTemplatesBatch2DetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch3DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2022-1388-f5-bigip":                    newResponseView(200, []byte(`<html><body>BIG-IP by F5 Networks - logmein.html</body></html>`), nil),
+		"cve-2024-3400-globalprotect":               newResponseView(200, []byte(`<html><body>GlobalProtect Portal PanGlobalProtect</body></html>`), nil),
+		"cve-2023-49103-owncloud-graphapi":          newResponseView(200, []byte(`<html><body>phpinfo() PHP Version 7.4.3 PHP Extension OWNCLOUD_ROOT</body></html>`), nil),
+		"cve-2024-4040-crushftp":                    newResponseView(200, []byte(`<html><body>CrushFTP by Ben Spink c2s.jar</body></html>`), nil),
+		"cve-2022-22954-vmware-workspace-one":       newResponseView(200, []byte(`<html><body>VMware Identity Workspace ONE vIDM horizonInstanceId</body></html>`), nil),
+		"cve-2021-40539-manageengine-adselfservice": newResponseView(200, []byte(`<html><body>ManageEngine ADSelfService Plus by Zoho Corporation</body></html>`), nil),
+		"cve-2017-12149-jboss-invoker":              newResponseView(500, []byte(`org.jboss.invocation.MarshalledInvocation java.io.ObjectInputStream`), nil),
+		"cve-2021-43798-grafana-traversal":          newResponseView(200, []byte(`<html><body>grafanaBootData Grafana "commit":"a1b" "database":"ok"</body></html>`), nil),
+		"cve-2024-40766-sonicwall":                  newResponseView(200, []byte(`<html><body>SonicWall NSA SSL-VPN portal</body></html>`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: KEV template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}
