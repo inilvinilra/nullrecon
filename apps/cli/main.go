@@ -82,6 +82,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return ctx.cmdSvc(rest[1:])
 	case "audit":
 		return ctx.cmdAudit(rest[1:])
+	case "sqli":
+		return ctx.cmdSqli(rest[1:])
 	case "honeypot":
 		return ctx.cmdHoneypot(rest[1:])
 	case "discover":
