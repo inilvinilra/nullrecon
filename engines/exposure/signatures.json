@@ -960,6 +960,144 @@
         "<!DOCTYPE",
         "<html>"
       ]
+    },
+    {
+      "id": "rails-database-yml",
+      "path": "config/database.yml",
+      "category": "leak",
+      "severity": "high",
+      "mustContain": [
+        "adapter:",
+        "default: &default"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "git-logs-head",
+      "path": ".git/logs/HEAD",
+      "category": "leak",
+      "severity": "high",
+      "pattern": "0{40}\\s[0-9a-f]{40}\\s",
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "elmah-axd",
+      "path": "elmah.axd",
+      "category": "leak",
+      "severity": "medium",
+      "mustContainAny": [
+        "Error Log for",
+        "ELMAH"
+      ]
+    },
+    {
+      "id": "trace-axd",
+      "path": "trace.axd",
+      "category": "leak",
+      "severity": "medium",
+      "mustContain": [
+        "Application Trace"
+      ],
+      "mustContainAny": [
+        "Request Details",
+        "Trace Information",
+        "Physical Directory"
+      ]
+    },
+    {
+      "id": "sublime-sftp-config",
+      "path": "sftp-config.json",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "upload_on_save",
+        "connect_timeout",
+        "sftp_flags"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "vscode-sftp-json",
+      "path": ".vscode/sftp.json",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "uploadOnSave",
+        "downloadOnOpen"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "joomla-config-bak",
+      "path": "configuration.php.bak",
+      "category": "secret",
+      "severity": "high",
+      "mustContainAny": [
+        "class JConfig",
+        "public $password",
+        "public $secret"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "rails-secrets-yml",
+      "path": "config/secrets.yml",
+      "category": "secret",
+      "severity": "high",
+      "mustContain": [
+        "secret_key_base:"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "jenkins-credentials-xml",
+      "path": "credentials.xml",
+      "category": "secret",
+      "severity": "critical",
+      "mustContainAny": [
+        "com.cloudbees.plugins.credentials",
+        "UsernamePasswordCredentialsImpl",
+        "<passwordHash>"
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
+    },
+    {
+      "id": "idea-datasources",
+      "path": ".idea/dataSources.xml",
+      "category": "leak",
+      "severity": "medium",
+      "mustContain": [
+        "<data-source"
+      ],
+      "mustContainAny": [
+        "jdbc",
+        "dbms="
+      ],
+      "mustNotContain": [
+        "<html",
+        "<!doctype"
+      ]
     }
   ]
 }
