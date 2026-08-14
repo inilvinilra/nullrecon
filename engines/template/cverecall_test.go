@@ -335,3 +335,37 @@ func TestKEVTemplatesBatch7DetectRealSurfaces(t *testing.T) {
 		}
 	}
 }
+
+func TestKEVTemplatesBatch8DetectRealSurfaces(t *testing.T) {
+	set, err := LoadEmbedded()
+	if err != nil {
+		t.Fatal(err)
+	}
+	byID := map[string]Template{}
+	for _, tmpl := range set.Templates {
+		byID[tmpl.ID] = tmpl
+	}
+	cases := map[string]responseView{
+		"cve-2024-34102-magento-cosmicsting": newResponseView(200, []byte(`<html><body>Magento Adobe Commerce mage-cache-storage Mage.Cookies</body></html>`), nil),
+		"cve-2022-24706-couchdb":             newResponseView(200, []byte(`<html><body>Welcome to Fauxton CouchDB couch_httpd</body></html>`), nil),
+		"cve-2023-34468-apache-nifi":         newResponseView(200, []byte(`<html><body>Apache NiFi nifi-web NiFi Flow supportsLogin</body></html>`), nil),
+		"cve-2022-30781-gitea":               newResponseView(200, []byte(`<html><body>Powered by Gitea - Gitea: Git with a cup of tea</body></html>`), nil),
+		"cve-2020-27986-sonarqube":           newResponseView(200, []byte(`{"id":"AYabc123","version":"9.9","status":"UP"}`), nil),
+		"cve-2019-17558-solr-velocity":       newResponseView(200, []byte(`{"lucene":{"solr-impl-version":"8.11.1"},"solr_home":"/var/solr","initFailures":{}}`), nil),
+	}
+	for id, view := range cases {
+		tmpl, ok := byID[id]
+		if !ok {
+			t.Fatalf("template %q missing", id)
+		}
+		matched := false
+		for _, req := range tmpl.Requests {
+			if req.matches(view) {
+				matched = true
+			}
+		}
+		if !matched {
+			t.Fatalf("RECALL FAIL: template %q does not detect its real vulnerable surface", id)
+		}
+	}
+}

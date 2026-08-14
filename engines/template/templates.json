@@ -8161,6 +8161,281 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cve-2024-34102-magento-cosmicsting",
+      "info": {
+        "name": "Adobe Commerce / Magento exposed (CosmicSting XXE)",
+        "severity": "critical",
+        "cve": "CVE-2024-34102",
+        "cwe": "CWE-611",
+        "tags": [
+          "magento",
+          "adobe",
+          "kev",
+          "xxe",
+          "rce"
+        ],
+        "description": "An Adobe Commerce / Magento REST surface is reachable (CVE-2024-34102 CosmicSting XXE RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/magento_version",
+            "/rest/V1/store/storeConfigs"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302,
+                401
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Magento",
+                "Adobe Commerce",
+                "mage-cache-storage",
+                "Mage.Cookies"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-24706-couchdb",
+      "info": {
+        "name": "Apache CouchDB Fauxton exposed",
+        "severity": "critical",
+        "cve": "CVE-2022-24706",
+        "cwe": "CWE-1188",
+        "tags": [
+          "couchdb",
+          "apache",
+          "rce"
+        ],
+        "description": "An Apache CouchDB admin surface is reachable (CVE-2022-24706 default-config RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/_utils/",
+            "/_all_dbs"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Fauxton",
+                "CouchDB",
+                "Welcome to Fauxton",
+                "couch_httpd"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2023-34468-apache-nifi",
+      "info": {
+        "name": "Apache NiFi exposed (EL injection RCE)",
+        "severity": "high",
+        "cve": "CVE-2023-34468",
+        "cwe": "CWE-94",
+        "tags": [
+          "nifi",
+          "apache",
+          "rce"
+        ],
+        "description": "An Apache NiFi interface is reachable (CVE-2023-34468 authenticated EL-injection RCE).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/nifi/",
+            "/nifi-api/access/config"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Apache NiFi",
+                "nifi-web",
+                "NiFi Flow",
+                "supportsLogin"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2022-30781-gitea",
+      "info": {
+        "name": "Gitea instance exposed",
+        "severity": "high",
+        "cve": "CVE-2022-30781",
+        "cwe": "CWE-74",
+        "tags": [
+          "gitea",
+          "git",
+          "rce"
+        ],
+        "description": "A Gitea instance is reachable (CVE-2022-30781 / git-hook RCE surface on older versions).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/",
+            "/explore/repos"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200,
+                302
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "Powered by Gitea",
+                "gitea-",
+                "Gitea: Git with a cup of tea",
+                "gitea_incredible"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2020-27986-sonarqube",
+      "info": {
+        "name": "SonarQube exposed (unauthenticated info leak)",
+        "severity": "high",
+        "cve": "CVE-2020-27986",
+        "cwe": "CWE-306",
+        "tags": [
+          "sonarqube",
+          "info-leak"
+        ],
+        "description": "A SonarQube instance is reachable (CVE-2020-27986 unauth API disclosure on misconfigured instances)."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/api/system/status",
+            "/api/settings/values"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "SonarQube",
+                "\"status\":\"UP\"",
+                "sonar.core",
+                "\"id\":\"AY"
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cve-2019-17558-solr-velocity",
+      "info": {
+        "name": "Apache Solr Velocity template exposed (RCE)",
+        "severity": "critical",
+        "cve": "CVE-2019-17558",
+        "cwe": "CWE-94",
+        "tags": [
+          "solr",
+          "apache",
+          "rce",
+          "ssti"
+        ],
+        "description": "An Apache Solr surface allows Velocity response writing (CVE-2019-17558 RCE when params.resource.loader.enabled).",
+        "prerequisite": true
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": [
+            "/solr/admin/cores?wt=json",
+            "/solr/admin/info/system?wt=json"
+          ],
+          "matchersCondition": "and",
+          "matchers": [
+            {
+              "type": "status",
+              "status": [
+                200
+              ]
+            },
+            {
+              "type": "word",
+              "part": "body",
+              "words": [
+                "\"lucene\"",
+                "solr_home",
+                "\"solr-impl-version\"",
+                "\"initFailures\""
+              ],
+              "condition": "or"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
