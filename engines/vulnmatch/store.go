@@ -18,7 +18,7 @@ func NewStoreMatcher() *StoreMatcher {
 }
 
 func (m *StoreMatcher) Match(projectID string, tech technology.Technology, records []cve.Record) []vulnerability.Candidate {
-	v := parseVersion(tech.Version)
+	v := parseVersion(normalizeVersion(tech.Product, tech.Version))
 	if !v.ok {
 		return nil
 	}

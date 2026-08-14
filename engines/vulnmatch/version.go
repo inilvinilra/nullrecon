@@ -50,6 +50,34 @@ func parseVersion(raw string) version {
 	return version{parts: parts, patch: patch, pre: pre, ok: true}
 }
 
+var exchangeBuildYear = map[string]string{
+	"8":    "2007",
+	"14":   "2010",
+	"15.0": "2013",
+	"15.1": "2016",
+	"15.2": "2019",
+}
+
+func normalizeVersion(product, raw string) string {
+	if !strings.EqualFold(strings.TrimSpace(product), "exchange_server") {
+		return raw
+	}
+	v := parseVersion(raw)
+	if !v.ok || len(v.parts) == 0 {
+		return raw
+	}
+	major := strconv.Itoa(v.parts[0])
+	if len(v.parts) >= 2 {
+		if y, ok := exchangeBuildYear[major+"."+strconv.Itoa(v.parts[1])]; ok {
+			return y
+		}
+	}
+	if y, ok := exchangeBuildYear[major]; ok {
+		return y
+	}
+	return raw
+}
+
 func leadingDigits(s string) string {
 	end := 0
 	for end < len(s) && s[end] >= '0' && s[end] <= '9' {
